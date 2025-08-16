@@ -152,7 +152,7 @@ export default function PengurusPage() {
           </div>
 
           {/* Management Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-8 mb-16">
             {management.map((person, index) => (
               <Card
                 key={index}
