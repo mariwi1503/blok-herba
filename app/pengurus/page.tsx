@@ -120,6 +120,16 @@ export default function PengurusPage() {
       description: "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
       image: "/images/ragil.jpg",
     },
+     {
+      name: "Ondra Wizal",
+      position: "Koordinator Humas",
+      phone: "+62 815-3349-2729",
+      // email: "andi@rtherba.com",
+      address: "Blok C No. 025",
+      period: "2022-2025",
+      description: "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      image: "/images/ondra.jpg",
+    },
   ]
 
   return (
