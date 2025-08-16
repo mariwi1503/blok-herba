@@ -22,7 +22,7 @@ export function ActivitiesSection() {
       location: "Balai RT Blok Herba",
       participants: "Pengurus RT",
       status: "upcoming",
-      image: "/images/rapat-rt.jpg",
+      image: "/images/activities/rapat-rt.jpg",
       fullDescription:
         "Rapat koordinasi rutin untuk membahas program kerja bulan Januari 2025 dan melakukan evaluasi menyeluruh terhadap kegiatan yang telah dilaksanakan sepanjang tahun 2024. Agenda meliputi perencanaan kegiatan, alokasi anggaran, dan pembagian tugas pengurus.",
     },
@@ -35,7 +35,7 @@ export function ActivitiesSection() {
       location: "Area Umum RT",
       participants: "Seluruh Warga",
       status: "upcoming",
-      image: "/images/pasang-tenda.jpg",
+      image: "/images/activities/pasang-tenda.jpg",
       fullDescription:
         "Kegiatan gotong royong rutin bulanan untuk membersihkan area umum, merawat taman, dan memelihara fasilitas bersama RT. Kegiatan ini melibatkan seluruh warga untuk menjaga kebersihan dan keindahan lingkungan.",
     },
@@ -48,7 +48,7 @@ export function ActivitiesSection() {
       location: "Lapangan RT",
       participants: "20 warga",
       status: "completed",
-      image: "/images/rapat-pembentukan-panitia.jpg",
+      image: "/images/activities/rapat-pembentukan-panitia.jpg",
       fullDescription:
         "Rapat pembentukan panitia untuk mempersiapkan kegiatan perayaan tahun baru 2025. Dalam rapat ini dibentuk struktur panitia, pembagian tugas, dan perencanaan acara yang akan dilaksanakan.",
     },
@@ -61,7 +61,7 @@ export function ActivitiesSection() {
       location: "Rumah Ketua RT",
       participants: "15 warga",
       status: "completed",
-      image: "/images/pertemuan.jpg",
+      image: "/images/activities/pertemuan.jpg",
       fullDescription:
         "Pertemuan warga untuk mendiskusikan rencana pembangunan fasilitas umum RT seperti perbaikan jalan, penambahan lampu penerangan, dan pembangunan pos keamanan.",
     },
@@ -99,7 +99,7 @@ export function ActivitiesSection() {
                     height={200}
                     className="w-full h-48 object-cover rounded-t-lg"
                   />
-                  <div className="absolute top-4 left-4">
+                  {/* <div className="absolute top-4 left-4">
                     <Badge
                       className={
                         activity.status === "upcoming" ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-700"
@@ -107,7 +107,7 @@ export function ActivitiesSection() {
                     >
                       {activity.status === "upcoming" ? "Akan Datang" : "Selesai"}
                     </Badge>
-                  </div>
+                  </div> */}
                 </div>
                 <CardContent className="p-6">
                   <h3 className="font-heading text-xl font-bold text-gray-900 mb-3">{activity.title}</h3>
@@ -168,13 +168,13 @@ export function ActivitiesSection() {
                   height={400}
                   className="w-full h-auto md:max-h-[50vh] object-contain rounded-lg"
                 />
-                <Badge
+                {/* <Badge
                   className={`absolute top-4 left-4 ${
                     selectedActivity.status === "upcoming" ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-700"
                   }`}
                 >
                   {selectedActivity.status === "upcoming" ? "Akan Datang" : "Selesai"}
-                </Badge>
+                </Badge> */}
               </div>
 
               <div className="grid grid-cols-2 gap-6 text-base">

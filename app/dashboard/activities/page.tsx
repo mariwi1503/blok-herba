@@ -25,7 +25,7 @@ export default function ActivitiesPage() {
       status: "upcoming",
       description: "Pembersihan area taman dan jalan lingkungan RT",
       organizer: "Ketua RT",
-      image: "/images/pasang-tenda.jpg", // Added image
+      image: "/images/activities/pasang-tenda.jpg", // Added image
     },
     {
       id: 2,
@@ -38,7 +38,7 @@ export default function ActivitiesPage() {
       status: "upcoming",
       description: "Evaluasi kegiatan bulan ini dan perencanaan bulan depan",
       organizer: "Sekretaris RT",
-      image: "/images/rapat-rt.jpg", // Added image
+      image: "/images/activities/rapat-rt.jpg", // Added image
     },
     {
       id: 3,
@@ -51,7 +51,7 @@ export default function ActivitiesPage() {
       status: "completed",
       description: "Pemasangan tenda untuk acara 17 Agustus",
       organizer: "Bendahara RT",
-      image: "/images/rapat-pembentukan-panitia.jpg", // Added image
+      image: "/images/activities/rapat-pembentukan-panitia.jpg", // Added image
     },
     {
       id: 4,
@@ -64,7 +64,7 @@ export default function ActivitiesPage() {
       status: "upcoming",
       description: "Senam sehat rutin untuk warga RT",
       organizer: "Koordinator Kesehatan",
-      image: "/images/pertemuan.jpg", // Added image
+      image: "/images/activities/pertemuan.jpg", // Added image
     },
   ]
 
