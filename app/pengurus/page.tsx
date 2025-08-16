@@ -29,25 +29,25 @@ export const metadata: Metadata = {
 export default function PengurusPage() {
   const management = [
     {
-      name: "Bapak Edika",
+      name: "Edika Saputra",
       position: "Ketua RT",
-      phone: "0812-3456-7890",
+      phone: "+62 812-6361-3720",
       email: "suharto@rtherba.com",
-      address: "Blok A No. 001",
+      address: "Blok Herba No. 57",
       period: "2022-2025",
       description:
         "Memimpin dan mengkoordinasikan seluruh kegiatan RT dengan pengalaman 15 tahun di bidang kemasyarakatan.",
       image: "/indonesian-leader-formal.png",
     },
     {
-      name: "Bapak Eka",
+      name: "Eka Pengayum",
       position: "Sekretaris RT",
-      phone: "0813-4567-8901",
+      phone: "+62 831-8435-2371",
       email: "siti@rtherba.com",
       address: "Blok A No. 005",
       period: "2022-2025",
       description: "Mengelola administrasi dan dokumentasi RT dengan ketelitian dan dedikasi tinggi.",
-      image: "/indonesian-treasurer.png",
+      image: "/images/eka.jpg",
     },
     {
       name: "Ibu Sinta",
@@ -60,14 +60,14 @@ export default function PengurusPage() {
       image: "/indonesian-secretary.png",
     },
     {
-      name: "Bapak Andes",
+      name: "Andeska Arifin",
       position: "Koordinator Perlengkapan",
-      phone: "0816-7890-1234",
+      phone: "+62 816-7890-1234",
       email: "joko@rtherba.com",
-      address: "Blok C No. 020",
+      address: "Blok Herba No. 109",
       period: "2022-2025",
       description: "Mengkoordinasikan sistem keamanan lingkungan dan ronda malam dengan pengalaman kepolisian.",
-      image: "/placeholder-ues2z.png",
+      image: "/images/andes.jpg",
     },
     {
       name: "Ibu Leni",
@@ -80,9 +80,9 @@ export default function PengurusPage() {
       image: "/indonesian-health-coordinator.png",
     },
     {
-      name: "Bapak Ary",
+      name: "Muhammad Ary Widodo",
       position: "Koordinator Pemuda dan Olahraga",
-      phone: "0818-9012-3456",
+      phone: "+62 853-3871-4313",
       email: "andi@rtherba.com",
       address: "Blok C No. 025",
       period: "2022-2025",
@@ -137,10 +137,10 @@ export default function PengurusPage() {
                       <Phone className="w-4 h-4 mr-3 text-emerald-600" />
                       <span>{person.phone}</span>
                     </div>
-                    <div className="flex items-center text-sm text-gray-600">
+                    {/* <div className="flex items-center text-sm text-gray-600">
                       <Mail className="w-4 h-4 mr-3 text-blue-600" />
                       <span>{person.email}</span>
-                    </div>
+                    </div> */}
                     <div className="flex items-center text-sm text-gray-600">
                       <MapPin className="w-4 h-4 mr-3 text-purple-600" />
                       <span>{person.address}</span>

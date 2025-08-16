@@ -6,21 +6,21 @@ export function ManagementSection() {
   const management = [
     {
       position: "Ketua RT",
-      name: "Bapak RT lansung",
-      phone: "0812-3456-7890",
+      name: "Edika Saputra",
+      phone: "+62 812-6361-3720",
       email: "ketua@rtblokherba.id",
       icon: Crown,
       color: "text-yellow-600",
-      bgColor: "bg-yellow-50",
+      bgColor: "bg-yellow-50",image: "/indonesian-secretary.png",
     },
     {
       position: "Sekretaris",
-      name: "Bapak Eka",
-      phone: "0813-4567-8901",
+      name: "Eka Pengayum",
+      phone: "+62 831-8435-2371",
       email: "sekretaris@rtblokherba.id",
       icon: FileText,
       color: "text-blue-600",
-      bgColor: "bg-blue-50",
+      bgColor: "bg-blue-50",image: "/images/eka.jpg",
     },
     {
       position: "Bendahara",
@@ -29,16 +29,16 @@ export function ManagementSection() {
       email: "bendahara@rtblokherba.id",
       icon: Wallet,
       color: "text-emerald-600",
-      bgColor: "bg-emerald-50",
+      bgColor: "bg-emerald-50",image: "/indonesian-secretary.png",
     },
     {
       position: "Koordinator Perlengkapan",
-      name: "Bapak Andes",
-      phone: "0815-6789-0123",
+      name: "Andeska Arifin",
+      phone: "+62 816-7890-1234",
       email: "keamanan@rtblokherba.id",
       icon: Users,
       color: "text-red-600",
-      bgColor: "bg-red-50",
+      bgColor: "bg-red-50",image: "/images/andes.jpg",
     },
   ]
 
@@ -62,11 +62,11 @@ export function ManagementSection() {
                 {/* Profile Image Placeholder */}
                 <div className="relative mb-4">
                   <Image
-                    src="/professional-indonesian-portrait.png"
+                    src={person.image}
                     alt={person.name}
                     width={120}
                     height={120}
-                    className="rounded-full mx-auto shadow-lg"
+                    className="rounded-lg mx-auto shadow-lg"
                   />
                   <div className={`absolute -bottom-2 -right-2 p-2 rounded-full ${person.bgColor}`}>
                     <person.icon className={`w-5 h-5 ${person.color}`} />
