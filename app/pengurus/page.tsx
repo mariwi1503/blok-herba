@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Phone, Mail, MapPin, Calendar, Users } from "lucide-react"
 import Image from "next/image"
 import type { Metadata } from "next"
+import { toWaMeUrl } from "@/lib/utils"
 
 export const metadata: Metadata = {
   title: "Pengurus RT Blok Herba - Ketua, Sekretaris, Bendahara | Taman Cipta Asri 2 Batam",
@@ -32,18 +33,18 @@ export default function PengurusPage() {
       name: "Edika Saputra",
       position: "Ketua RT",
       phone: "+62 812-6361-3720",
-      email: "suharto@rtherba.com",
+      // email: "suharto@rtherba.com",
       address: "Blok Herba No. 57",
       period: "2022-2025",
       description:
         "Memimpin dan mengkoordinasikan seluruh kegiatan RT dengan pengalaman 15 tahun di bidang kemasyarakatan.",
-      image: "/indonesian-leader-formal.png",
+      image: "/images/rt.jpg",
     },
     {
       name: "Eka Pengayum",
       position: "Sekretaris RT",
       phone: "+62 831-8435-2371",
-      email: "siti@rtherba.com",
+      // email: "siti@rtherba.com",
       address: "Blok A No. 005",
       period: "2022-2025",
       description: "Mengelola administrasi dan dokumentasi RT dengan ketelitian dan dedikasi tinggi.",
@@ -53,41 +54,59 @@ export default function PengurusPage() {
       name: "Ibu Sinta",
       position: "Bendahara RT",
       phone: "0814-5678-9012",
-      email: "ahmad@rtherba.com",
+      // email: "ahmad@rtherba.com",
       address: "Blok B No. 012",
       period: "2022-2025",
       description: "Mengelola keuangan RT dengan transparansi dan akuntabilitas yang tinggi.",
-      image: "/indonesian-secretary.png",
+      image: "/placeholder-nybna.png",
     },
     {
       name: "Andeska Arifin",
       position: "Koordinator Perlengkapan",
-      phone: "+62 816-7890-1234",
-      email: "joko@rtherba.com",
+      phone: "+62 812-7524-3138",
+      // email: "joko@rtherba.com",
       address: "Blok Herba No. 109",
       period: "2022-2025",
       description: "Mengkoordinasikan sistem keamanan lingkungan dan ronda malam dengan pengalaman kepolisian.",
       image: "/images/andes.jpg",
     },
     {
-      name: "Ibu Leni",
+      name: "Leni Syafrida",
       position: "Koordinator Konsumsi",
-      phone: "0815-6789-0123",
-      email: "ratna@rtherba.com",
+      phone: "+62 812-7515-5988",
+      // email: "ratna@rtherba.com",
       address: "Blok A No. 008",
       period: "2022-2025",
       description: "Mengelola program kesehatan warga dan koordinasi dengan puskesmas setempat.",
-      image: "/indonesian-health-coordinator.png",
+      image: "/images/leni.jpg",
     },
     {
       name: "Muhammad Ary Widodo",
       position: "Koordinator Pemuda dan Olahraga",
       phone: "+62 853-3871-4313",
-      email: "andi@rtherba.com",
+      // email: "andi@rtherba.com",
       address: "Blok C No. 025",
       period: "2022-2025",
       description: "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
-      image: "/placeholder-nybna.png",
+      image: "/images/ary.jpg",
+    },{
+      name: "Nur Afandi",
+      position: "Koordinator Humas",
+      phone: "+62 812-6821-6760",
+      // email: "andi@rtherba.com",
+      address: "Blok C No. 025",
+      period: "2022-2025",
+      description: "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      image: "/images/nur.jpg",
+    },{
+      name: "Ruli Candra",
+      position: "Koordinator Pengajian",
+      phone: "+62 813-7331-8342",
+      // email: "andi@rtherba.com",
+      address: "Blok C No. 025",
+      period: "2022-2025",
+      description: "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      image: "/images/ruli.jpg",
     },
   ]
 
@@ -155,7 +174,12 @@ export default function PengurusPage() {
                     variant="outline"
                     className="w-full bg-transparent border-emerald-600 text-emerald-600 hover:bg-emerald-50"
                   >
-                    Hubungi
+                    <a
+                      href={toWaMeUrl(person.phone)}
+                      target="_blank"
+                      rel="noopener noreferrer">
+                      Hubungi
+                    </a>
                   </Button>
                 </CardContent>
               </Card>

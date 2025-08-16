@@ -1,6 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { Crown, FileText, Wallet, Users, Phone, Mail } from "lucide-react"
+import { Crown, FileText, Wallet, Users, Phone, Mail, ArrowRight } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
+import { Button } from "./ui/button"
 
 export function ManagementSection() {
   const management = [
@@ -11,7 +13,8 @@ export function ManagementSection() {
       email: "ketua@rtblokherba.id",
       icon: Crown,
       color: "text-yellow-600",
-      bgColor: "bg-yellow-50",image: "/indonesian-secretary.png",
+      bgColor: "bg-yellow-50",
+      image: "/images/rt.jpg",
     },
     {
       position: "Sekretaris",
@@ -20,7 +23,8 @@ export function ManagementSection() {
       email: "sekretaris@rtblokherba.id",
       icon: FileText,
       color: "text-blue-600",
-      bgColor: "bg-blue-50",image: "/images/eka.jpg",
+      bgColor: "bg-blue-50",
+      image: "/images/eka.jpg",
     },
     {
       position: "Bendahara",
@@ -29,16 +33,18 @@ export function ManagementSection() {
       email: "bendahara@rtblokherba.id",
       icon: Wallet,
       color: "text-emerald-600",
-      bgColor: "bg-emerald-50",image: "/indonesian-secretary.png",
+      bgColor: "bg-emerald-50",
+      image: "/placeholder-nybna.png",
     },
     {
       position: "Koordinator Perlengkapan",
       name: "Andeska Arifin",
-      phone: "+62 816-7890-1234",
+      phone: "+62 812-7524-3138",
       email: "keamanan@rtblokherba.id",
       icon: Users,
       color: "text-red-600",
-      bgColor: "bg-red-50",image: "/images/andes.jpg",
+      bgColor: "bg-red-50",
+      image: "/images/andes.jpg",
     },
   ]
 
@@ -52,13 +58,13 @@ export function ManagementSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {management.map((person, index) => (
             <Card
               key={index}
               className="border-0 shadow-[0_0_20px_rgba(0,0,0,0.15)] hover:shadow-[0_0_30px_rgba(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-1"
             >
-              <CardContent className="p-6 text-center">
+              <CardContent className="px-6 text-center">
                 {/* Profile Image Placeholder */}
                 <div className="relative mb-4">
                   <Image
@@ -66,7 +72,7 @@ export function ManagementSection() {
                     alt={person.name}
                     width={120}
                     height={120}
-                    className="rounded-lg mx-auto shadow-lg"
+                    className="rounded-full mx-auto shadow-lg"
                   />
                   <div className={`absolute -bottom-2 -right-2 p-2 rounded-full ${person.bgColor}`}>
                     <person.icon className={`w-5 h-5 ${person.color}`} />
@@ -89,15 +95,24 @@ export function ManagementSection() {
                     <Phone className="w-4 h-4 mr-2" />
                     <span className="font-body text-sm">{person.phone}</span>
                   </div>
-                  <div className="hidden sm:flex items-center justify-center text-gray-600">
+                  {/* <div className="hidden sm:flex items-center justify-center text-gray-600">
                     <Mail className="w-4 h-4 mr-2" />
                     <span className="font-body text-sm">{person.email}</span>
-                  </div>
+                  </div> */}
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
+
+        <div className="text-center">
+            <Link href="/pengurus">
+              <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50 bg-transparent">
+                Lihat Semua Pengurus
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
 
         {/* Additional Info */}
         <div className="mt-12 text-center">
