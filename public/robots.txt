@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://blokherba.vercel.app/sitemap.xml
+
+# Block dashboard from search engines
+User-agent: *
+Disallow: /dashboard/
+Disallow: /login/
