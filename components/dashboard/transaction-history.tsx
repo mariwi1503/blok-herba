@@ -3,8 +3,24 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ArrowUpRight, ArrowDownRight, Eye, Edit, Trash2 } from "lucide-react"
 
-export function TransactionHistory() {
-  const transactions = [
+type Transaction = {
+  id: string
+  type: "income" | "expense"
+  category: string
+  description: string
+  amount: number
+  date: string
+  status: "completed" | "pending"
+  payer?: string
+  vendor?: string
+}
+
+interface TransactionHistoryProps {
+  type?: "income" | "expense" // optional, kalau tidak dikirim tampilkan semua
+}
+
+export function TransactionHistory({ type }: TransactionHistoryProps) {
+  const transactions: Transaction[] = [
     {
       id: "TRX001",
       type: "income",
@@ -67,6 +83,11 @@ export function TransactionHistory() {
     },
   ]
 
+  // filter berdasarkan props
+  const filteredTransactions = type
+    ? transactions.filter((trx) => trx.type === type)
+    : transactions
+
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
@@ -84,9 +105,11 @@ export function TransactionHistory() {
   }
 
   return (
-    <Card className="border-0 shadow-lg">
+    <Card className="border-0 shadow-lg mb-2 lg:mb-6">
       <CardHeader>
-        <CardTitle className="font-heading text-xl">Riwayat Transaksi</CardTitle>
+        <CardTitle className="font-heading text-xl">
+          Riwayat Transaksi {type === "income" ? "Masuk" : type === "expense" ? "Keluar" : ""}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
@@ -103,7 +126,7 @@ export function TransactionHistory() {
               </tr>
             </thead>
             <tbody>
-              {transactions.map((transaction) => (
+              {filteredTransactions.map((transaction) => (
                 <tr key={transaction.id} className="border-b border-gray-100 hover:bg-gray-50">
                   <td className="py-4 px-4">
                     <span className="font-body font-medium text-gray-900">{transaction.id}</span>
