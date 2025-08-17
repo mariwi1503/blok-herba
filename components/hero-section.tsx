@@ -26,13 +26,14 @@ export function HeroSection() {
                 Selamat Datang di Blok Herba
               </div>
 
-              <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight">
+              <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight">
                 Komunitas yang{" "}
-                <span className="text-emerald-600 relative">
-                  Bersatu
-                  <div className="absolute -bottom-1 md:-bottom-2 left-0 right-0 h-2 md:h-3 bg-emerald-200 -skew-y-1 -z-10"></div>
-                </span>
+                
               </h1>
+              <p className="text-emerald-600  text-xl lg:text-4xl font-bold mb-4 md:mb-6">
+                  Harmonis, Energik, Ramah, Bermartabat dan Asri
+                  <div className="absolute -bottom-1 md:-bottom-2 left-0 right-0 h-2 md:h-3 bg-emerald-200 -skew-y-1 -z-10"></div>
+                </p>
 
               <p className="font-body text-base md:text-lg lg:text-xl text-gray-600 mb-6 md:mb-8 max-w-2xl">
                 Menghubungkan Tetangga, Mengelola Bersama. Bergabunglah dengan komunitas yang peduli, transparan dalam
