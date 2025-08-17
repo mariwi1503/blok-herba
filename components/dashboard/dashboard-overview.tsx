@@ -225,12 +225,15 @@ export function DashboardOverview() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
           <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
+              <div className="flex flex-col md:flex-row items-center justify-between">
+                <div className={`p-3 rounded-lg ${stat.bgColor}`}>
+                  <stat.icon className={`w-6 h-6 ${stat.color}`} />
+                </div>
+                <div className="flex flex-col text-center">
                   <p className="font-body text-sm text-gray-600 mb-1">{stat.title}</p>
                   <p className="font-heading text-2xl font-bold text-gray-900">{stat.value}</p>
                   <div className="flex items-center mt-2">
@@ -249,9 +252,7 @@ export function DashboardOverview() {
                     <span className="font-body text-sm text-gray-500 ml-1">bulan ini</span>
                   </div>
                 </div>
-                <div className={`p-3 rounded-lg ${stat.bgColor}`}>
-                  <stat.icon className={`w-6 h-6 ${stat.color}`} />
-                </div>
+                
               </div>
             </CardContent>
           </Card>
