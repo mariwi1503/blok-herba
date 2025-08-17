@@ -42,6 +42,16 @@ export default function PengurusPage() {
       image: "/images/rt.jpg",
     },
     {
+      name: "Kis Mardi",
+      position: "Penasehat RT",
+      phone: "+62 815-3349-2729",
+      // email: "andi@rtherba.com",
+      address: "Blok C No. 025",
+      period: "2022-2025",
+      description: "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      image: "/images/kis.jpg",
+    },
+    {
       name: "Eka Pengayum",
       position: "Sekretaris RT",
       phone: "+62 831-8435-2371",
@@ -51,14 +61,14 @@ export default function PengurusPage() {
       image: "/images/eka.jpg",
     },
     {
-      name: "Ibu Sinta",
+      name: "Shinta julia fitri",
       position: "Bendahara RT",
       phone: "0814-5678-9012",
       // email: "ahmad@rtherba.com",
       address: "Blok B No. 012",
       period: "2022-2025",
       description: "Mengelola keuangan RT dengan transparansi dan akuntabilitas yang tinggi.",
-      image: "/placeholder-nybna.png",
+      image: "/images/shinta.jpg",
     },
     {
       name: "Andeska Arifin",
@@ -139,6 +149,16 @@ export default function PengurusPage() {
       period: "2022-2025",
       description: "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
       image: "/images/rufi.jpg",
+    },
+    {
+      name: "Andi Samsu alam",
+      position: "Keagamaan",
+      phone: "0814-5678-9012",
+      // email: "ahmad@rtherba.com",
+      address: "Blok B No. 012",
+      period: "2022-2025",
+      description: "Mengelola keuangan RT dengan transparansi dan akuntabilitas yang tinggi.",
+      image: "/images/andi.jpg",
     },
   ]
 
