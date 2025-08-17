@@ -38,29 +38,18 @@ export function FinanceDashboard() {
 
       {/* Tabs */}
       <Tabs defaultValue="transactions" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="reports">Laporan Keuangan</TabsTrigger>
           <TabsTrigger value="transactions">Riwayat Transaksi</TabsTrigger>
-          <TabsTrigger value="budget">Anggaran</TabsTrigger>
         </TabsList>
 
         <TabsContent value="transactions">
-          <TransactionHistory />
+          <TransactionHistory type="income" />
+          <TransactionHistory type="expense" />
         </TabsContent>
 
         <TabsContent value="reports">
           <FinanceReports />
-        </TabsContent>
-
-        <TabsContent value="budget">
-          <Card className="border-0 shadow-lg">
-            <CardHeader>
-              <CardTitle className="font-heading text-xl">Anggaran RT 2024</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="font-body text-gray-600">Fitur anggaran akan segera hadir...</p>
-            </CardContent>
-          </Card>
         </TabsContent>
       </Tabs>
 
