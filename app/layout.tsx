@@ -43,6 +43,9 @@ export const metadata: Metadata = {
   authors: [{ name: "RT 005 Blok Herba" }],
   creator: "RT 005 Blok Herba",
   publisher: "RT 005 Blok Herba",
+  icons: {
+    icon: "/images/logo-rt-herba.png",
+  },
   formatDetection: {
     email: false,
     address: false,
