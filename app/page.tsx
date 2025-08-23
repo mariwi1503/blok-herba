@@ -37,7 +37,7 @@ export default function HomePage() {
       <Navbar />
       <main>
         <HeroSection />
-        <VisionMissionSection />
+        {/* <VisionMissionSection /> */}
         <StatsSection />
         <FinanceSection />
         <ActivitiesSection />
