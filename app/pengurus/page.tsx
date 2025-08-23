@@ -1,16 +1,23 @@
-"use client"
+"use client";
 
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Phone, Mail, MapPin, Calendar, Users } from "lucide-react"
-import Image from "next/image"
-import type { Metadata } from "next"
-import { toWaMeUrl } from "@/lib/utils"
-import { useState } from "react"
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Calendar,
+  Users,
+} from "lucide-react";
+import Image from "next/image";
+import type { Metadata } from "next";
+import { toWaMeUrl } from "@/lib/utils";
+import { useState } from "react";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { ImWhatsapp } from "react-icons/im";
 
 // export const metadata: Metadata = {
 //   title: "Pengurus RT Blok Herba - Ketua, Sekretaris, Bendahara | Taman Cipta Asri 2 Batam",
@@ -28,9 +35,31 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 // }
 
 export default function PengurusPage() {
-  const [selected, setSelected] = useState<any | null>(null)
+  const [selected, setSelected] = useState<any | null>(null);
 
   const management = [
+    {
+      name: "Bpk. Kismardi",
+      position: "Penasehat",
+      phone: "+62 815-3349-2729",
+      // email: "andi@rtherba.com",
+      address: "Blok C No. 025",
+      period: "2022-2025",
+      description:
+        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      image: "/images/kis.jpg",
+    },
+    {
+      name: "Bpk. Sulaiman",
+      position: "Penasehat",
+      phone: "+62 812-7753-7556",
+      // email: "andi@rtherba.com",
+      address: "Blok C No. 025",
+      period: "2022-2025",
+      description:
+        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      image: "/placeholder-nybna.png",
+    },
     {
       name: "Edika Saputra",
       position: "Ketua RT",
@@ -41,44 +70,60 @@ export default function PengurusPage() {
         "Memimpin dan mengkoordinasikan seluruh kegiatan RT dengan pengalaman 15 tahun di bidang kemasyarakatan.",
       image: "/images/rt.jpg",
     },
-    {
-      name: "Kis Mardi",
-      position: "Penasehat RT",
-      phone: "+62 815-3349-2729",
-      // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
-      description: "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
-      image: "/images/kis.jpg",
-    },
+
     {
       name: "Eka Pengayum",
-      position: "Sekretaris RT",
+      position: "Sekretaris",
       phone: "+62 831-8435-2371",
       address: "Blok A No. 005",
       period: "2022-2025",
-      description: "Mengelola administrasi dan dokumentasi RT dengan ketelitian dan dedikasi tinggi.",
+      description:
+        "Mengelola administrasi dan dokumentasi RT dengan ketelitian dan dedikasi tinggi.",
       image: "/images/eka.jpg",
     },
     {
       name: "Shinta julia fitri",
-      position: "Bendahara RT",
-      phone: "0814-5678-9012",
+      position: "Bendahara",
+      phone: "+62 814-5678-9012",
       // email: "ahmad@rtherba.com",
       address: "Blok B No. 012",
       period: "2022-2025",
-      description: "Mengelola keuangan RT dengan transparansi dan akuntabilitas yang tinggi.",
+      description:
+        "Mengelola keuangan RT dengan transparansi dan akuntabilitas yang tinggi.",
       image: "/images/shinta.jpg",
     },
     {
       name: "Andeska Arifin",
-      position: "Koordinator Perlengkapan",
+      position: "Koordinator Bidang Sarana",
       phone: "+62 812-7524-3138",
       // email: "joko@rtherba.com",
       address: "Blok Herba No. 109",
       period: "2022-2025",
-      description: "Mengkoordinasikan sistem keamanan lingkungan dan ronda malam dengan pengalaman kepolisian.",
+      description:
+        "Mengkoordinasikan sistem keamanan lingkungan dan ronda malam dengan pengalaman kepolisian.",
       image: "/images/andes.jpg",
+    },
+    {
+      name: "Nur Afandi",
+      position: "Bidang Sarana",
+      phone: "+62 812-6821-6760",
+      // email: "andi@rtherba.com",
+      address: "Blok C No. 025",
+      period: "2022-2025",
+      description:
+        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      image: "/images/nur.jpg",
+    },
+    {
+      name: "Agus Purnomo",
+      position: "Bidang Sarana",
+      phone: "+62 812-6821-6760",
+      // email: "andi@rtherba.com",
+      address: "Blok C No. 025",
+      period: "2022-2025",
+      description:
+        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      image: "/placeholder-nybna.png",
     },
     {
       name: "Leni Syafrida",
@@ -87,67 +132,96 @@ export default function PengurusPage() {
       // email: "ratna@rtherba.com",
       address: "Blok A No. 008",
       period: "2022-2025",
-      description: "Mengelola program kesehatan warga dan koordinasi dengan puskesmas setempat.",
+      description:
+        "Mengelola program kesehatan warga dan koordinasi dengan puskesmas setempat.",
       image: "/images/leni.jpg",
     },
     {
-      name: "Muhammad Ary Widodo",
-      position: "Koordinator Pemuda dan Olahraga",
-      phone: "+62 853-3871-4313",
-      // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
-      description: "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
-      image: "/images/ary.jpg",
-    },
-    {
-      name: "Nur Afandi",
-      position: "Koordinator Humas",
-      phone: "+62 812-6821-6760",
-      // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
-      description: "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
-      image: "/images/nur.jpg",
-    },
-    {
-      name: "Ruli Candra",
-      position: "Koordinator Pengajian",
-      phone: "+62 813-7331-8342",
-      // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
-      description: "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
-      image: "/images/ruli.jpg",
-    },
-    {
       name: "Rizky ragil seputro",
-      position: "Koordinator Pemuda",
+      position: "Koordinator Pemuda dan Olahraga",
       phone: "+62 815-3349-2729",
       // email: "andi@rtherba.com",
       address: "Blok C No. 025",
       period: "2022-2025",
-      description: "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      description:
+        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
       image: "/images/ragil.jpg",
     },
-     {
+    {
+      name: "Muhammad Ary Widodo",
+      position: "Pemuda dan Olahraga",
+      phone: "+62 853-3871-4313",
+      // email: "andi@rtherba.com",
+      address: "Blok C No. 025",
+      period: "2022-2025",
+      description:
+        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      image: "/images/ary.jpg",
+    },
+    {
       name: "Ondra Wizal",
       position: "Koordinator Humas",
       phone: "+62 815-3349-2729",
       // email: "andi@rtherba.com",
       address: "Blok C No. 025",
       period: "2022-2025",
-      description: "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      description:
+        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
       image: "/images/ondra.jpg",
     },
     {
+      name: "Ruli Candra",
+      position: "Humas",
+      phone: "+62 813-7331-8342",
+      // email: "andi@rtherba.com",
+      address: "Blok C No. 025",
+      period: "2022-2025",
+      description:
+        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      image: "/images/ruli.jpg",
+    },
+    {
+      name: "Afrizal",
+      position: "Humas",
+      phone: "+62 813-7331-8342",
+      // email: "andi@rtherba.com",
+      address: "Blok C No. 025",
+      period: "2022-2025",
+      description:
+        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      image: "/placeholder-nybna.png",
+    },
+    {
+      name: "Alfitra K.",
+      position: "Humas",
+      phone: "+62 813-7331-8342",
+      // email: "andi@rtherba.com",
+      address: "Blok C No. 025",
+      period: "2022-2025",
+      description:
+        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      image: "/placeholder-nybna.png",
+    },
+    {
+      name: "Halle",
+      position: "Koordinator Keamanan",
+      phone: "+62 813-7331-8342",
+      // email: "andi@rtherba.com",
+      address: "Blok C No. 025",
+      period: "2022-2025",
+      description:
+        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      image: "/placeholder-nybna.png",
+    },
+    {
       name: "Rufima'ruf",
-      position: "Keagamaan",
+      position: "Koordinator Keagamaan",
       phone: "+62 815-3349-2729",
       // email: "andi@rtherba.com",
       address: "Blok C No. 025",
       period: "2022-2025",
-      description: "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      description:
+        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
       image: "/images/rufi.jpg",
     },
     {
@@ -157,10 +231,11 @@ export default function PengurusPage() {
       // email: "ahmad@rtherba.com",
       address: "Blok B No. 012",
       period: "2022-2025",
-      description: "Mengelola keuangan RT dengan transparansi dan akuntabilitas yang tinggi.",
+      description:
+        "Mengelola keuangan RT dengan transparansi dan akuntabilitas yang tinggi.",
       image: "/images/andi.jpg",
     },
-  ]
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
@@ -176,8 +251,8 @@ export default function PengurusPage() {
               </h1>
             </div>
             <p className="font-body text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Tim pengurus yang berdedikasi untuk melayani dan memajukan RT Blok Herba dengan penuh tanggung jawab dan
-              transparansi.
+              Tim pengurus yang berdedikasi untuk melayani dan memajukan RT Blok
+              Herba dengan penuh tanggung jawab dan transparansi.
             </p>
           </div>
 
@@ -188,7 +263,7 @@ export default function PengurusPage() {
                 key={index}
                 className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
                 onClick={() => {
-                  if (window.innerWidth < 768) setSelected(person)
+                  if (window.innerWidth < 768) setSelected(person);
                 }}
               >
                 <div className="relative">
@@ -201,14 +276,20 @@ export default function PengurusPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-lg" />
                   <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <h3 className="font-heading text-xl font-bold mb-1">{person.name}</h3>
-                    <p className="font-body text-sm opacity-90">{person.position}</p>
+                    <h3 className="font-heading text-xl font-bold mb-1">
+                      {person.name}
+                    </h3>
+                    <p className="font-body text-sm opacity-90">
+                      {person.position}
+                    </p>
                   </div>
                 </div>
 
                 {/* CardContent hanya muncul di desktop/tablet */}
                 <CardContent className="p-6 hidden md:block">
-                  <p className="font-body text-gray-600 mb-4 leading-relaxed text-sm">{person.description}</p>
+                  <p className="font-body text-gray-600 mb-4 leading-relaxed text-sm">
+                    {person.description}
+                  </p>
 
                   <div className="space-y-3 mb-6">
                     <div className="flex items-center text-sm text-gray-600">
@@ -225,7 +306,7 @@ export default function PengurusPage() {
                     </div>
                   </div>
 
-                  <Button
+                  {/* <Button
                     variant="outline"
                     className="w-full bg-transparent border-emerald-600 text-emerald-600 hover:bg-emerald-50"
                   >
@@ -235,6 +316,20 @@ export default function PengurusPage() {
                       rel="noopener noreferrer"
                     >
                       Hubungi
+                    </a>
+                  </Button> */}
+                  <Button
+                    variant="outline"
+                    className="w-full bg-transparent border-emerald-600 text-emerald-600 hover:bg-emerald-50 flex items-center justify-center gap-2"
+                  >
+                    <a
+                      href={toWaMeUrl(person.phone)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2"
+                    >
+                      <ImWhatsapp className="w-5 h-5 text-green-600" />
+                      <span>Whatsapp</span>
                     </a>
                   </Button>
                 </CardContent>
@@ -257,8 +352,12 @@ export default function PengurusPage() {
                     height={300}
                     className="w-full h-64 object-cover rounded-lg mb-4"
                   />
-                  <h3 className="font-heading text-xl font-bold mb-1">{selected.name}</h3>
-                  <p className="text-sm text-gray-500 mb-3">{selected.position}</p>
+                  <h3 className="font-heading text-xl font-bold mb-1">
+                    {selected.name}
+                  </h3>
+                  <p className="text-sm text-gray-500 mb-3">
+                    {selected.position}
+                  </p>
                   <p className="text-gray-600 mb-4">{selected.description}</p>
 
                   <div className="space-y-3 mb-6">
@@ -276,7 +375,7 @@ export default function PengurusPage() {
                     </div>
                   </div>
 
-                  <Button
+                  {/* <Button
                     variant="outline"
                     className="w-full bg-transparent border-emerald-600 text-emerald-600 hover:bg-emerald-50"
                   >
@@ -287,6 +386,20 @@ export default function PengurusPage() {
                     >
                       Hubungi
                     </a>
+                  </Button> */}
+                  <Button
+                    variant="outline"
+                    className="w-full bg-transparent border-emerald-600 text-emerald-600 hover:bg-emerald-50 flex items-center justify-center gap-2"
+                  >
+                    <a
+                      href={toWaMeUrl(selected.phone)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2"
+                    >
+                      <ImWhatsapp className="w-5 h-5 text-green-600" />
+                      <span>Whatsapp</span>
+                    </a>
                   </Button>
                 </div>
               )}
@@ -296,5 +409,5 @@ export default function PengurusPage() {
       </main>
       <Footer />
     </div>
-  )
+  );
 }
