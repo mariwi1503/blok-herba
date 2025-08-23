@@ -95,6 +95,13 @@ export const metadata: Metadata = {
     generator: 'v0.app'
 }
 
+import { Nunito } from "next/font/google"
+
+const nunito = Nunito({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"], // pilih variasi yang dipakai
+})
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -143,7 +150,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="font-sans">
+      <body className={nunito.className}>
         <AuthProvider>
           {children}
           {/* <ResidentRegistrationModal /> */}
