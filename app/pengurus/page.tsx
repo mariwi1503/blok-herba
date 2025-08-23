@@ -18,6 +18,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { ImWhatsapp } from "react-icons/im";
+import { OrganizationalChart } from "@/components/organitational-chart";
 
 // export const metadata: Metadata = {
 //   title: "Pengurus RT Blok Herba - Ketua, Sekretaris, Bendahara | Taman Cipta Asri 2 Batam",
@@ -238,7 +239,7 @@ export default function PengurusPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div className="min-h-screen bg-gradient-to-r from-red-50 to-blue-50">
       <Navbar />
       <main className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -407,6 +408,7 @@ export default function PengurusPage() {
           </Dialog>
         </div>
       </main>
+      <OrganizationalChart />
       <Footer />
     </div>
   );

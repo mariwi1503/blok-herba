@@ -1,8 +1,17 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Crown, FileText, Wallet, Users, Phone, Mail, ArrowRight } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { Button } from "./ui/button"
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Crown,
+  FileText,
+  Wallet,
+  Users,
+  Phone,
+  Mail,
+  ArrowRight,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "./ui/button";
+import { OrganizationalChart } from "./organitational-chart";
 
 export function ManagementSection() {
   const management = [
@@ -46,13 +55,15 @@ export function ManagementSection() {
       bgColor: "bg-red-50",
       image: "/images/andes.jpg",
     },
-  ]
+  ];
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-gradient-to-br from-yellow-50 to-green-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-gray-900 mb-4">Pengurus RT Blok Herba</h2>
+          <h2 className="font-heading text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Pengurus RT Blok Herba
+          </h2>
           <p className="font-body text-lg text-gray-600 max-w-2xl mx-auto">
             Tim pengurus yang siap melayani dan memajukan RT Blok Herba
           </p>
@@ -74,7 +85,9 @@ export function ManagementSection() {
                     height={120}
                     className="rounded-full mx-auto shadow-lg"
                   />
-                  <div className={`absolute -bottom-2 -right-2 p-2 rounded-full ${person.bgColor}`}>
+                  <div
+                    className={`absolute -bottom-2 -right-2 p-2 rounded-full ${person.bgColor}`}
+                  >
                     <person.icon className={`w-5 h-5 ${person.color}`} />
                   </div>
                 </div>
@@ -87,7 +100,9 @@ export function ManagementSection() {
                 </div>
 
                 {/* Name */}
-                <h3 className="font-heading text-xl font-bold text-gray-900 mb-4">{person.name}</h3>
+                <h3 className="font-heading text-xl font-bold text-gray-900 mb-4">
+                  {person.name}
+                </h3>
 
                 {/* Contact Info */}
                 <div className="space-y-2">
@@ -105,17 +120,20 @@ export function ManagementSection() {
           ))}
         </div>
 
-        <div className="text-center">
-            <Link href="/pengurus">
-              <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50 bg-transparent">
-                Lihat Semua Pengurus
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
+        {/* <div className="text-center">
+          <Link href="/pengurus">
+            <Button
+              variant="outline"
+              className="border-blue-600 text-blue-600 hover:bg-blue-50 bg-transparent"
+            >
+              Lihat Semua Pengurus
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
+        </div> */}
 
         {/* Additional Info */}
-        <div className="mt-12 text-center">
+        {/* <div className="mt-12 text-center">
           <Card className="border-0 shadow-lg bg-gradient-to-r from-emerald-50 to-blue-50">
             <CardContent className="p-8">
               <h3 className="font-heading text-2xl font-bold text-gray-900 mb-4">Hubungi Pengurus RT</h3>
@@ -135,8 +153,9 @@ export function ManagementSection() {
               </div>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
       </div>
+      <OrganizationalChart />
     </section>
-  )
+  );
 }
