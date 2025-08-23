@@ -30,10 +30,10 @@ export function HeroSection() {
                 Komunitas yang{" "}
                 
               </h1>
-              <p className="text-emerald-600  text-xl lg:text-4xl font-bold mb-4 md:mb-6">
+              <div className="text-emerald-600  text-xl lg:text-4xl font-bold mb-4 md:mb-6">
                   Harmonis, Energik, Ramah, Bermartabat dan Asri
                   <div className="absolute -bottom-1 md:-bottom-2 left-0 right-0 h-2 md:h-3 bg-emerald-200 -skew-y-1 -z-10"></div>
-                </p>
+                </div>
 
               <p className="font-body text-base md:text-lg lg:text-xl text-gray-600 mb-6 md:mb-8 max-w-2xl">
                 Menghubungkan Tetangga, Mengelola Bersama. Bergabunglah dengan komunitas yang peduli, transparan dalam
