@@ -75,11 +75,12 @@ export function ActivitiesSection() {
 
   return (
     <>
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gradient-to-r from-violet-50 to-green-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-gray-900 mb-4">Kegiatan RT Blok Herba</h2>
-            <p className="font-body text-lg text-gray-600 max-w-2xl mx-auto">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-gray-900 mb-4">Kegiatan Blok Herba</h2>
+            <div className="mx-auto h-1 w-1/2 lg:w-1/4 bg-green-400 rounded-md mb-10"></div>
+            <p className="font-body text-xl text-gray-600 max-w-2xl mx-auto">
               Berbagai kegiatan dan program yang diselenggarakan untuk mempererat hubungan antar warga
             </p>
           </div>

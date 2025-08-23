@@ -39,7 +39,7 @@ export default function HomePage() {
         <HeroSection />
         {/* <VisionMissionSection /> */}
         <StatsSection />
-        <FinanceSection />
+        {/* <FinanceSection /> */}
         <ActivitiesSection />
         <ArticlesSection />
         <ManagementSection />

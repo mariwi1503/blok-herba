@@ -185,7 +185,7 @@ export function ArticlesSection() {
 
   return (
     <>
-      <section className="py-12 md:py-16 bg-white">
+      <section className="py-12 md:py-16 bg-gradient-to-r from-yellow-50 to-red-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 md:mb-12">
             <div className="flex items-center justify-center mb-4">
@@ -194,8 +194,9 @@ export function ArticlesSection() {
                 Artikel & Pengumuman
               </h2>
             </div>
-            <p className="font-body text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
-              Informasi terkini dan artikel bermanfaat untuk warga RT Blok Herba
+            <div className="mx-auto h-1 w-1/2 lg:w-1/4 bg-green-400 rounded-md mb-10"></div>
+            <p className="font-body text-xl text-gray-600 max-w-2xl mx-auto">
+              Kumpulan artikel yang bermanfaat
             </p>
           </div>
 
@@ -203,7 +204,7 @@ export function ArticlesSection() {
             {displayedArticles.map((article, index) => (
               <Card
                 key={index}
-                className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group h-full bg-yellow-50/20"
+                className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group h-full"
                 onClick={() => handleArticleClick(article)}
               >
                 <CardContent className="p-4 md:p-6 h-full flex flex-col">

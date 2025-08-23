@@ -13,7 +13,7 @@ export function HeroSection() {
 
   return (
     <>
-      <section className="relative bg-gradient-to-br from-emerald-50 via-white to-emerald-50 py-12 md:py-20 lg:py-24 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-emerald-50 via-white to-emerald-50 py-12 md:py-20 lg:py-24 overflow-hidden lg:h-screen">
         {/* Background decoration */}
         <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-5"></div>
 

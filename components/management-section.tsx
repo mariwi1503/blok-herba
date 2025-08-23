@@ -64,7 +64,8 @@ export function ManagementSection() {
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Pengurus RT Blok Herba
           </h2>
-          <p className="font-body text-lg text-gray-600 max-w-2xl mx-auto">
+          <div className="mx-auto h-1 w-1/2 lg:w-1/4 bg-green-400 rounded-md mb-10"></div>
+          <p className="font-body text-xl text-gray-600 max-w-2xl mx-auto">
             Tim pengurus yang siap melayani dan memajukan RT Blok Herba
           </p>
         </div>
