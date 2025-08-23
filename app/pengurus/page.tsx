@@ -42,12 +42,12 @@ export default function PengurusPage() {
     {
       name: "Bpk. Kismardi",
       position: "Penasehat",
-      phone: "+62 815-3349-2729",
+      phone: "+62 852-6414-4435",
       // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
+      address: "Herba 025",
+      period: "2025-2030",
       description:
-        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+        "Mendampingi dan memberi pertimbangan bagi kelancaran kegiatan RT.",
       image: "/images/kis.jpg",
     },
     {
@@ -55,10 +55,10 @@ export default function PengurusPage() {
       position: "Penasehat",
       phone: "+62 812-7753-7556",
       // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
+      address: "Herba 025",
+      period: "2025-2030",
       description:
-        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+        "Mendampingi dan memberi pertimbangan bagi kelancaran kegiatan RT.",
       image: "/placeholder-nybna.png",
     },
     {
@@ -66,9 +66,9 @@ export default function PengurusPage() {
       position: "Ketua RT",
       phone: "+62 812-6361-3720",
       address: "Blok Herba No. 57",
-      period: "2022-2025",
+      period: "2025-2030",
       description:
-        "Memimpin dan mengkoordinasikan seluruh kegiatan RT dengan pengalaman 15 tahun di bidang kemasyarakatan.",
+        "Memimpin dan mengkoordinasikan seluruh kegiatan RT.",
       image: "/images/rt.jpg",
     },
 
@@ -77,7 +77,7 @@ export default function PengurusPage() {
       position: "Sekretaris",
       phone: "+62 831-8435-2371",
       address: "Blok A No. 005",
-      period: "2022-2025",
+      period: "2025-2030",
       description:
         "Mengelola administrasi dan dokumentasi RT dengan ketelitian dan dedikasi tinggi.",
       image: "/images/eka.jpg",
@@ -85,10 +85,10 @@ export default function PengurusPage() {
     {
       name: "Shinta julia fitri",
       position: "Bendahara",
-      phone: "+62 814-5678-9012",
+      phone: "+62 821-7646-4812",
       // email: "ahmad@rtherba.com",
       address: "Blok B No. 012",
-      period: "2022-2025",
+      period: "2025-2030",
       description:
         "Mengelola keuangan RT dengan transparansi dan akuntabilitas yang tinggi.",
       image: "/images/shinta.jpg",
@@ -98,10 +98,10 @@ export default function PengurusPage() {
       position: "Koordinator Bidang Sarana",
       phone: "+62 812-7524-3138",
       // email: "joko@rtherba.com",
-      address: "Blok Herba No. 109",
-      period: "2022-2025",
+      address: "Herba 109",
+      period: "2025-2030",
       description:
-        "Mengkoordinasikan sistem keamanan lingkungan dan ronda malam dengan pengalaman kepolisian.",
+        "Mengelola, merawat, dan memastikan ketersediaan sarana serta peralatan untuk mendukung kegiatan RT.",
       image: "/images/andes.jpg",
     },
     {
@@ -109,10 +109,10 @@ export default function PengurusPage() {
       position: "Bidang Sarana",
       phone: "+62 812-6821-6760",
       // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
+      address: "Herba 025",
+      period: "2025-2030",
       description:
-        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+        "Mengelola, merawat, dan memastikan ketersediaan sarana serta peralatan untuk mendukung kegiatan RT.",
       image: "/images/nur.jpg",
     },
     {
@@ -120,10 +120,10 @@ export default function PengurusPage() {
       position: "Bidang Sarana",
       phone: "+62 812-6821-6760",
       // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
+      address: "Herba 025",
+      period: "2025-2030",
       description:
-        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+        "Mengelola, merawat, dan memastikan ketersediaan sarana serta peralatan untuk mendukung kegiatan RT.",
       image: "/placeholder-nybna.png",
     },
     {
@@ -132,9 +132,9 @@ export default function PengurusPage() {
       phone: "+62 812-7515-5988",
       // email: "ratna@rtherba.com",
       address: "Blok A No. 008",
-      period: "2022-2025",
+      period: "2025-2030",
       description:
-        "Mengelola program kesehatan warga dan koordinasi dengan puskesmas setempat.",
+        "Mengatur, menyiapkan, dan memastikan kebutuhan konsumsi terpenuhi dalam setiap kegiatan RT.",
       image: "/images/leni.jpg",
     },
     {
@@ -142,10 +142,10 @@ export default function PengurusPage() {
       position: "Koordinator Pemuda dan Olahraga",
       phone: "+62 815-3349-2729",
       // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
+      address: "Herba 025",
+      period: "2025-2030",
       description:
-        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+        "Mengkoordinir kegiatan olahraga serta membina kreativitas, semangat, dan peran aktif pemuda dalam kegiatan RT.",
       image: "/images/ragil.jpg",
     },
     {
@@ -153,10 +153,10 @@ export default function PengurusPage() {
       position: "Pemuda dan Olahraga",
       phone: "+62 853-3871-4313",
       // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
+      address: "Herba 025",
+      period: "2025-2030",
       description:
-        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+        "Mengkoordinir kegiatan olahraga serta membina kreativitas, semangat, dan peran aktif pemuda dalam kegiatan RT.",
       image: "/images/ary.jpg",
     },
     {
@@ -164,10 +164,10 @@ export default function PengurusPage() {
       position: "Koordinator Humas",
       phone: "+62 815-3349-2729",
       // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
+      address: "Herba 025",
+      period: "2025-2030",
       description:
-        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+        "Menjalin komunikasi, menyebarkan informasi, dan menjadi penghubung antara pengurus RT dengan warga maupun pihak luar.",
       image: "/images/ondra.jpg",
     },
     {
@@ -175,10 +175,10 @@ export default function PengurusPage() {
       position: "Humas",
       phone: "+62 813-7331-8342",
       // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
+      address: "Herba 025",
+      period: "2025-2030",
       description:
-        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+        "Menjalin komunikasi, menyebarkan informasi, dan menjadi penghubung antara pengurus RT dengan warga maupun pihak luar.",
       image: "/images/ruli.jpg",
     },
     {
@@ -186,10 +186,10 @@ export default function PengurusPage() {
       position: "Humas",
       phone: "+62 813-7331-8342",
       // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
+      address: "Herba 025",
+      period: "2025-2030",
       description:
-        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+        "Menjalin komunikasi, menyebarkan informasi, dan menjadi penghubung antara pengurus RT dengan warga maupun pihak luar.",
       image: "/placeholder-nybna.png",
     },
     {
@@ -197,20 +197,20 @@ export default function PengurusPage() {
       position: "Humas",
       phone: "+62 813-7331-8342",
       // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
+      address: "Herba 025",
+      period: "2025-2030",
       description:
-        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+        "Menjalin komunikasi, menyebarkan informasi, dan menjadi penghubung antara pengurus RT dengan warga maupun pihak luar.",
       image: "/placeholder-nybna.png",
     },{
       name: "Cak Gucir",
       position: "Humas",
       phone: "+62 819-9089-5797",
       // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
+      address: "Herba 025",
+      period: "2025-2030",
       description:
-        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+        "Menjalin komunikasi, menyebarkan informasi, dan menjadi penghubung antara pengurus RT dengan warga maupun pihak luar.",
       image:  "/images/gucir.jpg",
     },
     {
@@ -218,10 +218,10 @@ export default function PengurusPage() {
       position: "Koordinator Keagamaan",
       phone: "+62 815-3349-2729",
       // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
+      address: "Herba 025",
+      period: "2025-2030",
       description:
-        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+        "Mengkoordinir kegiatan keagamaan serta mendorong peningkatan iman, takwa, dan kerukunan warga di lingkungan RT.",
       image: "/images/rufi.jpg",
     },
     {
@@ -230,9 +230,9 @@ export default function PengurusPage() {
       phone: "0814-5678-9012",
       // email: "ahmad@rtherba.com",
       address: "Blok B No. 012",
-      period: "2022-2025",
+      period: "2025-2030",
       description:
-        "Mengelola keuangan RT dengan transparansi dan akuntabilitas yang tinggi.",
+        "Mengkoordinir kegiatan keagamaan serta mendorong peningkatan iman, takwa, dan kerukunan warga di lingkungan RT.",
       image: "/images/andi.jpg",
     },
     {
@@ -240,10 +240,10 @@ export default function PengurusPage() {
       position: "Koordinator Keamanan",
       phone: "+62 813-7331-8342",
       // email: "andi@rtherba.com",
-      address: "Blok C No. 025",
-      period: "2022-2025",
+      address: "Herba 025",
+      period: "2025-2030",
       description:
-        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+        "Mengatur, menjaga, dan meningkatkan keamanan serta ketertiban lingkungan RT bersama warga.",
       image: "/placeholder-nybna.png",
     },
   ];
