@@ -108,7 +108,6 @@ export function HeroSection() {
                   { src: "/images/hero-banner.png", alt: "Banner 1 - Blok Herba" },
                   { src: "/images/hero-banner-2.png", alt: "Banner 2 - Kegiatan Warga" },
                   { src: "/images/hero-banner-3.png", alt: "Banner 3 - Gotong Royong" },
-                  { src: "/images/hero-banner-4.png", alt: "Banner 3 - Gotong Royong" },
                 ]}
                 autoplay
                 interval={3000}
