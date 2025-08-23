@@ -202,17 +202,16 @@ export default function PengurusPage() {
       description:
         "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
       image: "/placeholder-nybna.png",
-    },
-    {
-      name: "Halle",
-      position: "Koordinator Keamanan",
-      phone: "+62 813-7331-8342",
+    },{
+      name: "Cak Gucir",
+      position: "Humas",
+      phone: "+62 819-9089-5797",
       // email: "andi@rtherba.com",
       address: "Blok C No. 025",
       period: "2022-2025",
       description:
         "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
-      image: "/placeholder-nybna.png",
+      image:  "/images/gucir.jpg",
     },
     {
       name: "Rufima'ruf",
@@ -235,6 +234,17 @@ export default function PengurusPage() {
       description:
         "Mengelola keuangan RT dengan transparansi dan akuntabilitas yang tinggi.",
       image: "/images/andi.jpg",
+    },
+    {
+      name: "Halle",
+      position: "Koordinator Keamanan",
+      phone: "+62 813-7331-8342",
+      // email: "andi@rtherba.com",
+      address: "Blok C No. 025",
+      period: "2022-2025",
+      description:
+        "Mengkoordinasikan kegiatan pemuda dan olahraga di lingkungan RT.",
+      image: "/placeholder-nybna.png",
     },
   ];
 

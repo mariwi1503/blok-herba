@@ -32,7 +32,7 @@ const organization = {
       title: "HUMAS",
       icon: MessageCircle,
       color: "from-purple-400 to-purple-500 border-purple-600",
-      members: ["ONDRA WIZAL", "RULLY CHANDRA", "AFRIZAL", "ALFITRA K."],
+      members: ["ONDRA WIZAL", "RULLY CHANDRA", "AFRIZAL", "ALFITRA K.", "CAK GUCIR"],
     },
     {
       title: "PEMUDA & OLAHRAGA",
