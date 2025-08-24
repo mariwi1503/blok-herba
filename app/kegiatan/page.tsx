@@ -36,84 +36,70 @@ export default function KegiatanPage() {
   const activities = [
     {
       id: 1,
-      title: "Rapat Koordinasi RT",
-      description:
-        "Pembahasan program kerja bulan Januari 2025 dan evaluasi kegiatan tahun 2024",
+      title: "Acara Serah Terima Jabatan RT",
+      description: "Acara Serah terima jabatan dari ketua RT lama dengan ketua RT baru",
       date: "28/12/24",
       time: "19:00 - 21:00",
-      location: "Balai RT Blok Herba",
-      participants: "Pengurus RT",
-      status: "upcoming",
-      image: "/images/activities/rapat-rt.jpg",
+      location: "Fasum Blok Herba",
+      participants: "Seluruh Warga",
+      status: "completed",
+      image: "/images/activities/sertijab.jpg",
       fullDescription:
         "Rapat koordinasi rutin untuk membahas program kerja bulan Januari 2025 dan melakukan evaluasi menyeluruh terhadap kegiatan yang telah dilaksanakan sepanjang tahun 2024. Agenda meliputi perencanaan kegiatan, alokasi anggaran, dan pembagian tugas pengurus.",
     },
     {
       id: 2,
-      title: "Gotong Royong Bulanan",
-      description: "Pembersihan area umum, taman, dan fasilitas bersama RT",
+      title: "Malam Penerimaan Hadiah Lomba",
+      description: "Malam Puncak Perayaan 17an dan pemberian hadiah lomba",
       date: "30/12/24",
       time: "07:00 - 10:00",
-      location: "Area Umum RT",
+      location: "Fasum Blok Herba",
       participants: "Seluruh Warga",
-      status: "upcoming",
-      image: "/images/activities/pasang-tenda.jpg",
+      status: "completed",
+      image: "/images/activities/malam-puncak.jpg",
       fullDescription:
         "Kegiatan gotong royong rutin bulanan untuk membersihkan area umum, merawat taman, dan memelihara fasilitas bersama RT. Kegiatan ini melibatkan seluruh warga untuk menjaga kebersihan dan keindahan lingkungan.",
     },
     {
       id: 3,
-      title: "Rapat Pembentukan Panitia",
-      description: "Pembentukan panitia untuk kegiatan perayaan tahun baru",
+      title: "Rapat Perdana RT baru dengan warga",
+      description: "Penyampaian program baru dan rencana pengurus RT ke depannya",
       date: "15/12/24",
       time: "19:30 - 21:30",
-      location: "Lapangan RT",
+      location: "Fasum Blok Herba",
       participants: "20 warga",
       status: "completed",
-      image: "/images/activities/rapat-pembentukan-panitia.jpg",
+      image: "/images/activities/rapat-warga.jpg",
       fullDescription:
         "Rapat pembentukan panitia untuk mempersiapkan kegiatan perayaan tahun baru 2025. Dalam rapat ini dibentuk struktur panitia, pembagian tugas, dan perencanaan acara yang akan dilaksanakan.",
     },
     {
       id: 4,
-      title: "Pertemuan Warga",
-      description: "Diskusi mengenai program pembangunan fasilitas umum RT",
+      title: "Pemotongan Tumpeng",
+      description: "Proses pemotongan tumpeng yang dilakukan oleh RT lama dan RT baru",
       date: "10/12/24",
       time: "20:00 - 22:00",
-      location: "Rumah Ketua RT",
+      location: "Fasum Blok Herba",
       participants: "15 warga",
       status: "completed",
-      image: "/images/activities/pertemuan.jpg",
+      image: "/images/activities/suap.jpg",
       fullDescription:
         "Pertemuan warga untuk mendiskusikan rencana pembangunan fasilitas umum RT seperti perbaikan jalan, penambahan lampu penerangan, dan pembangunan pos keamanan.",
     },
     {
       id: 5,
-      title: "Perlombaan Bulu Tangkis",
-      description: "Pembentukan panitia untuk kegiatan perayaan tahun baru",
-      date: "15/12/24",
-      time: "19:30 - 21:30",
-      location: "Lapangan RT",
-      participants: "20 warga",
-      status: "completed",
-      image: "/images/activities/bulu.jpg",
-      fullDescription:
-        "Rapat pembentukan panitia untuk mempersiapkan kegiatan perayaan tahun baru 2025. Dalam rapat ini dibentuk struktur panitia, pembagian tugas, dan perencanaan acara yang akan dilaksanakan.",
-    },
-    {
-      id: 6,
-      title: "Acara Kondangan",
-      description: "Diskusi mengenai program pembangunan fasilitas umum RT",
+      title: "Malam Sertijab",
+      description: "Keseruan IBu-IBu di malam sertijab",
       date: "10/12/24",
       time: "20:00 - 22:00",
-      location: "Rumah Ketua RT",
+      location: "Fasum Blok Herba",
       participants: "15 warga",
       status: "completed",
-      image: "/images/activities/kawinan.jpg",
+      image: "/images/activities/ibu-ibu.jpg",
       fullDescription:
         "Pertemuan warga untuk mendiskusikan rencana pembangunan fasilitas umum RT seperti perbaikan jalan, penambahan lampu penerangan, dan pembangunan pos keamanan.",
     },
-  ];
+  ]
 
   const pastEvents = [
     {
@@ -131,11 +117,11 @@ export default function KegiatanPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedActivity, setSelectedActivity] = useState<any>(null);
 
-  const totalPages = Math.ceil(pastEvents.length / pageSize);
-  const paginatedEvents = pastEvents.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
+  const totalPages = Math.ceil(activities.length / pageSize);
+  // const paginatedEvents = activities.slice(
+  //   (currentPage - 1) * pageSize,
+  //   currentPage * pageSize
+  // );
 
   const handleActivityClick = (activity: any) => {
     setSelectedActivity(activity);
@@ -315,7 +301,7 @@ export default function KegiatanPage() {
                           Deskripsi Kegiatan
                         </h4>
                         <p className="font-body text-gray-600 leading-relaxed text-base">
-                          {selectedActivity.fullDescription}
+                          {selectedActivity.description}
                         </p>
                       </div>
                     </div>
