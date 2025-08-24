@@ -23,7 +23,7 @@ export function ManagementSection() {
       icon: Crown,
       color: "text-yellow-600",
       bgColor: "bg-yellow-50",
-      image: "/images/rt.jpg",
+      image: "/profile/rt.jpg",
     },
     {
       position: "Sekretaris",
@@ -33,7 +33,7 @@ export function ManagementSection() {
       icon: FileText,
       color: "text-blue-600",
       bgColor: "bg-blue-50",
-      image: "/images/eka.jpg",
+      image: "/profile/eka.jpg",
     },
     {
       position: "Bendahara",
@@ -43,7 +43,7 @@ export function ManagementSection() {
       icon: Wallet,
       color: "text-emerald-600",
       bgColor: "bg-emerald-50",
-      image: "/images/shinta.jpg",
+      image: "/profile/shinta.jpg",
     },
     {
       position: "Bidang Sarana",
@@ -53,7 +53,7 @@ export function ManagementSection() {
       icon: Users,
       color: "text-red-600",
       bgColor: "bg-red-50",
-      image: "/images/andes.jpg",
+      image: "/profile/andes.jpg",
     },
   ];
 

@@ -48,7 +48,7 @@ export default function PengurusPage() {
       period: "2025-2030",
       description:
         "Mendampingi dan memberi pertimbangan bagi kelancaran kegiatan RT.",
-      image: "/images/kis.jpg",
+      image: "/profile/kis.jpg",
     },
     {
       name: "Bpk. Sulaiman",
@@ -69,7 +69,7 @@ export default function PengurusPage() {
       period: "2025-2030",
       description:
         "Memimpin dan mengkoordinasikan seluruh kegiatan RT.",
-      image: "/images/rt.jpg",
+      image: "/profile/rt.jpg",
     },
 
     {
@@ -80,7 +80,7 @@ export default function PengurusPage() {
       period: "2025-2030",
       description:
         "Mengelola administrasi dan dokumentasi RT dengan ketelitian dan dedikasi tinggi.",
-      image: "/images/eka.jpg",
+      image: "/profile/eka.jpg",
     },
     {
       name: "Shinta julia fitri",
@@ -91,7 +91,7 @@ export default function PengurusPage() {
       period: "2025-2030",
       description:
         "Mengelola keuangan RT dengan transparansi dan akuntabilitas yang tinggi.",
-      image: "/images/shinta.jpg",
+      image: "/profile/shinta.jpg",
     },
     {
       name: "Andeska Arifin",
@@ -102,7 +102,7 @@ export default function PengurusPage() {
       period: "2025-2030",
       description:
         "Mengelola, merawat, dan memastikan ketersediaan sarana serta peralatan untuk mendukung kegiatan RT.",
-      image: "/images/andes.jpg",
+      image: "/profile/andes.jpg",
     },
     {
       name: "Nur Afandi",
@@ -113,7 +113,7 @@ export default function PengurusPage() {
       period: "2025-2030",
       description:
         "Mengelola, merawat, dan memastikan ketersediaan sarana serta peralatan untuk mendukung kegiatan RT.",
-      image: "/images/nur.jpg",
+      image: "/profile/nur.jpg",
     },
     {
       name: "Agus Purnomo",
@@ -135,7 +135,7 @@ export default function PengurusPage() {
       period: "2025-2030",
       description:
         "Mengatur, menyiapkan, dan memastikan kebutuhan konsumsi terpenuhi dalam setiap kegiatan RT.",
-      image: "/images/leni.jpg",
+      image: "/profile/leni.jpg",
     },
     {
       name: "Rizky ragil seputro",
@@ -146,7 +146,7 @@ export default function PengurusPage() {
       period: "2025-2030",
       description:
         "Mengkoordinir kegiatan olahraga serta membina kreativitas, semangat, dan peran aktif pemuda dalam kegiatan RT.",
-      image: "/images/ragil.jpg",
+      image: "/profile/ragil.jpg",
     },
     {
       name: "Muhammad Ary Widodo",
@@ -157,7 +157,7 @@ export default function PengurusPage() {
       period: "2025-2030",
       description:
         "Mengkoordinir kegiatan olahraga serta membina kreativitas, semangat, dan peran aktif pemuda dalam kegiatan RT.",
-      image: "/images/ary.jpg",
+      image: "/profile/ary.jpg",
     },
     {
       name: "Ondra Wizal",
@@ -168,7 +168,7 @@ export default function PengurusPage() {
       period: "2025-2030",
       description:
         "Menjalin komunikasi, menyebarkan informasi, dan menjadi penghubung antara pengurus RT dengan warga maupun pihak luar.",
-      image: "/images/ondra.jpg",
+      image: "/profile/ondra.jpg",
     },
     {
       name: "Ruli Candra",
@@ -179,7 +179,7 @@ export default function PengurusPage() {
       period: "2025-2030",
       description:
         "Menjalin komunikasi, menyebarkan informasi, dan menjadi penghubung antara pengurus RT dengan warga maupun pihak luar.",
-      image: "/images/ruli.jpg",
+      image: "/profile/ruli.jpg",
     },
     {
       name: "Afrizal",
@@ -211,7 +211,7 @@ export default function PengurusPage() {
       period: "2025-2030",
       description:
         "Menjalin komunikasi, menyebarkan informasi, dan menjadi penghubung antara pengurus RT dengan warga maupun pihak luar.",
-      image:  "/images/gucir.jpg",
+      image:  "/profile/gucir.jpg",
     },
     {
       name: "Rufima'ruf",
@@ -222,7 +222,7 @@ export default function PengurusPage() {
       period: "2025-2030",
       description:
         "Mengkoordinir kegiatan keagamaan serta mendorong peningkatan iman, takwa, dan kerukunan warga di lingkungan RT.",
-      image: "/images/rufi.jpg",
+      image: "/profile/rufi.jpg",
     },
     {
       name: "Andi Samsu alam",
@@ -233,7 +233,7 @@ export default function PengurusPage() {
       period: "2025-2030",
       description:
         "Mengkoordinir kegiatan keagamaan serta mendorong peningkatan iman, takwa, dan kerukunan warga di lingkungan RT.",
-      image: "/images/andi.jpg",
+      image: "/profile/andi.jpg",
     },
     {
       name: "Halle",
