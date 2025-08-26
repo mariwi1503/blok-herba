@@ -311,10 +311,10 @@ export default function PengurusPage() {
                       <MapPin className="w-4 h-4 mr-3 text-purple-600" />
                       <span>{person.address}</span>
                     </div>
-                    <div className="flex items-center text-sm text-gray-600">
+                    {/* <div className="flex items-center text-sm text-gray-600">
                       <Calendar className="w-4 h-4 mr-3 text-orange-600" />
                       <span>Periode {person.period}</span>
-                    </div>
+                    </div> */}
                   </div>
 
                   {/* <Button
