@@ -10,6 +10,7 @@ import { ActivitiesSection } from "@/components/activities-section";
 import type { Metadata } from "next";
 
 const getHomeData = async () => {
+  console.warn('env of mine ===============>',process.env.NEXT_PUBLIC_BASE_URL)
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/public`
@@ -49,6 +50,7 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const homeData = await getHomeData();
+  console.log("🚀 ~ :53 ~ homeData:", homeData)
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       <Navbar />
