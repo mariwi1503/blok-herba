@@ -72,7 +72,7 @@ export const GET = async () => {
     };
 
     return NextResponse.json({
-      status: "ok",
+      status: "success",
       data: {
         ...organizationData,
         totalHouse,
@@ -83,8 +83,8 @@ export const GET = async () => {
     });
   } catch (error) {
     if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 500 });
+      return NextResponse.json({status: "failed", message: error.message }, { status: 500 });
     }
-    return NextResponse.json({ message: "Unknown error" }, { status: 500 });
+    return NextResponse.json({status: "failed", message: "Unknown error" }, { status: 500 });
   }
 };
