@@ -13,6 +13,10 @@ export const GET = async () => {
       prisma.organizationProfile.findFirst({
         select: {
           heroTagline: true,
+          footerTagline: true,
+          address: true,
+          phone: true,
+          email: true,
         },
       }),
       prisma.house.count(),
@@ -25,7 +29,8 @@ export const GET = async () => {
     ]);
 
     // saldo terbaru
-    const latestBalance = transaction.length > 0 ? Number(transaction[0].balance) : 0;
+    const latestBalance =
+      transaction.length > 0 ? Number(transaction[0].balance) : 0;
 
     // cari transaksi terakhir bulan lalu
     const lastMonth = new Date();
@@ -41,7 +46,9 @@ export const GET = async () => {
       orderBy: { date: "desc" },
     });
 
-    const prevBalance = lastMonthTransaction ? Number(lastMonthTransaction.balance) : 0;
+    const prevBalance = lastMonthTransaction
+      ? Number(lastMonthTransaction.balance)
+      : 0;
 
     // hitung trend
     let trend: "up" | "down" | "same" = "same";
@@ -67,7 +74,7 @@ export const GET = async () => {
     return NextResponse.json({
       status: "ok",
       data: {
-        heroTagline: organizationData?.heroTagline,
+        ...organizationData,
         totalHouse,
         totalResident,
         totalFamilyCard,

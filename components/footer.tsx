@@ -1,8 +1,17 @@
-import { Heart, MapPin, Phone, Mail, Facebook, Instagram, Twitter } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
+import { Heart, MapPin, Phone, Mail, Facebook, Instagram, Twitter } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
-export function Footer() {
+// Definisikan tipe untuk props
+interface FooterProps {
+  footerTagline: string;
+  address: string;
+  phone: string;
+  email: string;
+}
+
+// Tambahkan props ke argumen fungsi
+export function Footer({ footerTagline, address, phone, email }: FooterProps) {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -20,8 +29,7 @@ export function Footer() {
               <div className="font-heading font-bold text-xl">Blok Herba</div>
             </div>
             <p className="font-body text-gray-300 mb-6 max-w-md">
-              Membangun komunitas yang harmonis, transparan, dan sejahtera di Taman Cipta Asri 2, Blok Herba. Bersama
-              kita wujudkan lingkungan yang nyaman untuk semua.
+              {footerTagline}
             </p>
             <div className="flex space-x-4">
               <Link href="#" className="text-gray-400 hover:text-emerald-400 transition-colors">
@@ -55,11 +63,6 @@ export function Footer() {
                   Kegiatan
                 </Link>
               </li>
-              {/* <li>
-                <Link href="/galeri" className="font-body text-gray-300 hover:text-emerald-400 transition-colors">
-                  Galeri
-                </Link>
-              </li> */}
               <li>
                 <Link href="/pengurus" className="font-body text-gray-300 hover:text-emerald-400 transition-colors">
                   Pengurus
@@ -79,21 +82,17 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-start">
                 <MapPin className="w-5 h-5 text-emerald-400 mr-3 mt-0.5 flex-shrink-0" />
-                <span className="font-body text-gray-300 text-sm">
-                  Taman Cipta Asri 2, Blok Herba
-                  <br />
-                  RT:05/ RW:21, Kelurahan Tembesi
-                  <br />
-                  Kecamatan Sagulung, Kota Batam.
+                <span className="font-body text-gray-300 text-sm whitespace-pre-line">
+                  {address}
                 </span>
               </div>
               <div className="flex items-center">
                 <Phone className="w-5 h-5 text-emerald-400 mr-3" />
-                <span className="font-body text-gray-300 text-sm">0812-3456-7890</span>
+                <span className="font-body text-gray-300 text-sm">{phone}</span>
               </div>
               <div className="flex items-center">
                 <Mail className="w-5 h-5 text-emerald-400 mr-3" />
-                <span className="font-body text-gray-300 text-sm">info@rtblokherba.id</span>
+                <span className="font-body text-gray-300 text-sm">{email}</span>
               </div>
             </div>
           </div>
@@ -110,5 +109,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

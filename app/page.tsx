@@ -69,7 +69,12 @@ export default async function HomePage() {
         <ArticlesSection />
         <ManagementSection />
       </main>
-      <Footer />
+      <Footer 
+        footerTagline={homeData?.footerTagline}
+        address={homeData?.address}
+        phone={homeData?.phone}
+        email={homeData?.email}
+      />
     </div>
   );
 }
