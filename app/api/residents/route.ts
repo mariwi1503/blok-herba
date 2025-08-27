@@ -76,6 +76,16 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
+    // check house
+    const houseExist = await prisma.house.findUnique({where: {number: validation.data.houseNumber},select: {number: true}})
+    if (!houseExist) return NextResponse.json(
+        { 
+          status: "failed", 
+          message: "Data runah tidak ditemukan",
+        },
+        { status: 404 }
+      );
+
     // Buat data warga baru di database
     const newResident = await prisma.resident.create({
       data: validation.data,
