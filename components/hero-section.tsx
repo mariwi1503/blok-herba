@@ -1,15 +1,28 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Users, Home, UserCheck } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { useState } from "react"
-import { ResidentRegistrationModal } from "./resident-registration-modal"
-import { BannerCarousel } from "./ui/banner-carousel"
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Users, Home, UserCheck } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { ResidentRegistrationModal } from "./resident-registration-modal";
+import { BannerCarousel } from "./ui/banner-carousel";
+import { OrganizationData } from "@/interfaces";
 
-export function HeroSection() {
-  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false)
+interface HeroSectionProps {
+  heroTagline: string | null;
+  totalHouse: number;
+  totalResident: number;
+  totalFamilyCard: number;
+}
+
+export function HeroSection({
+  heroTagline,
+  totalHouse,
+  totalFamilyCard,
+  totalResident,
+}: HeroSectionProps) {
+  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
 
   return (
     <>
@@ -28,16 +41,14 @@ export function HeroSection() {
 
               <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight">
                 Komunitas yang{" "}
-                
               </h1>
               <div className="text-emerald-600  text-xl lg:text-4xl font-bold mb-4 md:mb-6">
-                  Harmonis, Energik, Ramah, Bermartabat dan Asri
-                  <div className="absolute -bottom-1 md:-bottom-2 left-0 right-0 h-2 md:h-3 bg-emerald-200 -skew-y-1 -z-10"></div>
-                </div>
+                Harmonis, Energik, Ramah, Bermartabat dan Asri
+                <div className="absolute -bottom-1 md:-bottom-2 left-0 right-0 h-2 md:h-3 bg-emerald-200 -skew-y-1 -z-10"></div>
+              </div>
 
               <p className="font-body text-base md:text-lg lg:text-xl text-gray-600 mb-6 md:mb-8 max-w-2xl">
-                Menghubungkan Tetangga, Mengelola Bersama. Bergabunglah dengan komunitas yang peduli, transparan dalam
-                pengelolaan, dan selalu mengutamakan kebersamaan.
+                {heroTagline}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start">
@@ -66,22 +77,34 @@ export function HeroSection() {
                   <div className="flex justify-center mb-1 md:mb-2">
                     <Home className="w-5 md:w-6 h-5 md:h-6 text-emerald-600" />
                   </div>
-                  <div className="font-heading text-xl md:text-2xl font-bold text-gray-900">120</div>
-                  <div className="font-body text-xs md:text-sm text-gray-600">Total Rumah</div>
+                  <div className="font-heading text-xl md:text-2xl font-bold text-gray-900">
+                    {totalHouse}
+                  </div>
+                  <div className="font-body text-xs md:text-sm text-gray-600">
+                    Total Rumah
+                  </div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center mb-1 md:mb-2">
                     <Users className="w-5 md:w-6 h-5 md:h-6 text-emerald-600" />
                   </div>
-                  <div className="font-heading text-xl md:text-2xl font-bold text-gray-900">450</div>
-                  <div className="font-body text-xs md:text-sm text-gray-600">Total Warga</div>
+                  <div className="font-heading text-xl md:text-2xl font-bold text-gray-900">
+                    {totalResident}
+                  </div>
+                  <div className="font-body text-xs md:text-sm text-gray-600">
+                    Total Warga
+                  </div>
                 </div>
                 <div className="text-center">
                   <div className="flex justify-center mb-1 md:mb-2">
                     <UserCheck className="w-5 md:w-6 h-5 md:h-6 text-emerald-600" />
                   </div>
-                  <div className="font-heading text-xl md:text-2xl font-bold text-gray-900">95</div>
-                  <div className="font-body text-xs md:text-sm text-gray-600">Total KK</div>
+                  <div className="font-heading text-xl md:text-2xl font-bold text-gray-900">
+                    {totalFamilyCard}
+                  </div>
+                  <div className="font-body text-xs md:text-sm text-gray-600">
+                    Total KK
+                  </div>
                 </div>
               </div>
             </div>
@@ -105,9 +128,18 @@ export function HeroSection() {
             <div className="relative mt-8 lg:mt-0 z-10">
               <BannerCarousel
                 slides={[
-                  { src: "/images/hero-banner.png", alt: "Banner 1 - Blok Herba" },
-                  { src: "/images/hero-banner-2.png", alt: "Banner 2 - Kegiatan Warga" },
-                  { src: "/images/hero-banner-3.png", alt: "Banner 3 - Gotong Royong" },
+                  {
+                    src: "/images/hero-banner.png",
+                    alt: "Banner 1 - Blok Herba",
+                  },
+                  {
+                    src: "/images/hero-banner-2.png",
+                    alt: "Banner 2 - Kegiatan Warga",
+                  },
+                  {
+                    src: "/images/hero-banner-3.png",
+                    alt: "Banner 3 - Gotong Royong",
+                  },
                 ]}
                 autoplay
                 interval={3000}
@@ -117,12 +149,14 @@ export function HeroSection() {
               <div className="absolute -top-2 md:-top-4 -right-2 md:-right-4 w-16 md:w-24 h-16 md:h-24 bg-emerald-200 rounded-full opacity-60 -z-10"></div>
               <div className="absolute -bottom-3 md:-bottom-6 -left-3 md:-left-6 w-20 md:w-32 h-20 md:h-32 bg-emerald-100 rounded-full opacity-40 -z-10"></div>
             </div>
-
           </div>
         </div>
       </section>
 
-      <ResidentRegistrationModal open={isRegistrationOpen} onOpenChange={setIsRegistrationOpen} />
+      <ResidentRegistrationModal
+        open={isRegistrationOpen}
+        onOpenChange={setIsRegistrationOpen}
+      />
     </>
-  )
+  );
 }

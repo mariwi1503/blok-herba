@@ -1,28 +1,70 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Home, Users, UserCheck, Wallet, ArrowUpRight, TrendingUp, ArrowDownRight } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatCurrencyShort } from "@/lib/utils";
+import {
+  Home,
+  Users,
+  UserCheck,
+  Wallet,
+  ArrowUpRight,
+  TrendingUp,
+  ArrowDownRight,
+  TrendingDown,
+} from "lucide-react";
 
-export function StatsSection() {
+type TransactionItem = {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  date: string;
+  description: string;
+  type: "INCOME" | "EXPENSE";
+  category: string;
+  amount: string;
+  balance: string;
+  residentId: string;
+};
+
+interface TransactionHistory {
+  balance: string;
+  trend: string
+  percentageChange: number
+  history: TransactionItem[];
+}
+
+interface StatsSectionProps {
+  transactionHistory: TransactionHistory;
+  totalHouse: number;
+  totalResident: number;
+  totalFamilyCard: number;
+}
+
+export function StatsSection({
+  transactionHistory,
+  totalHouse,
+  totalResident,
+  totalFamilyCard,
+}: StatsSectionProps) {
   const stats = [
     {
       icon: Home,
       title: "Total Rumah",
-      value: "120",
-      subtitle: "Terisi: 115 | Kosong: 5",
+      value: totalHouse,
+      subtitle: "Rumah: 130 | Kos: 0 | Ruko: 10",
       color: "text-blue-600",
       bgColor: "bg-blue-50",
     },
     {
       icon: Users,
       title: "Total Warga",
-      value: "450",
-      subtitle: "Dewasa: 280 | Anak: 170",
+      value: totalResident,
+      subtitle: "Berdasarkan data terdaftar",
       color: "text-emerald-600",
       bgColor: "bg-emerald-50",
     },
     {
       icon: UserCheck,
       title: "Total KK",
-      value: "115",
+      value: totalFamilyCard,
       subtitle: "Kepala Keluarga Aktif",
       color: "text-purple-600",
       bgColor: "bg-purple-50",
@@ -30,51 +72,61 @@ export function StatsSection() {
     {
       icon: Wallet,
       title: "Kas RT",
-      value: "Rp 25.5M",
-      subtitle: "Per Desember 2024",
+      // value: `Rp ${Number(transactionHistory.balance).toLocaleString("id-ID")}`,
+      value: `Rp ${formatCurrencyShort(Number(transactionHistory.balance))}`,
+      subtitle: "Saldo terakhir",
       color: "text-orange-600",
       bgColor: "bg-orange-50",
     },
-  ]
+  ];
 
-  const recentTransactions = [
-    { type: "income", description: "Iuran Bulanan Desember", amount: "Rp 2.300.000", date: "15 Des 2024" },
-    { type: "expense", description: "Pembelian Alat Kebersihan", amount: "Rp 450.000", date: "12 Des 2024" },
-    { type: "income", description: "Sumbangan Kegiatan 17 Agustus", amount: "Rp 1.200.000", date: "10 Des 2024" },
-    { type: "expense", description: "Perbaikan Lampu Jalan", amount: "Rp 800.000", date: "8 Des 2024" },
-    { type: "expense", description: "Konsumsi Rapat RT", amount: "Rp 350.000", date: "5 Des 2024" },
-  ]
+  // ambil 5 transaksi terbaru, urutkan desc by date
+  const recentTransactions = [...transactionHistory.history]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 5);
 
   return (
     <section className="py-16 bg-gradient-to-b from-yellow-50 to-red-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-4">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-gray-900 mb-1 lg:mb-2">Data Blok Herba</h2>
+          <h2 className="font-heading text-3xl md:text-4xl font-bold text-gray-900 mb-1 lg:mb-2">
+            Data Blok Herba
+          </h2>
           <div className="mx-auto h-1 w-1/2 lg:w-1/4 bg-green-400 rounded-md mb-10"></div>
           <p className="font-body text-xl text-gray-600 max-w-2xl mx-auto font-bold">
             Ringkasan Data Blok Herba
           </p>
         </div>
 
+        {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-6 mb-12">
           {stats.map((stat, index) => (
-            <Card key={index} className={`border-0 shadow-lg hover:shadow-xl ${stat.bgColor} transition-shadow duration-300`}>
+            <Card
+              key={index}
+              className={`border-0 shadow-lg hover:shadow-xl ${stat.bgColor} transition-shadow duration-300`}
+            >
               <CardContent className="px-2 lg:p-6">
                 <div className={`inline-flex p-2 rounded-lg mb-2 lg:mb-4`}>
                   <stat.icon className={`w-6 h-6 ${stat.color}`} />
                 </div>
-                <h3 className="font-heading lg:text-lg font-semibold text-gray-900 mb-2">{stat.title}</h3>
-                <div className="font-heading text-2xl lg:text-3xl font-bold text-gray-900 mb-2">{stat.value}</div>
-                <p className="font-body text-sm text-gray-600">{stat.subtitle}</p>
+                <h3 className="font-heading lg:text-lg font-semibold text-gray-900 mb-2">
+                  {stat.title}
+                </h3>
+                <div className="font-heading text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
+                  {stat.value}
+                </div>
+                <p className="font-body text-sm text-gray-600">
+                  {stat.subtitle}
+                </p>
               </CardContent>
             </Card>
           ))}
         </div>
       </div>
 
+      {/* Keuangan */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-4">
-          {/* <h3 className="font-heading text-2xl md:text-3xl font-bold text-gray-900 mb-4">Keuangan RT</h3> */}
           <p className="font-body text-xl text-gray-600 max-w-2xl mx-auto font-bold">
             Data Keuangan terbaru
           </p>
@@ -83,60 +135,109 @@ export function StatsSection() {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Saldo Kas */}
           <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 lg:col-span-1">
-            <CardHeader className="pb-3">
-              <CardTitle className="flex items-center font-heading text-lg">
-                <Wallet className="w-5 h-5 text-emerald-600 mr-2" />
-                Total Kas RT
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-gray-900 mb-2">Rp 25.500.000</div>
-              <p className="font-body text-sm text-gray-600">Per 31 Desember 2024</p>
-              <div className="mt-4 p-3 bg-emerald-50 rounded-lg">
-                <div className="flex items-center text-emerald-700">
-                  <TrendingUp className="w-4 h-4 mr-2" />
-                  <span className="font-body text-sm">Naik 8% dari bulan lalu</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+  <CardHeader className="pb-3">
+    <CardTitle className="flex items-center font-heading text-lg">
+      <Wallet className="w-5 h-5 text-emerald-600 mr-2" />
+      Total Kas RT
+    </CardTitle>
+  </CardHeader>
+  <CardContent>
+    {/* Saldo utama */}
+    <div className="text-3xl font-bold text-gray-900 mb-2">
+      Rp {Number(transactionHistory.balance).toLocaleString("id-ID")}
+    </div>
+    <p className="font-body text-sm text-gray-600">Saldo per hari ini</p>
+
+    {/* Info naik/turun */}
+    <div
+      className={`mt-4 p-3 rounded-lg flex items-center gap-2 ${
+        transactionHistory.trend === "up"
+          ? "bg-emerald-50 text-emerald-700"
+          : transactionHistory.trend === "down"
+          ? "bg-red-50 text-red-700"
+          : "bg-gray-50 text-gray-600"
+      }`}
+    >
+      {transactionHistory.trend === "up" && (
+        <>
+          <TrendingUp className="w-4 h-4" />
+          <span className="font-body text-sm">
+            Naik {transactionHistory.percentageChange}% dibanding bulan lalu
+          </span>
+        </>
+      )}
+
+      {transactionHistory.trend === "down" && (
+        <>
+          <TrendingDown className="w-4 h-4" />
+          <span className="font-body text-sm">
+            Turun {transactionHistory.percentageChange}% dibanding bulan lalu
+          </span>
+        </>
+      )}
+
+      {transactionHistory.trend === "same" && (
+        <>
+          <span className="font-body text-sm">Tidak ada perubahan dari bulan lalu</span>
+        </>
+      )}
+    </div>
+  </CardContent>
+</Card>
 
           {/* Recent Transactions */}
           <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 lg:col-span-2">
             <CardHeader>
-              <CardTitle className="font-heading text-lg">5 Transaksi Terakhir</CardTitle>
+              <CardTitle className="font-heading text-lg">
+                5 Transaksi Terakhir
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {recentTransactions.map((transaction, index) => (
+                {recentTransactions.map((transaction) => (
                   <div
-                    key={index}
+                    key={transaction.id}
                     className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors"
                   >
                     <div className="flex items-center">
                       <div
                         className={`p-2 rounded-full mr-3 ${
-                          transaction.type === "income" ? "bg-emerald-50 text-emerald-600" : "bg-red-50 text-red-600"
+                          transaction.type === "INCOME"
+                            ? "bg-emerald-50 text-emerald-600"
+                            : "bg-red-50 text-red-600"
                         }`}
                       >
-                        {transaction.type === "income" ? (
+                        {transaction.type === "INCOME" ? (
                           <ArrowUpRight className="w-4 h-4" />
                         ) : (
                           <ArrowDownRight className="w-4 h-4" />
                         )}
                       </div>
                       <div>
-                        <div className="font-body font-medium text-gray-900">{transaction.description}</div>
-                        <div className="font-body text-sm text-gray-500">{transaction.date}</div>
+                        <div className="font-body font-medium text-gray-900">
+                          {transaction.description}
+                        </div>
+                        <div className="font-body text-sm text-gray-500">
+                          {new Date(transaction.date).toLocaleDateString(
+                            "id-ID",
+                            {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                            }
+                          )}
+                        </div>
                       </div>
                     </div>
                     <div
                       className={`font-heading font-semibold ${
-                        transaction.type === "income" ? "text-emerald-600" : "text-red-600"
+                        transaction.type === "INCOME"
+                          ? "text-emerald-600"
+                          : "text-red-600"
                       }`}
                     >
-                      {transaction.type === "income" ? "+" : "-"}
-                      {transaction.amount}
+                      {transaction.type === "INCOME" ? "+" : "-"}Rp{" "}
+                      {Number(transaction.amount).toLocaleString("id-ID")}
                     </div>
                   </div>
                 ))}
@@ -146,5 +247,5 @@ export function StatsSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
