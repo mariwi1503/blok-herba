@@ -54,16 +54,16 @@ export default async function HomePage() {
       <Navbar />
       <main>
         <HeroSection 
-          heroTagline={homeData.heroTagline}
-          totalHouse={homeData.totalHouse}
-          totalResident={homeData.totalResident}
-          totalFamilyCard={homeData.totalFamilyCard}
+          heroTagline={homeData?.heroTagline}
+          totalHouse={homeData?.totalHouse}
+          totalResident={homeData?.totalResident}
+          totalFamilyCard={homeData?.totalFamilyCard}
         />
         <StatsSection
-          transactionHistory={homeData.transactionHistory}
-          totalHouse={homeData.totalHouse}
-          totalResident={homeData.totalResident}
-          totalFamilyCard={homeData.totalFamilyCard}
+          transactionHistory={homeData?.transactionHistory}
+          totalHouse={homeData?.totalHouse}
+          totalResident={homeData?.totalResident}
+          totalFamilyCard={homeData?.totalFamilyCard}
         />
         <ActivitiesSection />
         <ArticlesSection />
