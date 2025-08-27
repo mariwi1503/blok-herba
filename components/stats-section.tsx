@@ -72,8 +72,8 @@ export function StatsSection({
     {
       icon: Wallet,
       title: "Kas RT",
-      // value: `Rp ${Number(transactionHistory.balance).toLocaleString("id-ID")}`,
-      value: `Rp ${formatCurrencyShort(Number(transactionHistory.balance))}`,
+      // value: `Rp ${Number(transactionHistory?.balance).toLocaleString("id-ID")}`,
+      value: `Rp ${formatCurrencyShort(Number(transactionHistory?.balance))}`,
       subtitle: "Saldo terakhir",
       color: "text-orange-600",
       bgColor: "bg-orange-50",
@@ -81,7 +81,7 @@ export function StatsSection({
   ];
 
   // ambil 5 transaksi terbaru, urutkan desc by date
-  const recentTransactions = [...transactionHistory.history]
+  const recentTransactions = [...transactionHistory?.history]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 5);
 
@@ -144,39 +144,39 @@ export function StatsSection({
   <CardContent>
     {/* Saldo utama */}
     <div className="text-3xl font-bold text-gray-900 mb-2">
-      Rp {Number(transactionHistory.balance).toLocaleString("id-ID")}
+      Rp {Number(transactionHistory?.balance).toLocaleString("id-ID")}
     </div>
     <p className="font-body text-sm text-gray-600">Saldo per hari ini</p>
 
     {/* Info naik/turun */}
     <div
       className={`mt-4 p-3 rounded-lg flex items-center gap-2 ${
-        transactionHistory.trend === "up"
+        transactionHistory?.trend === "up"
           ? "bg-emerald-50 text-emerald-700"
-          : transactionHistory.trend === "down"
+          : transactionHistory?.trend === "down"
           ? "bg-red-50 text-red-700"
           : "bg-gray-50 text-gray-600"
       }`}
     >
-      {transactionHistory.trend === "up" && (
+      {transactionHistory?.trend === "up" && (
         <>
           <TrendingUp className="w-4 h-4" />
           <span className="font-body text-sm">
-            Naik {transactionHistory.percentageChange}% dibanding bulan lalu
+            Naik {transactionHistory?.percentageChange}% dibanding bulan lalu
           </span>
         </>
       )}
 
-      {transactionHistory.trend === "down" && (
+      {transactionHistory?.trend === "down" && (
         <>
           <TrendingDown className="w-4 h-4" />
           <span className="font-body text-sm">
-            Turun {transactionHistory.percentageChange}% dibanding bulan lalu
+            Turun {transactionHistory?.percentageChange}% dibanding bulan lalu
           </span>
         </>
       )}
 
-      {transactionHistory.trend === "same" && (
+      {transactionHistory?.trend === "same" && (
         <>
           <span className="font-body text-sm">Tidak ada perubahan dari bulan lalu</span>
         </>
