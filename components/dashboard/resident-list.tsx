@@ -11,6 +11,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import {
@@ -47,38 +48,49 @@ export function ResidentList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showFilterDialog, setShowFilterDialog] = useState(false);
-  
+
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [filters, setFilters] = useState({
+
+  // State untuk filter yang aktif
+  const [activeFilters, setActiveFilters] = useState({
     gender: "",
     maritalStatus: "",
     idCardType: "",
   });
 
-  // Fungsi untuk fetching data dipindahkan ke sini
+  // State untuk filter sementara di dalam dialog
+  const [dialogFilters, setDialogFilters] = useState({
+    gender: "",
+    maritalStatus: "",
+    idCardType: "",
+  });
+
+  // Fungsi untuk fetching data
   const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || window.location.origin;
+      const baseUrl =
+        process.env.NEXT_PUBLIC_BASE_URL || window.location.origin;
       const url = new URL(`${baseUrl}/api/residents`);
-      
+
       url.searchParams.append("page", page.toString());
       url.searchParams.append("per_page", "10");
       if (debouncedSearchTerm) {
         url.searchParams.append("search", debouncedSearchTerm);
       }
-      if (filters.gender) {
-        url.searchParams.append("gender", filters.gender);
+      // Gunakan activeFilters, bukan filters
+      if (activeFilters.gender) {
+        url.searchParams.append("gender", activeFilters.gender);
       }
-      if (filters.maritalStatus) {
-        url.searchParams.append("maritalStatus", filters.maritalStatus);
+      if (activeFilters.maritalStatus) {
+        url.searchParams.append("maritalStatus", activeFilters.maritalStatus);
       }
-      if (filters.idCardType) {
-        url.searchParams.append("idCardType", filters.idCardType);
+      if (activeFilters.idCardType) {
+        url.searchParams.append("idCardType", activeFilters.idCardType);
       }
 
       const response = await fetch(url.toString());
@@ -86,10 +98,9 @@ export function ResidentList() {
         throw new Error("Gagal mengambil data warga.");
       }
       const result = await response.json();
-      
+
       setResidents(result.data);
       setTotalPages(result.meta.lastPage);
-
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -99,15 +110,14 @@ export function ResidentList() {
     } finally {
       setLoading(false);
     }
-  }, [page, debouncedSearchTerm, filters]); // Ditambahkan ke dependencies
+  }, [page, debouncedSearchTerm, activeFilters]); // Dependensi sekarang menggunakan activeFilters
 
-  // Efek untuk debouncing: menunda pembaruan `debouncedSearchTerm`
+  // Efek untuk debouncing
   useEffect(() => {
     const timerId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
-    }, 500); 
-
-    return () => clearTimeout(timerId); 
+    }, 500);
+    return () => clearTimeout(timerId);
   }, [searchTerm]);
 
   // Efek utama untuk mengambil data
@@ -115,14 +125,29 @@ export function ResidentList() {
     fetchData();
   }, [fetchData]);
 
-  const handleFilterChange = (filterName: string, value: string) => {
-    setFilters((prevFilters) => ({
+  // Fungsi untuk mengubah state filter sementara di dialog
+  const handleDialogFilterChange = (filterName: string, value: string) => {
+    const filterValue = value === "all" ? "" : value;
+    setDialogFilters((prevFilters) => ({
       ...prevFilters,
-      [filterName]: value,
+      [filterName]: filterValue,
     }));
-    setPage(1);
   };
-  
+
+  // Fungsi untuk menerapkan filter
+  const applyFilters = () => {
+    setActiveFilters(dialogFilters);
+    setPage(1); // Kembali ke halaman 1 setiap kali filter baru diterapkan
+    setShowFilterDialog(false);
+  };
+
+  // Fungsi untuk mereset filter
+  const resetFilters = () => {
+    setActiveFilters({ gender: "", maritalStatus: "", idCardType: "" });
+    setPage(1);
+    setShowFilterDialog(false);
+  };
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
     setPage(1);
@@ -135,7 +160,8 @@ export function ResidentList() {
   const handleDelete = async (id: string) => {
     if (confirm("Apakah Anda yakin ingin menghapus data warga ini?")) {
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || window.location.origin;
+        const baseUrl =
+          process.env.NEXT_PUBLIC_BASE_URL || window.location.origin;
         const response = await fetch(`${baseUrl}/api/residents/${id}`, {
           method: "DELETE",
         });
@@ -143,7 +169,7 @@ export function ResidentList() {
           throw new Error("Gagal menghapus data.");
         }
         alert("Data berhasil dihapus.");
-        fetchData(); // Sekarang fetchData bisa diakses di sini
+        fetchData();
       } catch (err) {
         if (err instanceof Error) {
           alert(err.message);
@@ -153,7 +179,7 @@ export function ResidentList() {
       }
     }
   };
-  
+
   const getMaritalStatusLabel = (status: string) => {
     switch (status) {
       case "KAWIN":
@@ -174,7 +200,7 @@ export function ResidentList() {
   const getGenderLabel = (gender: string) => {
     return gender === "L" ? "Laki-laki" : "Perempuan";
   };
-  
+
   if (loading) return <div>Memuat data...</div>;
   if (error) return <div>Terjadi kesalahan: {error}</div>;
 
@@ -183,7 +209,9 @@ export function ResidentList() {
       <Card className="border-0 shadow-lg">
         <CardHeader>
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <CardTitle className="font-heading text-xl">Daftar Warga RT</CardTitle>
+            <CardTitle className="font-heading text-xl">
+              Daftar Warga RT
+            </CardTitle>
             <div className="flex gap-3 w-full sm:w-auto">
               <div className="relative flex-1 sm:w-64">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -198,7 +226,10 @@ export function ResidentList() {
                 variant="outline"
                 size="sm"
                 className="bg-transparent"
-                onClick={() => setShowFilterDialog(true)}
+                onClick={() => {
+                  setDialogFilters(activeFilters); // Salin filter aktif ke dialog
+                  setShowFilterDialog(true);
+                }}
               >
                 <Filter className="w-4 h-4" />
               </Button>
@@ -241,7 +272,9 @@ export function ResidentList() {
                         </Badge>
                       </td>
                       <td className="py-4 px-4">
-                        <Badge variant="outline">{getGenderLabel(resident.gender)}</Badge>
+                        <Badge variant="outline">
+                          {getGenderLabel(resident.gender)}
+                        </Badge>
                       </td>
                       <td className="py-4 px-4">
                         <Badge variant="outline">
@@ -301,19 +334,24 @@ export function ResidentList() {
 
       {/* Dialog Filter */}
       <Dialog open={showFilterDialog} onOpenChange={setShowFilterDialog}>
-        <DialogContent>
+        <DialogContent className="lg:max-w-lg">
           <DialogHeader>
             <DialogTitle>Filter Data Warga</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
               <Label htmlFor="gender">Jenis Kelamin</Label>
-              <Select onValueChange={(value) => handleFilterChange('gender', value)} value={filters.gender}>
+              <Select
+                onValueChange={(value) =>
+                  handleDialogFilterChange("gender", value)
+                }
+                value={dialogFilters.gender}
+              >
                 <SelectTrigger id="gender">
                   <SelectValue placeholder="Pilih jenis kelamin" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Semua</SelectItem>
+                  <SelectItem value="all">Semua</SelectItem>
                   <SelectItem value="L">Laki-laki</SelectItem>
                   <SelectItem value="P">Perempuan</SelectItem>
                 </SelectContent>
@@ -321,12 +359,17 @@ export function ResidentList() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="maritalStatus">Status Pernikahan</Label>
-              <Select onValueChange={(value) => handleFilterChange('maritalStatus', value)} value={filters.maritalStatus}>
+              <Select
+                onValueChange={(value) =>
+                  handleDialogFilterChange("maritalStatus", value)
+                }
+                value={dialogFilters.maritalStatus}
+              >
                 <SelectTrigger id="maritalStatus">
                   <SelectValue placeholder="Pilih status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Semua</SelectItem>
+                  <SelectItem value="all">Semua</SelectItem>
                   <SelectItem value="KAWIN">Menikah</SelectItem>
                   <SelectItem value="BELUM_KAWIN">Belum Menikah</SelectItem>
                   <SelectItem value="DUDA_JANDA">Janda/Duda</SelectItem>
@@ -335,19 +378,35 @@ export function ResidentList() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="idCardType">Tipe KTP</Label>
-              <Select onValueChange={(value) => handleFilterChange('idCardType', value)} value={filters.idCardType}>
+              <Select
+                onValueChange={(value) =>
+                  handleDialogFilterChange("idCardType", value)
+                }
+                value={dialogFilters.idCardType}
+              >
                 <SelectTrigger id="idCardType">
                   <SelectValue placeholder="Pilih tipe KTP" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Semua</SelectItem>
+                  <SelectItem value="all">Semua</SelectItem>
                   <SelectItem value="BATAM">KTP Batam</SelectItem>
                   <SelectItem value="NON_BATAM">KTP Luar Batam</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
-          <Button onClick={() => setShowFilterDialog(false)}>Tutup</Button>
+          <DialogFooter>
+            <Button variant="ghost" onClick={resetFilters}>
+              Reset Filter
+            </Button>
+            <Button onClick={applyFilters}>Terapkan Filter</Button>
+            <Button
+              variant="outline"
+              onClick={() => setShowFilterDialog(false)}
+            >
+              Batal
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </>
