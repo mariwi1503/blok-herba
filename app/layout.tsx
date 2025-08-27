@@ -96,6 +96,7 @@ export const metadata: Metadata = {
 }
 
 import { Nunito } from "next/font/google"
+import { Toaster } from "@/components/ui/toaster"
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -154,6 +155,7 @@ export default function RootLayout({
         <AuthProvider>
           {children}
           {/* <ResidentRegistrationModal /> */}
+          <Toaster />
         </AuthProvider>
       </body>
     </html>
