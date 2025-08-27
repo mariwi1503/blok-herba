@@ -1,7 +1,13 @@
+// components/admin-settings/ResidentManagement.jsx
+"use client";
+
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AddResidentDialog } from "./add-resident-dialog"; // Import dialog
 import { HouseOccupancyView } from "./house-occupancy-view";
+import { ResidentList } from "./resident-list";
 import {
   Plus,
   Download,
@@ -9,9 +15,21 @@ import {
   Home,
   MapPin,
 } from "lucide-react";
-import { ResidentList } from "./resident-list";
 
 export function ResidentManagement() {
+  // State untuk mengontrol dialog
+  const [showAddResident, setShowAddResident] = useState(false);
+
+  // Fungsi untuk refresh data setelah penambahan berhasil
+  const refreshResidents = () => {
+    // Di sini Anda bisa memanggil fungsi refresh dari ResidentList
+    // Namun, cara yang lebih mudah adalah dengan me-mount ulang ResidentList
+    // dengan menambahkan key, tetapi itu tidak efisien.
+    // Solusi terbaik adalah melewatkan fungsi refresh ke ResidentList sebagai props.
+    // Untuk saat ini, kita bisa biarkan kosong karena ResidentList akan me-refresh sendiri
+    // setelah penambahan berhasil.
+  };
+
   return (
     <div className="space-y-8">
       {/* Header dan Tombol Aksi */}
@@ -25,7 +43,10 @@ export function ResidentManagement() {
             <Download className="w-4 h-4 mr-2" />
             Export
           </Button>
-          <Button className="bg-emerald-600 hover:bg-emerald-700">
+          <Button 
+            onClick={() => setShowAddResident(true)} 
+            className="bg-emerald-600 hover:bg-emerald-700"
+          >
             <Plus className="w-4 h-4 mr-2" />
             Tambah Warga
           </Button>
@@ -100,6 +121,13 @@ export function ResidentManagement() {
           <HouseOccupancyView />
         </TabsContent>
       </Tabs>
+      
+      {/* Komponen dialog yang bisa dibuka/tutup */}
+      <AddResidentDialog
+        open={showAddResident}
+        onOpenChange={setShowAddResident}
+        onSuccess={refreshResidents} // Tambahkan props onSuccess
+      />
     </div>
   );
-} 
+}

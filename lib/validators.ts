@@ -18,3 +18,17 @@ export const organizationProfileSchema = z.object({
 
 // Zod akan secara otomatis menyimpulkan tipe data dari schema
 export type OrganizationProfile = z.infer<typeof organizationProfileSchema>;
+
+export const residentSchema = z.object({
+  fullName: z.string().min(1, "Nama lengkap harus diisi."),
+  idCardNumber: z.string().min(1, "Nomor KTP harus diisi."),
+  idCardType: z.enum(["BATAM", "NON_BATAM"]),
+  phone: z.string().optional(),
+  maritalStatus: z.enum(["KAWIN", "BELUM_KAWIN", "DUDA_JANDA"]),
+  gender: z.enum(["L", "P"]),
+  isHead: z.boolean().default(false),
+  image: z.string().optional(),
+  houseNumber: z.string().min(1, "Nomor rumah harus diisi."),
+  committeeId: z.string().optional().nullable(),
+  familyCardId: z.string().optional().nullable(),
+});
