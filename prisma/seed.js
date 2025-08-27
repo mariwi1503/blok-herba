@@ -1,6 +1,11 @@
 import { PrismaClient } from "@prisma/client";
+import { number } from "zod";
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  transactionOptions: {
+    timeout: 10000, // Waktu dalam milidetik
+  },
+});
 
 const organizationProfile = {
   heroTagline:
@@ -277,9 +282,10 @@ const committees = [
 ];
 
 async function main() {
-  const [commiteeExist, organizationProfileExist] = await Promise.all([
+  const [commiteeExist, organizationProfileExist, houseExist] = await Promise.all([
     prisma.committee.findFirst({ select: { id: true } }),
     prisma.organizationProfile.findFirst({ select: { id: true } }),
+    prisma.house.findFirst()
   ]);
   await prisma.$transaction(async (t) => {
     // seed organitation
@@ -293,17 +299,15 @@ async function main() {
     }
 
     // seed houses
-    for (const h of houses) {
-      await t.house.upsert({
-        where: {
-          number: h.number.toString(),
-        },
-        create: {
-          number: h.number.toString(),
-          type: h.type,
-        },
-        update: {},
-      });
+    if (!houseExist) {
+      await t.house.createMany({
+        data: houses.map(h => {
+          return {
+            number: h.number.toString(),
+            type: h.type
+          }
+        })
+      })
     }
 
     // seed resident
