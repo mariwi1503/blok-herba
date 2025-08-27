@@ -81,9 +81,9 @@ export function StatsSection({
   ];
 
   // ambil 5 transaksi terbaru, urutkan desc by date
-  const recentTransactions = [...transactionHistory?.history]
+  const recentTransactions = transactionHistory ? [...transactionHistory.history]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 5);
+    .slice(0, 5) : [];
 
   return (
     <section className="py-16 bg-gradient-to-b from-yellow-50 to-red-50">
