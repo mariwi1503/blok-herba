@@ -19,15 +19,15 @@ model OrganizationProfile {
   createdAt DateTime @default(now()) @db.Timestamptz(6)
   updatedAt DateTime @updatedAt @db.Timestamptz(6)
 
-  heroTagline String
+  heroTagline   String
   footerTagline String
-  vision   String
-  mission  String[]
-  history  String
-  about String
-  address  String
-  phone String
-  email String
+  vision        String
+  mission       String[]
+  history       String
+  about         String
+  address       String
+  phone         String
+  email         String
 }
 
 model User {
@@ -35,16 +35,18 @@ model User {
   createdAt DateTime @default(now()) @db.Timestamptz(6)
   updatedAt DateTime @updatedAt @db.Timestamptz(6)
 
-  firstName    String   @db.VarChar(100)
-  lastName     String   @db.VarChar(100)
-  email        String?  @unique @db.VarChar(100)
-  username     String   @unique @db.VarChar(100)
+  fullName     String     @db.VarChar(100)
+  phone        String     @unique @db.VarChar(100)
   hashPassword String
+  residentId   String @unique
+  isActive Boolean @default(true)
   role         UserRole
+  Committee    Committee @relation(fields: [committeeId], references: [id])
+  committeeId  String
 }
 
 enum UserRole {
-  SUPER
+  SUPER_ADMIN
   ADMIN
   FINANCE
 }
@@ -90,11 +92,11 @@ model Resident {
   isHead        Boolean
   image         String?
 
-  House        House         @relation(fields: [houseNumber], references: [number])
+  House        House       @relation(fields: [houseNumber], references: [number])
   houseNumber  String
-  Committee    Committee?    @relation(fields: [committeeId], references: [id])
+  Committee    Committee?  @relation(fields: [committeeId], references: [id])
   committeeId  String?
-  FamilyCard   FamilyCard?   @relation(fields: [familyCardId], references: [id])
+  FamilyCard   FamilyCard? @relation(fields: [familyCardId], references: [id])
   familyCardId String?
 }
 
@@ -115,12 +117,13 @@ enum Gender {
 }
 
 model Committee {
-  id        String   @id @default(cuid())
+  id        String   @id
   createdAt DateTime @default(now()) @db.Timestamptz(6)
   updatedAt DateTime @updatedAt @db.Timestamptz(6)
 
   label       String
   description String
+  User        User[]
   Resident    Resident[]
 }
 

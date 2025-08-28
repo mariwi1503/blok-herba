@@ -231,50 +231,60 @@ const residents = [
 
 const committees = [
   {
+    key: 'penasehat',
     label: "Penasehat",
     description:
       "Mendampingi dan memberi pertimbangan bagi kelancaran kegiatan RT.",
   },
   {
+    key: 'ketua',
     label: "Ketua RT",
     description: "Memimpin dan mengkoordinasikan seluruh kegiatan RT.",
   },
   {
+    key: 'sekretaris',
     label: "Sekretaris",
     description:
       "Mengelola administrasi dan dokumentasi RT dengan ketelitian dan dedikasi tinggi.",
   },
   {
+    key: 'bendahara',
     label: "Bendahara",
     description:
       "Mengelola keuangan RT dengan transparansi dan akuntabilitas yang tinggi.",
   },
   {
+    key: 'bidang_sarana',
     label: "Bidang Sarana",
     description:
       "Mengelola, merawat, dan memastikan ketersediaan sarana serta peralatan untuk mendukung kegiatan RT.",
   },
   {
+    key: 'konsumsi',
     label: "Konsumsi",
     description:
       "Mengatur, menyiapkan, dan memastikan kebutuhan konsumsi terpenuhi dalam setiap kegiatan RT.",
   },
   {
+    key: 'pemuda_olahraga',
     label: "Pemuda & Olahraga",
     description:
       "Mengkoordinir kegiatan olahraga serta membina kreativitas, semangat, dan peran aktif pemuda dalam kegiatan RT.",
   },
   {
+    key: 'humas',
     label: "Humas",
     description:
       "Menjalin komunikasi, menyebarkan informasi, dan menjadi penghubung antara pengurus RT dengan warga maupun pihak luar.",
   },
   {
+    key: 'keagamaan',
     label: "Keagamaan",
     description:
       "Mengkoordinir kegiatan keagamaan serta mendorong peningkatan iman, takwa, dan kerukunan warga di lingkungan RT.",
   },
   {
+    key: 'keamanan',
     label: "Keamanan",
     description:
       "Mengatur, menjaga, dan meningkatkan keamanan serta ketertiban lingkungan RT bersama warga.",
@@ -338,6 +348,7 @@ async function main() {
       await t.committee.createMany({
         data: committees.map((c) => {
           return {
+            id: c.key,
             label: c.label,
             description: c.description,
           };
