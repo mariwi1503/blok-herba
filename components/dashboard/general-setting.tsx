@@ -180,7 +180,7 @@ export function GeneralSettings() {
               <Label htmlFor="heroTagline" className="font-body font-medium">
                 Hero Tagline
               </Label>
-              <Input
+              <Textarea
                 id="heroTagline"
                 defaultValue={settings.heroTagline}
                 onChange={handleInputChange}
@@ -190,7 +190,7 @@ export function GeneralSettings() {
               <Label htmlFor="footerTagline" className="font-body font-medium">
                 Footer Tagline
               </Label>
-              <Input
+              <Textarea
                 id="footerTagline"
                 defaultValue={settings.footerTagline}
                 onChange={handleInputChange}
