@@ -39,7 +39,7 @@ export function OrganizationalChart() {
   const [error, setError] = useState<string | null>(null);
 
   // Define your API's base URL
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   useEffect(() => {
     async function fetchOrganizationalData() {
