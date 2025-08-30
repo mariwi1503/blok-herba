@@ -77,6 +77,7 @@ export const POST = async (req: NextRequest) => {
     // 5. Buat user baru menggunakan data resident, tanpa kolom email
     const newUser = await prisma.user.create({
       data: {
+        id: residentId,
         fullName: resident.fullName,
         phone: resident.phone || '', // Asumsi resident memiliki phone, atau default ke string kosong
         hashPassword: hashedPassword,
