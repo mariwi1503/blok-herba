@@ -1,4 +1,3 @@
-// components/admin-settings/UserManagement.jsx
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
@@ -22,8 +21,28 @@ import {
   Phone,
   Briefcase,
   Shield,
+  PlusCircle,
+  ChevronsUpDown,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import {
+  Command,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+} from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 // Define UserRole union type based on Prisma schema (adjust if your enum values differ)
 type UserRole = "SUPER_ADMIN" | "ADMIN" | "FINANCE";
@@ -33,11 +52,18 @@ interface User {
   fullName: string;
   phone: string;
   role: UserRole;
-  position?: string; // Added position field based on user request
+  position?: string;
   Committee?: {
-    label: string; // Corrected to 'name' as per API response
+    label: string;
   } | null;
-  isActive: boolean; // Assuming an 'isActive' field for user status
+  isActive: boolean;
+}
+
+interface Resident {
+  id: string;
+  fullName: string;
+  nik: string;
+  houseNumber: string;
 }
 
 export function UserManagement() {
@@ -53,6 +79,17 @@ export function UserManagement() {
   const [userToChangeRole, setUserToChangeRole] = useState<User | null>(null);
   const [selectedNewRole, setSelectedNewRole] = useState<UserRole | null>(null);
 
+  // State untuk dialog Tambah Pengguna
+  const [showAddUserDialog, setShowAddUserDialog] = useState(false);
+  const [residents, setResidents] = useState<Resident[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [loadingResidents, setLoadingResidents] = useState(false);
+  const [selectedResident, setSelectedResident] = useState<Resident | null>(null);
+  const [newUser, setNewUser] = useState({
+    password: "",
+    role: "ADMIN" as UserRole,
+  });
+  const [isComboboxOpen, setIsComboboxOpen] = useState(false);
 
   // Function to fetch users from the API
   const fetchUsers = useCallback(async () => {
@@ -65,12 +102,11 @@ export function UserManagement() {
         throw new Error("Gagal mengambil data pengguna.");
       }
       const result = await response.json();
-      
+
       const usersWithStatus = result.data.map((user: any) => ({
         ...user,
-        isActive: user.isActive ?? true, // Default to true if 'isActive' is not in API response
-        // Prioritize user.position from API, fallback to Committee name, then 'Tidak Ada Posisi'
-        position: user.position || user.Committee?.name || 'Tidak Ada Posisi', 
+        isActive: user.isActive ?? true,
+        position: user.position || user.Committee?.name || 'Tidak Ada Posisi',
       }));
       setUsers(usersWithStatus);
     } catch (err) {
@@ -89,10 +125,43 @@ export function UserManagement() {
     }
   }, [toast]);
 
+  // Function to fetch residents from the API
+  const fetchResidents = useCallback(async (query: string) => {
+    setLoadingResidents(true);
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || window.location.origin;
+      const response = await fetch(`${baseUrl}/api/committee?search=${query}`);
+      if (!response.ok) {
+        throw new Error("Gagal mengambil data warga.");
+      }
+      const result = await response.json();
+      setResidents(result.data);
+    } catch (err) {
+      toast({
+        title: "Gagal Memuat Data Warga",
+        description: "Terjadi kesalahan saat memuat data warga.",
+        variant: "destructive",
+      });
+      setResidents([]);
+    } finally {
+      setLoadingResidents(false);
+    }
+  }, [toast]);
+
   // Fetch users on component mount
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
+
+  // Fetch residents when the dialog is opened OR search query changes
+  useEffect(() => {
+    if (showAddUserDialog && (searchQuery.trim() !== '' || isComboboxOpen)) {
+      fetchResidents(searchQuery);
+    } else if (showAddUserDialog && searchQuery.trim() === '') {
+      setResidents([]);
+      setLoadingResidents(false);
+    }
+  }, [showAddUserDialog, searchQuery, isComboboxOpen, fetchResidents]);
 
   // Generic function to update user data via PATCH API
   const updateUser = useCallback(async (userId: string, updates: Partial<User>) => {
@@ -110,7 +179,7 @@ export function UserManagement() {
           title: "Pembaruan Berhasil",
           description: "Data pengguna berhasil diperbarui.",
         });
-        fetchUsers(); // Refresh the user list after successful update
+        fetchUsers();
       } else {
         toast({
           title: "Gagal Memperbarui Pengguna",
@@ -127,10 +196,61 @@ export function UserManagement() {
     }
   }, [fetchUsers, toast]);
 
+  // Fungsi untuk menangani penambahan pengguna baru
+  const handleAddUser = async () => {
+    if (!selectedResident || !newUser.password || !newUser.role) {
+      toast({
+        title: "Input Tidak Lengkap",
+        description: "Silakan lengkapi semua bidang yang diperlukan.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || window.location.origin;
+      const response = await fetch(`${baseUrl}/api/users`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          password: newUser.password,
+          role: newUser.role,
+          residentId: selectedResident.id,
+        }),
+      });
+      const result = await response.json();
+
+      if (response.ok && result.status === "success") {
+        toast({
+          title: "Pengguna Berhasil Ditambahkan",
+          description: "Pengguna baru telah berhasil dibuat.",
+        });
+        // Reset state dan tutup dialog
+        setSelectedResident(null);
+        setNewUser({ password: "", role: "ADMIN" });
+        setSearchQuery("");
+        setShowAddUserDialog(false);
+        fetchUsers(); // Muat ulang daftar pengguna
+      } else {
+        toast({
+          title: "Gagal Menambahkan Pengguna",
+          description: result.message || "Terjadi kesalahan saat menambahkan pengguna.",
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      toast({
+        title: "Terjadi Kesalahan",
+        description: "Gagal terhubung ke server saat menambahkan pengguna.",
+        variant: "destructive",
+      });
+    }
+  };
+
   // Handle opening the role change dialog
   const handleOpenRoleChange = (user: User) => {
     setUserToChangeRole(user);
-    setSelectedNewRole(user.role); // Set initial selected role to current user's role
+    setSelectedNewRole(user.role);
     setShowRoleChangeDialog(true);
   };
 
@@ -169,7 +289,7 @@ export function UserManagement() {
           title: "Pengguna Berhasil Dihapus",
           description: "Data pengguna telah berhasil dihapus.",
         });
-        fetchUsers(); // Refresh the user list
+        fetchUsers();
         setShowDeleteDialog(false);
         setUserToDeleteId(null);
       } else {
@@ -235,8 +355,8 @@ export function UserManagement() {
                       <h3 className="font-heading text-xl font-bold text-gray-900 leading-tight">
                         {user.fullName}
                       </h3>
-                      <Badge 
-                        variant={getStatusBadgeVariant(user.isActive)} 
+                      <Badge
+                        variant={getStatusBadgeVariant(user.isActive)}
                         className={`px-3 py-1 text-xs font-semibold rounded-full ${user.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
                       >
                         {getStatusText(user.isActive)}
@@ -244,17 +364,17 @@ export function UserManagement() {
                     </div>
                     <div className="space-y-3 text-sm text-gray-700">
                       <p className="flex items-center font-body">
-                        <Phone className="w-4 h-4 mr-2 text-gray-500" /> 
+                        <Phone className="w-4 h-4 mr-2 text-gray-500" />
                         <span className="font-medium">{user.phone}</span>
                       </p>
                       <p className="flex items-center font-body">
-                        <Shield className="w-4 h-4 mr-2 text-gray-500" /> Peran: 
+                        <Shield className="w-4 h-4 mr-2 text-gray-500" /> Peran:
                         <Badge variant="outline" className="ml-2 font-medium bg-purple-50 text-purple-700">
                           {getRoleLabel(user.role)}
                         </Badge>
                       </p>
                       <p className="flex items-center font-body">
-                        <Briefcase className="w-4 h-4 mr-2 text-gray-500" /> Jabatan: 
+                        <Briefcase className="w-4 h-4 mr-2 text-gray-500" /> Jabatan:
                         <span className="ml-2 font-medium">{user.position || 'Tidak Ada'}</span>
                       </p>
                     </div>
@@ -291,7 +411,17 @@ export function UserManagement() {
             )}
           </div>
           <div className="mt-8 text-center">
-            <Button className="w-full sm:w-auto px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-md transition-colors duration-200">
+            <Button
+              onClick={() => {
+                setSearchQuery("");
+                setResidents([]);
+                setSelectedResident(null);
+                setNewUser({ password: "", role: "ADMIN" });
+                setShowAddUserDialog(true);
+              }}
+              className="w-full sm:w-auto px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-md transition-colors duration-200"
+            >
+              <PlusCircle className="w-5 h-5 mr-2" />
               Tambah Pengguna Baru
             </Button>
           </div>
@@ -359,6 +489,127 @@ export function UserManagement() {
             </Button>
             <Button onClick={handleSaveRole} disabled={!selectedNewRole || selectedNewRole === userToChangeRole?.role} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white">
               Simpan Peran
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog Tambah Pengguna Baru */}
+      <Dialog open={showAddUserDialog} onOpenChange={setShowAddUserDialog}>
+        <DialogContent className="sm:max-w-md md:max-w-lg lg:max-w-xl flex flex-col max-h-[90vh] rounded-2xl">
+          <DialogHeader className="pb-4">
+            <DialogTitle className="text-2xl font-bold font-heading">Tambah Pengguna Baru</DialogTitle>
+            <DialogDescription className="text-gray-600 mt-2 font-body">
+              Lengkapi detail akun untuk warga yang dipilih.
+            </DialogDescription>
+            <Separator className="mt-4" />
+          </DialogHeader>
+
+          <div className="grid gap-6 py-4 flex-1 overflow-y-auto">
+            <div className="grid items-center gap-2 relative">
+              <Label htmlFor="residentName" className="font-semibold text-gray-700">
+                Nama Warga
+              </Label>
+              <Popover open={isComboboxOpen} onOpenChange={setIsComboboxOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={isComboboxOpen}
+                    className="w-full justify-between"
+                  >
+                    {selectedResident
+                      ? selectedResident.fullName
+                      : "Pilih warga..."}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
+                  <Command>
+                    <CommandInput
+                      placeholder="Cari warga..."
+                      value={searchQuery}
+                      onValueChange={setSearchQuery}
+                      className="h-9"
+                    />
+                    <CommandList>
+                      {loadingResidents ? (
+                        <div className="py-4 text-center text-gray-500">Memuat...</div>
+                      ) : (
+                        <CommandEmpty>Tidak ada warga ditemukan.</CommandEmpty>
+                      )}
+                      <CommandGroup>
+                        {residents.map((resident) => (
+                          <CommandItem
+                            key={resident.id}
+                            onSelect={() => {
+                              setSelectedResident(resident);
+                              setIsComboboxOpen(false);
+                              setSearchQuery(resident.fullName);
+                            }}
+                          >
+                            <CheckCircle
+                              className={`mr-2 h-4 w-4 ${
+                                selectedResident?.id === resident.id ? "opacity-100" : "opacity-0"
+                              }`}
+                            />
+                            {resident.fullName}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            <div className="grid items-center gap-2">
+              <Label htmlFor="password" className="font-semibold text-gray-700">
+                Kata Sandi
+              </Label>
+              <Input
+                id="password"
+                type="password"
+                value={newUser.password}
+                onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+                className="py-2 rounded-lg border-gray-300 focus:ring-purple-500 focus:border-purple-500"
+              />
+            </div>
+            <div className="grid items-center gap-2">
+              <Label htmlFor="role" className="font-semibold text-gray-700">
+                Peran
+              </Label>
+              <Select onValueChange={(value) => setNewUser({ ...newUser, role: value as UserRole })} value={newUser.role}>
+                <SelectTrigger className="rounded-lg border-gray-300 focus:ring-purple-500 focus:border-purple-500">
+                  <SelectValue placeholder="Pilih Peran" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="SUPER_ADMIN">Super Admin</SelectItem>
+                  <SelectItem value="ADMIN">Administrator</SelectItem>
+                  <SelectItem value="FINANCE">Finance</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <DialogFooter className="mt-4 pt-4 border-t border-gray-200">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowAddUserDialog(false);
+                setSearchQuery("");
+                setResidents([]);
+              }}
+              className="px-6 py-2 font-medium rounded-lg text-gray-700 hover:bg-gray-100"
+            >
+              Batal
+            </Button>
+            <Button
+              onClick={handleAddUser}
+              className="px-6 py-2 font-medium rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white"
+              disabled={!selectedResident || !newUser.password || !newUser.role}
+            >
+              Simpan Pengguna
             </Button>
           </DialogFooter>
         </DialogContent>

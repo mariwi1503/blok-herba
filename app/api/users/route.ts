@@ -66,7 +66,7 @@ export const POST = async (req: NextRequest) => {
     // Jika resident tidak memiliki committeeId, tidak dapat membuat pengguna
     if (!resident.committeeId) {
       return NextResponse.json(
-        { status: "failed", message: "Resident tidak terhubung dengan komite. Tidak dapat membuat pengguna." },
+        { status: "failed", message: "Warga bukan pengurus" },
         { status: 400 } // Bad Request
       );
     }
