@@ -517,6 +517,7 @@ export function UserManagement() {
                     role="combobox"
                     aria-expanded={isComboboxOpen}
                     className="w-full justify-between"
+                    id="residentName"
                   >
                     {selectedResident
                       ? selectedResident.fullName
