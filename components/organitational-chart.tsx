@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Crown,
@@ -8,61 +9,121 @@ import {
   Users,
   Shield,
   MessageCircle,
-  Church,
+  MoonStar,
   Coffee,
   Trophy,
-  Book,
-  MoonStar,
 } from "lucide-react";
 
-// Dummy data (nanti bisa diganti fetch dari database)
-const organization = {
-  penasehat: ["Bpk. KISMARDI", "Bpk. SULAIMAN"],
-  ketua: "EDIKA SAPUTRA",
-  sekretaris: "EKA PENGAYUM",
-  bendahara: "SHINTA JULIA FITRI",
-  bidang: [
-    {
-      title: "BIDANG SARANA",
-      icon: Users,
-      color: "from-cyan-400 to-cyan-500 border-cyan-600",
-      members: ["NUR AFANDI", "ANDESKA ARIFIN", "AGUS PURNOMO"],
-    },
-    {
-      title: "HUMAS",
-      icon: MessageCircle,
-      color: "from-purple-400 to-purple-500 border-purple-600",
-      members: ["ONDRA WIZAL", "RULLY CHANDRA", "AFRIZAL", "ALFITRA K.", "CAK GUCIR"],
-    },
-    {
-      title: "PEMUDA & OLAHRAGA",
-      icon: Trophy,
-      color: "from-orange-400 to-orange-500 border-orange-600",
-      members: ["M. ARY WIDODO", "RIZKY RAGIL"],
-    },
+interface CommitteeMember {
+  fullName: string;
+  committeeLabel: string;
+  committeeId: string;
+}
 
-    {
-      title: "KEAGAMAAN",
-      icon: MoonStar,
-      color: "from-green-500 to-green-600 border-green-700",
-      members: ["ANDI SAMSU A.", "RUFIMA'RUF"],
-    },
-    {
-      title: "KONSUMSI",
-      icon: Coffee,
-      color: "from-pink-400 to-pink-500 border-pink-600",
-      members: ["LENI SYAFRIDA"],
-    },
-    {
-      title: "KEAMANAN",
-      icon: Shield,
-      color: "from-yellow-400 to-yellow-500 border-yellow-600",
-      members: ["HALLE"],
-    },
-  ],
+const committeeColors: { [key: string]: { icon: any; color: string; title: string } } = {
+  "penasehat": { icon: Crown, color: "from-purple-400 to-purple-500 border-purple-600", title: "PENASEHAT" },
+  "ketua": { icon: Crown, color: "from-blue-400 to-blue-500 border-blue-600", title: "KETUA RT" },
+  "sekretaris": { icon: FileText, color: "from-green-400 to-green-500 border-green-600", title: "SEKRETARIS" },
+  "bendahara": { icon: Wallet, color: "from-green-400 to-green-500 border-green-600", title: "BENDAHARA" },
+  "bidang_sarana": { icon: Users, color: "from-cyan-400 to-cyan-500 border-cyan-600", title: "BIDANG SARANA" },
+  "humas": { icon: MessageCircle, color: "from-purple-400 to-purple-500 border-purple-600", title: "HUMAS" },
+  "pemuda_olahraga": { icon: Trophy, color: "from-orange-400 to-orange-500 border-orange-600", title: "PEMUDA & OLAHRAGA" },
+  "keagamaan": { icon: MoonStar, color: "from-green-500 to-green-600 border-green-700", title: "KEAGAMAAN" },
+  "konsumsi": { icon: Coffee, color: "from-pink-400 to-pink-500 border-pink-600", title: "KONSUMSI" },
+  "keamanan": { icon: Shield, color: "from-yellow-400 to-yellow-500 border-yellow-600", title: "KEAMANAN" },
 };
 
 export function OrganizationalChart() {
+  const [organization, setOrganization] = useState<any | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Define your API's base URL
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
+
+  useEffect(() => {
+    async function fetchOrganizationalData() {
+      try {
+        const response = await fetch(`${baseUrl}/api/committee`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch organizational data');
+        }
+        const result = await response.json();
+        const rawMembers = result.data as CommitteeMember[];
+        const structuredData = processData(rawMembers);
+        setOrganization(structuredData);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchOrganizationalData();
+  }, [baseUrl]); // Re-run effect if baseUrl changes
+
+  const processData = (members: CommitteeMember[]) => {
+    const processed = {
+      penasehat: [] as string[],
+      ketua: "",
+      sekretaris: "",
+      bendahara: "",
+      bidang: [] as { title: string; icon: any; color: string; members: string[] }[],
+    };
+
+    const bidangMap = new Map<string, string[]>();
+
+    members.forEach(member => {
+      const { fullName, committeeId } = member;
+      
+      switch (committeeId) {
+        case "penasehat":
+          processed.penasehat.push(fullName.toUpperCase());
+          break;
+        case "ketua":
+          processed.ketua = fullName.toUpperCase();
+          break;
+        case "sekretaris":
+          processed.sekretaris = fullName.toUpperCase();
+          break;
+        case "bendahara":
+          processed.bendahara = fullName.toUpperCase();
+          break;
+        default:
+          if (!bidangMap.has(committeeId)) {
+            bidangMap.set(committeeId, []);
+          }
+          bidangMap.get(committeeId)?.push(fullName.toUpperCase());
+          break;
+      }
+    });
+
+    for (const [id, memberList] of bidangMap.entries()) {
+      const config = committeeColors[id] || { icon: Users, color: "bg-gray-500", title: id.toUpperCase().replace(/_/g, ' ') };
+      processed.bidang.push({
+        title: config.title,
+        icon: config.icon,
+        color: config.color,
+        members: memberList,
+      });
+    }
+
+    return processed;
+  };
+
+  if (isLoading) {
+    return <div className="text-center py-12">Loading chart...</div>;
+  }
+
+  if (error || !organization) {
+    return <div className="text-center py-12 text-red-500">Error: {error || "Data not found."}</div>;
+  }
+  
+  // Sort bidang based on a custom order
+  const customOrder = ["PENASEHAT", "KETUA RT", "SEKRETARIS", "BENDAHARA", "BIDANG SARANA", "HUMAS", "PEMUDA & OLAHRAGA", "KEAGAMAAN", "KONSUMSI", "KEAMANAN"];
+  const sortedBidang = organization.bidang.sort((a: any, b: any) => {
+    return customOrder.indexOf(a.title) - customOrder.indexOf(b.title);
+  });
+
   return (
     <section className="py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -84,7 +145,7 @@ export function OrganizationalChart() {
                   PENASEHAT
                 </h3>
                 <div className="space-y-0.5 text-sm text-white">
-                  {organization.penasehat.map((p, i) => (
+                  {organization.penasehat.map((p: string, i: number) => (
                     <p key={i}>{p}</p>
                   ))}
                 </div>
@@ -125,7 +186,7 @@ export function OrganizationalChart() {
                 <h3 className="font-heading font-bold text-white mb-1 lg:text-lg text-base">
                   BENDAHARA
                 </h3>
-                <p className="font-body text-white text-sm  font-medium">
+                <p className="font-body text-white text-sm font-medium">
                   {organization.bendahara}
                 </p>
               </CardContent>
@@ -150,7 +211,7 @@ export function OrganizationalChart() {
 
           {/* Bidang-bidang */}
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4">
-            {organization.bidang.map((b, i) => {
+            {sortedBidang.map((b: any, i: number) => {
               const Icon = b.icon;
               return (
                 <Card
@@ -163,7 +224,7 @@ export function OrganizationalChart() {
                       {b.title}
                     </h4>
                     <div className="space-y-0.5 text-xs text-white">
-                      {b.members.map((m, j) => (
+                      {b.members.map((m: string, j: number) => (
                         <p key={j}>{m}</p>
                       ))}
                     </div>

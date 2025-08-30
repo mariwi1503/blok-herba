@@ -6,247 +6,97 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Phone,
-  Mail,
   MapPin,
-  Calendar,
   Users,
 } from "lucide-react";
 import Image from "next/image";
-import type { Metadata } from "next";
 import { toWaMeUrl } from "@/lib/utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { ImWhatsapp } from "react-icons/im";
 import { OrganizationalChart } from "@/components/organitational-chart";
 
-// export const metadata: Metadata = {
-//   title: "Pengurus RT Blok Herba - Ketua, Sekretaris, Bendahara | Taman Cipta Asri 2 Batam",
-//   description:
-//     "Daftar lengkap pengurus RT 005 Blok Herba: Ketua RT, Sekretaris, Bendahara, Koordinator Keamanan & Kesehatan. Kontak pengurus Taman Cipta Asri 2, Batam.",
-//   keywords: [
-//     "pengurus RT Blok Herba",
-//     "ketua RT",
-//     "sekretaris RT",
-//     "bendahara RT",
-//     "kontak pengurus",
-//     "RT 005 Batam",
-//     "Taman Cipta Asri",
-//   ],
-// }
+// Define the type for a committee member
+interface CommitteeMember {
+  fullName: string;
+  committeeLabel: string;
+  committeeId: string;
+  phone: string;
+  address: string;
+  committeeDescription: string;
+  image: string;
+}
 
 export default function PengurusPage() {
-  const [selected, setSelected] = useState<any | null>(null);
+  const [selected, setSelected] = useState<CommitteeMember | null>(null);
+  const [management, setManagement] = useState<CommitteeMember[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const management = [
-    {
-      name: "Bpk. Kismardi",
-      position: "Penasehat",
-      phone: "+62 852-6414-4435",
-      // email: "andi@rtherba.com",
-      address: "Herba 025",
-      period: "2025-2030",
-      description:
-        "Mendampingi dan memberi pertimbangan bagi kelancaran kegiatan RT.",
-      image: "/profile/kis.jpg",
-    },
-    {
-      name: "Bpk. Sulaiman",
-      position: "Penasehat",
-      phone: "+62 812-7753-7556",
-      // email: "andi@rtherba.com",
-      address: "Herba 025",
-      period: "2025-2030",
-      description:
-        "Mendampingi dan memberi pertimbangan bagi kelancaran kegiatan RT.",
-      image: "/placeholder-nybna.png",
-    },
-    {
-      name: "Edika Saputra",
-      position: "Ketua RT",
-      phone: "+62 812-6361-3720",
-      address: "Blok Herba No. 57",
-      period: "2025-2030",
-      description:
-        "Memimpin dan mengkoordinasikan seluruh kegiatan RT.",
-      image: "/profile/rt.jpg",
-    },
+  useEffect(() => {
+    async function fetchManagement() {
+      try {
+        const response = await fetch('/api/committee');
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const result = await response.json();
+        const rawData = result.data as CommitteeMember[];
+        const sortedData = sortManagementData(rawData);
+        setManagement(sortedData);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
 
-    {
-      name: "Eka Pengayum",
-      position: "Sekretaris",
-      phone: "+62 831-8435-2371",
-      address: "Blok A No. 005",
-      period: "2025-2030",
-      description:
-        "Mengelola administrasi dan dokumentasi RT dengan ketelitian dan dedikasi tinggi.",
-      image: "/profile/eka.jpg",
-    },
-    {
-      name: "Shinta julia fitri",
-      position: "Bendahara",
-      phone: "+62 821-7646-4812",
-      // email: "ahmad@rtherba.com",
-      address: "Blok B No. 012",
-      period: "2025-2030",
-      description:
-        "Mengelola keuangan RT dengan transparansi dan akuntabilitas yang tinggi.",
-      image: "/profile/shinta.jpg",
-    },
-    {
-      name: "Andeska Arifin",
-      position: "Koordinator Bidang Sarana",
-      phone: "+62 812-7524-3138",
-      // email: "joko@rtherba.com",
-      address: "Herba 109",
-      period: "2025-2030",
-      description:
-        "Mengelola, merawat, dan memastikan ketersediaan sarana serta peralatan untuk mendukung kegiatan RT.",
-      image: "/profile/andes.jpg",
-    },
-    {
-      name: "Nur Afandi",
-      position: "Bidang Sarana",
-      phone: "+62 812-6821-6760",
-      // email: "andi@rtherba.com",
-      address: "Herba 025",
-      period: "2025-2030",
-      description:
-        "Mengelola, merawat, dan memastikan ketersediaan sarana serta peralatan untuk mendukung kegiatan RT.",
-      image: "/profile/nur.jpg",
-    },
-    {
-      name: "Agus Purnomo",
-      position: "Bidang Sarana",
-      phone: "+62 812-6821-6760",
-      // email: "andi@rtherba.com",
-      address: "Herba 025",
-      period: "2025-2030",
-      description:
-        "Mengelola, merawat, dan memastikan ketersediaan sarana serta peralatan untuk mendukung kegiatan RT.",
-      image: "/placeholder-nybna.png",
-    },
-    {
-      name: "Leni Syafrida",
-      position: "Koordinator Konsumsi",
-      phone: "+62 812-7515-5988",
-      // email: "ratna@rtherba.com",
-      address: "Blok A No. 008",
-      period: "2025-2030",
-      description:
-        "Mengatur, menyiapkan, dan memastikan kebutuhan konsumsi terpenuhi dalam setiap kegiatan RT.",
-      image: "/profile/leni.jpg",
-    },
-    {
-      name: "Rizky ragil seputro",
-      position: "Koordinator Pemuda dan Olahraga",
-      phone: "+62 815-3349-2729",
-      // email: "andi@rtherba.com",
-      address: "Herba 025",
-      period: "2025-2030",
-      description:
-        "Mengkoordinir kegiatan olahraga serta membina kreativitas, semangat, dan peran aktif pemuda dalam kegiatan RT.",
-      image: "/profile/ragil.jpg",
-    },
-    {
-      name: "Muhammad Ary Widodo",
-      position: "Pemuda dan Olahraga",
-      phone: "+62 853-3871-4313",
-      // email: "andi@rtherba.com",
-      address: "Herba 025",
-      period: "2025-2030",
-      description:
-        "Mengkoordinir kegiatan olahraga serta membina kreativitas, semangat, dan peran aktif pemuda dalam kegiatan RT.",
-      image: "/profile/ary.jpg",
-    },
-    {
-      name: "Ondra Wizal",
-      position: "Koordinator Humas",
-      phone: "+62 815-3349-2729",
-      // email: "andi@rtherba.com",
-      address: "Herba 025",
-      period: "2025-2030",
-      description:
-        "Menjalin komunikasi, menyebarkan informasi, dan menjadi penghubung antara pengurus RT dengan warga maupun pihak luar.",
-      image: "/profile/ondra.jpg",
-    },
-    {
-      name: "Ruli Candra",
-      position: "Humas",
-      phone: "+62 813-7331-8342",
-      // email: "andi@rtherba.com",
-      address: "Herba 025",
-      period: "2025-2030",
-      description:
-        "Menjalin komunikasi, menyebarkan informasi, dan menjadi penghubung antara pengurus RT dengan warga maupun pihak luar.",
-      image: "/profile/ruli.jpg",
-    },
-    {
-      name: "Afrizal",
-      position: "Humas",
-      phone: "+62 813-7331-8342",
-      // email: "andi@rtherba.com",
-      address: "Herba 025",
-      period: "2025-2030",
-      description:
-        "Menjalin komunikasi, menyebarkan informasi, dan menjadi penghubung antara pengurus RT dengan warga maupun pihak luar.",
-      image: "/placeholder-nybna.png",
-    },
-    {
-      name: "Alfitra K.",
-      position: "Humas",
-      phone: "+62 813-7331-8342",
-      // email: "andi@rtherba.com",
-      address: "Herba 025",
-      period: "2025-2030",
-      description:
-        "Menjalin komunikasi, menyebarkan informasi, dan menjadi penghubung antara pengurus RT dengan warga maupun pihak luar.",
-      image: "/placeholder-nybna.png",
-    },{
-      name: "Cak Gucir",
-      position: "Humas",
-      phone: "+62 819-9089-5797",
-      // email: "andi@rtherba.com",
-      address: "Herba 025",
-      period: "2025-2030",
-      description:
-        "Menjalin komunikasi, menyebarkan informasi, dan menjadi penghubung antara pengurus RT dengan warga maupun pihak luar.",
-      image:  "/profile/gucir.jpg",
-    },
-    {
-      name: "Rufima'ruf",
-      position: "Koordinator Keagamaan",
-      phone: "+62 815-3349-2729",
-      // email: "andi@rtherba.com",
-      address: "Herba 025",
-      period: "2025-2030",
-      description:
-        "Mengkoordinir kegiatan keagamaan serta mendorong peningkatan iman, takwa, dan kerukunan warga di lingkungan RT.",
-      image: "/profile/rufi.jpg",
-    },
-    {
-      name: "Andi Samsu alam",
-      position: "Keagamaan",
-      phone: "0814-5678-9012",
-      // email: "ahmad@rtherba.com",
-      address: "Blok B No. 012",
-      period: "2025-2030",
-      description:
-        "Mengkoordinir kegiatan keagamaan serta mendorong peningkatan iman, takwa, dan kerukunan warga di lingkungan RT.",
-      image: "/profile/andi.jpg",
-    },
-    {
-      name: "Halle",
-      position: "Koordinator Keamanan",
-      phone: "+62 813-7331-8342",
-      // email: "andi@rtherba.com",
-      address: "Herba 025",
-      period: "2025-2030",
-      description:
-        "Mengatur, menjaga, dan meningkatkan keamanan serta ketertiban lingkungan RT bersama warga.",
-      image: "/placeholder-nybna.png",
-    },
-  ];
+    fetchManagement();
+  }, []);
+
+  const sortManagementData = (data: CommitteeMember[]): CommitteeMember[] => {
+    const customOrder = ["penasehat", "ketua", "sekretaris", "bendahara"];
+    
+    // Separate the main leadership from other committees
+    const mainLeadership = data.filter(member => customOrder.includes(member.committeeId));
+    const otherCommittees = data.filter(member => !customOrder.includes(member.committeeId));
+    
+    // Sort the main leadership based on the custom order
+    mainLeadership.sort((a, b) => {
+      const aIndex = customOrder.indexOf(a.committeeId);
+      const bIndex = customOrder.indexOf(b.committeeId);
+      return aIndex - bIndex;
+    });
+
+    // Sort the other committees alphabetically by committeeLabel and then fullName
+    otherCommittees.sort((a, b) => {
+      const committeeLabelCompare = a.committeeLabel.localeCompare(b.committeeLabel);
+      if (committeeLabelCompare !== 0) {
+        return committeeLabelCompare;
+      }
+      return a.fullName.localeCompare(b.fullName);
+    });
+    
+    // Combine and return the sorted arrays
+    return [...mainLeadership, ...otherCommittees];
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Error: {error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-red-50 to-blue-50">
@@ -280,7 +130,7 @@ export default function PengurusPage() {
                 <div className="relative">
                   <Image
                     src={person.image || "/placeholder.svg"}
-                    alt={person.name}
+                    alt={person.fullName}
                     width={300}
                     height={300}
                     className="w-full h-64 object-cover rounded-t-lg"
@@ -288,10 +138,10 @@ export default function PengurusPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-lg" />
                   <div className="absolute bottom-4 left-4 right-4 text-white">
                     <h3 className="font-heading text-xl font-bold mb-1">
-                      {person.name}
+                      {person.fullName}
                     </h3>
                     <p className="font-body text-sm opacity-90">
-                      {person.position}
+                      {person.committeeLabel}
                     </p>
                   </div>
                 </div>
@@ -299,7 +149,7 @@ export default function PengurusPage() {
                 {/* CardContent hanya muncul di desktop/tablet */}
                 <CardContent className="p-6 hidden md:block">
                   <p className="font-body text-gray-600 mb-4 leading-relaxed text-sm">
-                    {person.description}
+                    {person.committeeDescription}
                   </p>
 
                   <div className="space-y-3 mb-6">
@@ -311,24 +161,8 @@ export default function PengurusPage() {
                       <MapPin className="w-4 h-4 mr-3 text-purple-600" />
                       <span>{person.address}</span>
                     </div>
-                    {/* <div className="flex items-center text-sm text-gray-600">
-                      <Calendar className="w-4 h-4 mr-3 text-orange-600" />
-                      <span>Periode {person.period}</span>
-                    </div> */}
                   </div>
 
-                  {/* <Button
-                    variant="outline"
-                    className="w-full bg-transparent border-emerald-600 text-emerald-600 hover:bg-emerald-50"
-                  >
-                    <a
-                      href={toWaMeUrl(person.phone)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Hubungi
-                    </a>
-                  </Button> */}
                   <Button
                     variant="outline"
                     className="w-full bg-transparent border-emerald-600 text-emerald-600 hover:bg-emerald-50 flex items-center justify-center gap-2"
@@ -354,22 +188,22 @@ export default function PengurusPage() {
               {selected && (
                 <div>
                   <VisuallyHidden>
-                    <DialogTitle>{selected.name}</DialogTitle>
+                    <DialogTitle>{selected.fullName}</DialogTitle>
                   </VisuallyHidden>
                   <Image
                     src={selected.image || "/placeholder.svg"}
-                    alt={selected.name}
+                    alt={selected.fullName}
                     width={400}
                     height={300}
                     className="w-full h-64 object-cover rounded-lg mb-4"
                   />
                   <h3 className="font-heading text-xl font-bold mb-1">
-                    {selected.name}
+                    {selected.fullName}
                   </h3>
                   <p className="text-sm text-gray-500 mb-3">
-                    {selected.position}
+                    {selected.committeeLabel}
                   </p>
-                  <p className="text-gray-600 mb-4">{selected.description}</p>
+                  <p className="text-gray-600 mb-4">{selected.committeeDescription}</p>
 
                   <div className="space-y-3 mb-6">
                     <div className="flex items-center text-sm text-gray-600">
@@ -380,24 +214,7 @@ export default function PengurusPage() {
                       <MapPin className="w-4 h-4 mr-3 text-purple-600" />
                       <span>{selected.address}</span>
                     </div>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Calendar className="w-4 h-4 mr-3 text-orange-600" />
-                      <span>Periode {selected.period}</span>
-                    </div>
                   </div>
-
-                  {/* <Button
-                    variant="outline"
-                    className="w-full bg-transparent border-emerald-600 text-emerald-600 hover:bg-emerald-50"
-                  >
-                    <a
-                      href={toWaMeUrl(selected.phone)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Hubungi
-                    </a>
-                  </Button> */}
                   <Button
                     variant="outline"
                     className="w-full bg-transparent border-emerald-600 text-emerald-600 hover:bg-emerald-50 flex items-center justify-center gap-2"

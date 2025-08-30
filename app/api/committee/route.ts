@@ -15,10 +15,37 @@ export const GET = async (req: NextRequest) => {
         ],
         committeeId: { not: null },
       },
+      select: {
+        id: true,
+        fullName: true,
+        idCardNumber: true,
+        houseNumber: true,
+        phone: true,
+        image: true,
+        committeeId: true,
+        Committee: {
+          select: {
+            label: true,
+            description: true,
+          },
+        },
+      },
     });
     return NextResponse.json({
       status: "success",
-      data,
+      data: data.map((d) => {
+        return {
+          id: d.id,
+          fullName: d.fullName,
+          committeeLabel: d.Committee?.label,
+          committeeId: d.committeeId,
+          phone: d.phone,
+          address: 'Herba ' + d.houseNumber,
+          committeeDescription:
+            d.Committee?.description,
+          image: d.image,
+        };
+      }),
     });
   } catch (error) {
     if (error instanceof Error) {
