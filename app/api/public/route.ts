@@ -17,6 +17,9 @@ export const GET = async () => {
           address: true,
           phone: true,
           email: true,
+          vision: true,
+          mission: true,
+          history: true
         },
       }),
       prisma.house.count(),
