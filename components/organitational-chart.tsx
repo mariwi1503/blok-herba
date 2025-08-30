@@ -79,8 +79,8 @@ export function OrganizationalChart() {
           {/* Penasehat */}
           <div className="flex justify-center relative">
             <Card className="bg-gradient-to-r from-purple-400 to-purple-500 border border-purple-600 shadow-md w-full max-w-sm">
-              <CardContent className="p-2 lg:p-4 text-center lg:text-lg">
-                <h3 className="font-heading font-bold text-white mb-2">
+              <CardContent className="p-2 lg:p-4 text-center">
+                <h3 className="font-heading font-bold text-white mb-2 lg:text-lg text-base">
                   PENASEHAT
                 </h3>
                 <div className="space-y-0.5 text-sm text-white">
@@ -98,11 +98,11 @@ export function OrganizationalChart() {
           </div>
 
           {/* Ketua */}
-          <div className="flex justify-center lg:text-xl">
+          <div className="flex justify-center">
             <Card className="bg-gradient-to-r from-blue-400 to-blue-500 border border-blue-600 shadow-md w-full max-w-sm">
               <CardContent className="p-2 lg:p-4 text-center">
                 <Crown className="w-7 h-7 text-white mx-auto mb-1" />
-                <h3 className="font-heading text-base font-bold text-white mb-1">
+                <h3 className="font-heading font-bold text-white mb-1 lg:text-lg text-base">
                   KETUA RT
                 </h3>
                 <p className="font-body text-white font-semibold text-sm">
@@ -119,10 +119,10 @@ export function OrganizationalChart() {
 
           {/* Sekretaris & Bendahara */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg mx-auto relative">
-            <Card className="lg:text-xl bg-gradient-to-r from-green-400 to-green-500 border border-green-600 shadow-md">
+            <Card className="bg-gradient-to-r from-green-400 to-green-500 border border-green-600 shadow-md">
               <CardContent className="p-2 lg:p-4 text-center">
                 <Wallet className="w-6 h-6 text-white mx-auto mb-1" />
-                <h3 className="font-heading font-bold text-white mb-1">
+                <h3 className="font-heading font-bold text-white mb-1 lg:text-lg text-base">
                   BENDAHARA
                 </h3>
                 <p className="font-body text-white text-sm  font-medium">
@@ -133,7 +133,7 @@ export function OrganizationalChart() {
             <Card className="bg-gradient-to-r from-green-400 to-green-500 border border-green-600 shadow-md">
               <CardContent className="p-2 lg:p-4 text-center">
                 <FileText className="w-6 h-6 text-white mx-auto mb-1" />
-                <h3 className="font-heading text-base font-bold text-white mb-1">
+                <h3 className="font-heading font-bold text-white mb-1 lg:text-lg text-base">
                   SEKRETARIS
                 </h3>
                 <p className="font-body text-white text-sm font-medium">
@@ -159,7 +159,7 @@ export function OrganizationalChart() {
                 >
                   <CardContent className="p-2 lg:p-4 text-center">
                     <Icon className="w-5 h-5 text-white mx-auto mb-1" />
-                    <h4 className="font-heading text-sm font-bold text-white mb-1">
+                    <h4 className="font-heading lg:text-lg text-base font-bold text-white mb-1">
                       {b.title}
                     </h4>
                     <div className="space-y-0.5 text-xs text-white">
