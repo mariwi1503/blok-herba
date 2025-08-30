@@ -121,7 +121,7 @@ export default async function TentangPage() {
                   </h3>
                 </div>
                 <ul className="font-body text-gray-700 space-y-2">
-                  {homeData.mission.map((m: string, i: number) => {
+                  {homeData?.mission && homeData.mission.map((m: string, i: number) => {
                     return <li key={i+1}>• {m}</li>
                   })}
                 </ul>
