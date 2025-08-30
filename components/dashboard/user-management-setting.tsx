@@ -68,6 +68,7 @@ interface Resident {
 
 export function UserManagement() {
   const [users, setUsers] = useState<User[]>([]);
+  const [residents, setResidents] = useState<Resident[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
@@ -79,11 +80,8 @@ export function UserManagement() {
   const [userToChangeRole, setUserToChangeRole] = useState<User | null>(null);
   const [selectedNewRole, setSelectedNewRole] = useState<UserRole | null>(null);
 
-  // State untuk dialog Tambah Pengguna
   const [showAddUserDialog, setShowAddUserDialog] = useState(false);
-  const [residents, setResidents] = useState<Resident[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [loadingResidents, setLoadingResidents] = useState(false);
   const [selectedResident, setSelectedResident] = useState<Resident | null>(null);
   const [newUser, setNewUser] = useState({
     password: "",
@@ -91,24 +89,35 @@ export function UserManagement() {
   });
   const [isComboboxOpen, setIsComboboxOpen] = useState(false);
 
-  // Function to fetch users from the API
-  const fetchUsers = useCallback(async () => {
+  // Mengambil semua data pengguna dan warga saat komponen dimuat
+  const fetchAllData = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || window.location.origin;
-      const response = await fetch(`${baseUrl}/api/users`);
-      if (!response.ok) {
+      const [usersResponse, residentsResponse] = await Promise.all([
+        fetch(`${baseUrl}/api/users`),
+        fetch(`${baseUrl}/api/committee`),
+      ]);
+
+      if (!usersResponse.ok) {
         throw new Error("Gagal mengambil data pengguna.");
       }
-      const result = await response.json();
+      if (!residentsResponse.ok) {
+        throw new Error("Gagal mengambil data warga.");
+      }
 
-      const usersWithStatus = result.data.map((user: any) => ({
+      const usersResult = await usersResponse.json();
+      const residentsResult = await residentsResponse.json();
+
+      const usersWithStatus = usersResult.data.map((user: any) => ({
         ...user,
         isActive: user.isActive ?? true,
         position: user.position || user.Committee?.name || 'Tidak Ada Posisi',
       }));
+
       setUsers(usersWithStatus);
+      setResidents(residentsResult.data);
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -116,8 +125,8 @@ export function UserManagement() {
         setError("Terjadi kesalahan yang tidak diketahui.");
       }
       toast({
-        title: "Gagal Memuat Pengguna",
-        description: err instanceof Error ? err.message : "Terjadi kesalahan saat memuat data pengguna.",
+        title: "Gagal Memuat Data",
+        description: err instanceof Error ? err.message : "Terjadi kesalahan saat memuat data pengguna dan warga.",
         variant: "destructive",
       });
     } finally {
@@ -125,45 +134,25 @@ export function UserManagement() {
     }
   }, [toast]);
 
-  // Function to fetch residents from the API
-  const fetchResidents = useCallback(async (query: string) => {
-    setLoadingResidents(true);
-    try {
-      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || window.location.origin;
-      const response = await fetch(`${baseUrl}/api/committee?search=${query}`);
-      if (!response.ok) {
-        throw new Error("Gagal mengambil data warga.");
-      }
-      const result = await response.json();
-      setResidents(result.data);
-    } catch (err) {
-      toast({
-        title: "Gagal Memuat Data Warga",
-        description: "Terjadi kesalahan saat memuat data warga.",
-        variant: "destructive",
-      });
-      setResidents([]);
-    } finally {
-      setLoadingResidents(false);
-    }
-  }, [toast]);
-
-  // Fetch users on component mount
   useEffect(() => {
-    fetchUsers();
-  }, [fetchUsers]);
+    fetchAllData();
+  }, [fetchAllData]);
 
-  // Fetch residents when the dialog is opened OR search query changes
-  useEffect(() => {
-    if (showAddUserDialog && (searchQuery.trim() !== '' || isComboboxOpen)) {
-      fetchResidents(searchQuery);
-    } else if (showAddUserDialog && searchQuery.trim() === '') {
-      setResidents([]);
-      setLoadingResidents(false);
-    }
-  }, [showAddUserDialog, searchQuery, isComboboxOpen, fetchResidents]);
+  // Membuat Set dari ID warga yang sudah memiliki akun pengguna
+  const existingUserResidentIds = new Set(users.map(user => user.id));
 
-  // Generic function to update user data via PATCH API
+  // Memfilter daftar warga yang tersedia (yang belum memiliki akun)
+  const availableResidents = residents.filter(
+    (resident) => !existingUserResidentIds.has(resident.id)
+  );
+
+  // Menerapkan pencarian pada daftar warga yang tersedia
+  const filteredAvailableResidents = searchQuery.trim() === ''
+    ? availableResidents
+    : availableResidents.filter((resident) =>
+        resident.fullName.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+
   const updateUser = useCallback(async (userId: string, updates: Partial<User>) => {
     try {
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || window.location.origin;
@@ -179,7 +168,7 @@ export function UserManagement() {
           title: "Pembaruan Berhasil",
           description: "Data pengguna berhasil diperbarui.",
         });
-        fetchUsers();
+        fetchAllData();
       } else {
         toast({
           title: "Gagal Memperbarui Pengguna",
@@ -194,9 +183,8 @@ export function UserManagement() {
         variant: "destructive",
       });
     }
-  }, [fetchUsers, toast]);
+  }, [fetchAllData, toast]);
 
-  // Fungsi untuk menangani penambahan pengguna baru
   const handleAddUser = async () => {
     if (!selectedResident || !newUser.password || !newUser.role) {
       toast({
@@ -225,12 +213,11 @@ export function UserManagement() {
           title: "Pengguna Berhasil Ditambahkan",
           description: "Pengguna baru telah berhasil dibuat.",
         });
-        // Reset state dan tutup dialog
         setSelectedResident(null);
         setNewUser({ password: "", role: "ADMIN" });
         setSearchQuery("");
         setShowAddUserDialog(false);
-        fetchUsers(); // Muat ulang daftar pengguna
+        fetchAllData();
       } else {
         toast({
           title: "Gagal Menambahkan Pengguna",
@@ -247,14 +234,12 @@ export function UserManagement() {
     }
   };
 
-  // Handle opening the role change dialog
   const handleOpenRoleChange = (user: User) => {
     setUserToChangeRole(user);
     setSelectedNewRole(user.role);
     setShowRoleChangeDialog(true);
   };
 
-  // Handle saving the new role
   const handleSaveRole = () => {
     if (userToChangeRole && selectedNewRole) {
       updateUser(userToChangeRole.id, { role: selectedNewRole });
@@ -262,18 +247,15 @@ export function UserManagement() {
     }
   };
 
-  // Handle toggle active/deactive status
   const handleToggleActive = (user: User) => {
     updateUser(user.id, { isActive: !user.isActive });
   };
 
-  // Handle delete button click (opens confirmation dialog)
   const handleDelete = (id: string) => {
     setUserToDeleteId(id);
     setShowDeleteDialog(true);
   };
 
-  // Confirm and execute delete action
   const confirmDelete = async () => {
     if (!userToDeleteId) return;
 
@@ -289,7 +271,7 @@ export function UserManagement() {
           title: "Pengguna Berhasil Dihapus",
           description: "Data pengguna telah berhasil dihapus.",
         });
-        fetchUsers();
+        fetchAllData();
         setShowDeleteDialog(false);
         setUserToDeleteId(null);
       } else {
@@ -308,7 +290,6 @@ export function UserManagement() {
     }
   };
 
-  // Helper function to get role display name
   const getRoleLabel = (role: UserRole) => {
     switch (role) {
       case "SUPER_ADMIN": return "Super Admin";
@@ -318,17 +299,15 @@ export function UserManagement() {
     }
   };
 
-  // Helper function to get status badge variant
   const getStatusBadgeVariant = (isActive: boolean) => {
     return isActive ? "default" : "secondary";
   };
 
-  // Helper function to get status text
   const getStatusText = (isActive: boolean) => {
     return isActive ? "Aktif" : "Nonaktif";
   };
 
-  if (loading) return <div>Memuat data pengguna...</div>;
+  if (loading) return <div>Memuat data pengguna dan warga...</div>;
   if (error) return <div>Terjadi kesalahan: {error}</div>;
 
   return (
@@ -414,7 +393,6 @@ export function UserManagement() {
             <Button
               onClick={() => {
                 setSearchQuery("");
-                setResidents([]);
                 setSelectedResident(null);
                 setNewUser({ password: "", role: "ADMIN" });
                 setShowAddUserDialog(true);
@@ -534,30 +512,29 @@ export function UserManagement() {
                       className="h-9"
                     />
                     <CommandList>
-                      {loadingResidents ? (
-                        <div className="py-4 text-center text-gray-500">Memuat...</div>
+                      {filteredAvailableResidents.length === 0 ? (
+                        <CommandEmpty>Tidak ada warga yang cocok ditemukan.</CommandEmpty>
                       ) : (
-                        <CommandEmpty>Tidak ada warga ditemukan.</CommandEmpty>
+                        <CommandGroup>
+                          {filteredAvailableResidents.map((resident) => (
+                            <CommandItem
+                              key={resident.id}
+                              onSelect={() => {
+                                setSelectedResident(resident);
+                                setIsComboboxOpen(false);
+                                setSearchQuery("");
+                              }}
+                            >
+                              <CheckCircle
+                                className={`mr-2 h-4 w-4 ${
+                                  selectedResident?.id === resident.id ? "opacity-100" : "opacity-0"
+                                }`}
+                              />
+                              {resident.fullName}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
                       )}
-                      <CommandGroup>
-                        {residents.map((resident) => (
-                          <CommandItem
-                            key={resident.id}
-                            onSelect={() => {
-                              setSelectedResident(resident);
-                              setIsComboboxOpen(false);
-                              setSearchQuery(resident.fullName);
-                            }}
-                          >
-                            <CheckCircle
-                              className={`mr-2 h-4 w-4 ${
-                                selectedResident?.id === resident.id ? "opacity-100" : "opacity-0"
-                              }`}
-                            />
-                            {resident.fullName}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
                     </CommandList>
                   </Command>
                 </PopoverContent>
@@ -603,7 +580,7 @@ export function UserManagement() {
               onClick={() => {
                 setShowAddUserDialog(false);
                 setSearchQuery("");
-                setResidents([]);
+                setSelectedResident(null);
               }}
               className="px-6 py-2 font-medium rounded-lg text-gray-700 hover:bg-gray-100"
             >
