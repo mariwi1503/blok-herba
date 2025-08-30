@@ -24,6 +24,8 @@ const getHomeData = async () => {
   }
 };
 
+//
+
 export const metadata: Metadata = {
   title: "Blok Herba - RT 005 RW 021 Taman Cipta Asri 2 Batam",
   description:
