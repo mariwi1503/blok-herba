@@ -30,8 +30,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
   const navigation = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
-    { name: "Keuangan", href: "/dashboard/finance", icon: Wallet },
     { name: "Warga", href: "/dashboard/residents", icon: Users },
+    { name: "Keuangan", href: "/dashboard/finance", icon: Wallet },
     { name: "Artikel", href: "/dashboard/articles", icon: FileText },
     { name: "Kegiatan", href: "/dashboard/activities", icon: Calendar },
     { name: "Pengaturan", href: "/dashboard/settings", icon: Settings },
