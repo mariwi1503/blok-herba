@@ -1,17 +1,38 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Heart, MapPin, Phone, Mail, Facebook, Instagram, Twitter } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-// Definisikan tipe untuk props
-interface FooterProps {
-  footerTagline: string;
-  address: string;
-  phone: string;
-  email: string;
-}
+const getHomeData = async () => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/public`
+    );
+    if (!response.ok) throw new Error("Failed to fetch organization data");
+    const result = await response.json();
+    return result.data;
+  } catch {
+    return null;
+  }
+};
 
-// Tambahkan props ke argumen fungsi
-export function Footer({ footerTagline, address, phone, email }: FooterProps) {
+export function Footer() {
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    getHomeData().then(setData);
+  }, []);
+
+  if (!data) {
+    return (
+      <footer className="bg-gray-900 text-white py-8 text-center">
+        <p className="text-gray-400 text-sm">Memuat footer...</p>
+      </footer>
+    );
+  }
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -26,19 +47,30 @@ export function Footer({ footerTagline, address, phone, email }: FooterProps) {
                 height={40}
                 className="rounded-lg"
               />
-              <div className="font-heading font-bold text-xl">Blok Herba</div>
+              <div className="font-heading font-bold text-xl">
+                Blok Herba
+              </div>
             </div>
             <p className="font-body text-gray-300 mb-6 max-w-md">
-              {footerTagline}
+              {data.footerTagline}
             </p>
             <div className="flex space-x-4">
-              <Link href="#" className="text-gray-400 hover:text-emerald-400 transition-colors">
+              <Link
+                href="#"
+                className="text-gray-400 hover:text-emerald-400 transition-colors"
+              >
                 <Facebook className="w-5 h-5" />
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-emerald-400 transition-colors">
+              <Link
+                href="#"
+                className="text-gray-400 hover:text-emerald-400 transition-colors"
+              >
                 <Instagram className="w-5 h-5" />
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-emerald-400 transition-colors">
+              <Link
+                href="#"
+                className="text-gray-400 hover:text-emerald-400 transition-colors"
+              >
                 <Twitter className="w-5 h-5" />
               </Link>
             </div>
@@ -46,30 +78,47 @@ export function Footer({ footerTagline, address, phone, email }: FooterProps) {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-heading font-semibold text-lg mb-4">Menu Utama</h3>
+            <h3 className="font-heading font-semibold text-lg mb-4">
+              Menu Utama
+            </h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/" className="font-body text-gray-300 hover:text-emerald-400 transition-colors">
+                <Link
+                  href="/"
+                  className="font-body text-gray-300 hover:text-emerald-400 transition-colors"
+                >
                   Beranda
                 </Link>
               </li>
               <li>
-                <Link href="/tentang" className="font-body text-gray-300 hover:text-emerald-400 transition-colors">
+                <Link
+                  href="/tentang"
+                  className="font-body text-gray-300 hover:text-emerald-400 transition-colors"
+                >
                   Tentang
                 </Link>
               </li>
               <li>
-                <Link href="/kegiatan" className="font-body text-gray-300 hover:text-emerald-400 transition-colors">
+                <Link
+                  href="/kegiatan"
+                  className="font-body text-gray-300 hover:text-emerald-400 transition-colors"
+                >
                   Kegiatan
                 </Link>
               </li>
               <li>
-                <Link href="/pengurus" className="font-body text-gray-300 hover:text-emerald-400 transition-colors">
+                <Link
+                  href="/pengurus"
+                  className="font-body text-gray-300 hover:text-emerald-400 transition-colors"
+                >
                   Pengurus
                 </Link>
               </li>
               <li>
-                <Link href="/dashboard" className="font-body text-gray-300 hover:text-emerald-400 transition-colors">
+                <Link
+                  href="/dashboard"
+                  className="font-body text-gray-300 hover:text-emerald-400 transition-colors"
+                >
                   Dashboard
                 </Link>
               </li>
@@ -83,16 +132,20 @@ export function Footer({ footerTagline, address, phone, email }: FooterProps) {
               <div className="flex items-start">
                 <MapPin className="w-5 h-5 text-emerald-400 mr-3 mt-0.5 flex-shrink-0" />
                 <span className="font-body text-gray-300 text-sm whitespace-pre-line">
-                  {address}
+                  {data.address}
                 </span>
               </div>
               <div className="flex items-center">
                 <Phone className="w-5 h-5 text-emerald-400 mr-3" />
-                <span className="font-body text-gray-300 text-sm">{phone}</span>
+                <span className="font-body text-gray-300 text-sm">
+                  {data.phone}
+                </span>
               </div>
               <div className="flex items-center">
                 <Mail className="w-5 h-5 text-emerald-400 mr-3" />
-                <span className="font-body text-gray-300 text-sm">{email}</span>
+                <span className="font-body text-gray-300 text-sm">
+                  {data.email}
+                </span>
               </div>
             </div>
           </div>
@@ -100,11 +153,17 @@ export function Footer({ footerTagline, address, phone, email }: FooterProps) {
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="font-body text-gray-400 text-sm">© 2025 Blok Herba. All rights reserved.</p>
+          <p className="font-body text-gray-400 text-sm">
+            © 2025 Blok Herba. All rights reserved.
+          </p>
           <div className="flex items-center mt-4 md:mt-0">
-            <span className="font-body text-gray-400 text-sm mr-2">Dibuat dengan</span>
+            <span className="font-body text-gray-400 text-sm mr-2">
+              Dibuat dengan
+            </span>
             <Heart className="w-4 h-4 text-red-500" />
-            <span className="font-body text-gray-400 text-sm ml-2">untuk kebersamaan</span>
+            <span className="font-body text-gray-400 text-sm ml-2">
+              untuk kebersamaan
+            </span>
           </div>
         </div>
       </div>

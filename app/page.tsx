@@ -12,7 +12,7 @@ import type { Metadata } from "next";
 const getHomeData = async () => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/public`, {cache: 'no-store'}
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/public`,
     );
     if (!response.ok) {
       throw new Error("Failed to fetch organization data");
@@ -69,12 +69,7 @@ export default async function HomePage() {
         <ArticlesSection />
         <ManagementSection />
       </main>
-      <Footer 
-        footerTagline={homeData?.footerTagline}
-        address={homeData?.address}
-        phone={homeData?.phone}
-        email={homeData?.email}
-      />
+      <Footer />
     </div>
   );
 }
