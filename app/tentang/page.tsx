@@ -25,8 +25,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function TentangPage() {
-  const getHomeData = async () => {
+const getHomeData = async () => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/public`
@@ -41,6 +40,7 @@ export default async function TentangPage() {
     }
   };
 
+export default async function TentangPage() {
   const homeData = await getHomeData();
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-50 to-blue-50">
