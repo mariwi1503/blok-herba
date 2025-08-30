@@ -513,11 +513,11 @@ export function UserManagement() {
               <Popover open={isComboboxOpen} onOpenChange={setIsComboboxOpen}>
                 <PopoverTrigger asChild>
                   <Button
+                    id="residentName"
                     variant="outline"
                     role="combobox"
                     aria-expanded={isComboboxOpen}
                     className="w-full justify-between"
-                    id="residentName"
                   >
                     {selectedResident
                       ? selectedResident.fullName
@@ -574,6 +574,7 @@ export function UserManagement() {
                 value={newUser.password}
                 onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
                 className="py-2 rounded-lg border-gray-300 focus:ring-purple-500 focus:border-purple-500"
+                autoComplete="new-password"
               />
             </div>
             <div className="grid items-center gap-2">
@@ -581,7 +582,10 @@ export function UserManagement() {
                 Peran
               </Label>
               <Select onValueChange={(value) => setNewUser({ ...newUser, role: value as UserRole })} value={newUser.role}>
-                <SelectTrigger className="rounded-lg border-gray-300 focus:ring-purple-500 focus:border-purple-500">
+                <SelectTrigger
+                  id="role"
+                  className="rounded-lg border-gray-300 focus:ring-purple-500 focus:border-purple-500"
+                >
                   <SelectValue placeholder="Pilih Peran" />
                 </SelectTrigger>
                 <SelectContent>
