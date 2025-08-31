@@ -34,7 +34,6 @@ export const GET = async (req: NextRequest) => {
         date: "desc",
       },
     })
-    console.log("🚀 ~ :37 ~ transactions:", transactions)
 
     return NextResponse.json({
       status: "success",
@@ -64,7 +63,6 @@ export async function POST(req: Request) {
       orderBy: { date: "desc" },
     });
     const prevBalance = lastTransaction ? lastTransaction.balance : 0;
-    console.log("🚀 ~ :68 ~ prevBalance:", typeof prevBalance)
 
     // Hitung saldo baru
     const newBalance =
