@@ -68,7 +68,7 @@ export default async function TentangPage() {
                   Sejarah RT Blok Herba
                 </h2>
                 <div className="prose prose-lg max-w-none text-justify">
-                  {homeData.history}
+                  {homeData?.history ?? '-'}
                   {/* <p className="font-body text-gray-700 leading-relaxed mb-4">
                     RT Blok Herba didirikan pada tahun 2019 sebagai bagian dari
                     pengembangan perumahan Taman Cipta Asri 2 di Batam. Dengan
