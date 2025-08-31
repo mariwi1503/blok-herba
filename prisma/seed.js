@@ -291,6 +291,191 @@ const committees = [
   },
 ];
 
+const transactions = [
+  {
+    date: new Date("2025-08-01"),
+    description: "Iuran bulanan RT 01",
+    type: "INCOME",
+    category: "IURAN",
+    amount: 500000,
+    balance: 500000,
+    source: "Warga RT 01",
+  },
+  {
+    date: new Date("2025-08-02"),
+    description: "Sumbangan dari Pak Budi",
+    type: "INCOME",
+    category: "SUMBANGAN",
+    amount: 300000,
+    balance: 800000,
+    source: "Pak Budi",
+  },
+  {
+    date: new Date("2025-08-03"),
+    description: "Pembelian konsumsi rapat RT",
+    type: "EXPENSE",
+    category: "KONSUMSI",
+    amount: 150000,
+    balance: 650000,
+    source: "Kas RT",
+  },
+  {
+    date: new Date("2025-08-04"),
+    description: "Pembayaran petugas kebersihan",
+    type: "EXPENSE",
+    category: "KEBERSIHAN",
+    amount: 200000,
+    balance: 450000,
+    source: "Kas RT",
+  },
+  {
+    date: new Date("2025-08-05"),
+    description: "Iuran bulanan RT 02",
+    type: "INCOME",
+    category: "IURAN",
+    amount: 500000,
+    balance: 950000,
+    source: "Warga RT 02",
+  },
+  {
+    date: new Date("2025-08-06"),
+    description: "Biaya administrasi kas RT",
+    type: "EXPENSE",
+    category: "ADMINISTRASI",
+    amount: 50000,
+    balance: 900000,
+    source: "Kas RT",
+  },
+  {
+    date: new Date("2025-08-07"),
+    description: "Iuran bulanan RT 03",
+    type: "INCOME",
+    category: "IURAN",
+    amount: 500000,
+    balance: 1400000,
+    source: "Warga RT 03",
+  },
+  {
+    date: new Date("2025-08-08"),
+    description: "Sumbangan acara 17 Agustus",
+    type: "INCOME",
+    category: "SUMBANGAN",
+    amount: 400000,
+    balance: 1800000,
+    source: "Donatur Warga",
+  },
+  {
+    date: new Date("2025-08-09"),
+    description: "Pembelian bendera & dekorasi",
+    type: "EXPENSE",
+    category: "INFRASTRUKTUR",
+    amount: 250000,
+    balance: 1550000,
+    source: "Kas RT",
+  },
+  {
+    date: new Date("2025-08-10"),
+    description: "Bayar satpam komplek",
+    type: "EXPENSE",
+    category: "KEAMANAN",
+    amount: 300000,
+    balance: 1250000,
+    source: "Kas RT",
+  },
+  {
+    date: new Date("2025-08-11"),
+    description: "Iuran bulanan RT 04",
+    type: "INCOME",
+    category: "IURAN",
+    amount: 500000,
+    balance: 1750000,
+    source: "Warga RT 04",
+  },
+  {
+    date: new Date("2025-08-12"),
+    description: "Pembelian konsumsi lomba",
+    type: "EXPENSE",
+    category: "KONSUMSI",
+    amount: 200000,
+    balance: 1550000,
+    source: "Kas RT",
+  },
+  {
+    date: new Date("2025-08-13"),
+    description: "Iuran bulanan RT 05",
+    type: "INCOME",
+    category: "IURAN",
+    amount: 500000,
+    balance: 2050000,
+    source: "Warga RT 05",
+  },
+  {
+    date: new Date("2025-08-14"),
+    description: "Pembayaran sewa tenda",
+    type: "EXPENSE",
+    category: "INFRASTRUKTUR",
+    amount: 350000,
+    balance: 1700000,
+    source: "Kas RT",
+  },
+  {
+    date: new Date("2025-08-15"),
+    description: "Iuran bulanan RT 06",
+    type: "INCOME",
+    category: "IURAN",
+    amount: 500000,
+    balance: 2200000,
+    source: "Warga RT 06",
+  },
+  {
+    date: new Date("2025-08-16"),
+    description: "Biaya administrasi kas RT",
+    type: "EXPENSE",
+    category: "ADMINISTRASI",
+    amount: 75000,
+    balance: 2125000,
+    source: "Kas RT",
+  },
+  {
+    date: new Date("2025-08-17"),
+    description: "Hadiah lomba 17 Agustus",
+    type: "EXPENSE",
+    category: "LAIN",
+    amount: 400000,
+    balance: 1725000,
+    source: "Kas RT",
+  },
+  {
+    date: new Date("2025-08-18"),
+    description: "Iuran bulanan RT 07",
+    type: "INCOME",
+    category: "IURAN",
+    amount: 500000,
+    balance: 2225000,
+    source: "Warga RT 07",
+  },
+  {
+    date: new Date("2025-08-19"),
+    description: "Perbaikan lampu jalan",
+    type: "EXPENSE",
+    category: "INFRASTRUKTUR",
+    amount: 300000,
+    balance: 1925000,
+    source: "Kas RT",
+  },
+  {
+    date: new Date("2025-08-20"),
+    description: "Iuran bulanan RT 08",
+    type: "INCOME",
+    category: "IURAN",
+    amount: 500000,
+    balance: 2425000,
+    source: "Warga RT 08",
+  },
+];
+
+
+
 async function main() {
   const [commiteeExist, organizationProfileExist, houseExist] = await Promise.all([
     prisma.committee.findFirst({ select: { id: true } }),
@@ -341,6 +526,12 @@ async function main() {
         update: {},
       });
       i++
+    }
+
+    if (transactions) {
+      await t.transaction.createMany({
+        data: transactions
+      })
     }
 
     // seed commitee

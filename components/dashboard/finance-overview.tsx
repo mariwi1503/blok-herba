@@ -1,38 +1,86 @@
+"use client"
+
+import { useEffect, useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { TrendingUp, TrendingDown, Wallet, PiggyBank, ArrowUpRight, ArrowDownRight } from "lucide-react"
 
+type SummaryResponse = {
+  status: string
+  data: {
+    balance: {
+      current: number
+      change: number
+    }
+    income: {
+      current: number
+      change: number
+    }
+    expense: {
+      current: number
+      change: number
+    }
+  }
+}
+
 export function FinanceOverview() {
+  const [summary, setSummary] = useState<SummaryResponse | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("/api/transactions/summary")
+        const json: SummaryResponse = await res.json()
+        setSummary(json)
+      } catch (err) {
+        console.error("Failed to fetch finance summary:", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  if (loading) {
+    return <p className="text-gray-500">Loading...</p>
+  }
+
+  if (!summary || summary.status !== "success") {
+    return <p className="text-red-500">Gagal memuat data</p>
+  }
+
   const financialStats = [
     {
       title: "Saldo Kas",
-      value: "Rp 25.500.000",
-      change: "+8%",
-      changeType: "increase",
+      value: `Rp ${summary.data.balance.current.toLocaleString("id-ID")}`,
+      change: `${summary.data.balance.change.toFixed(1)}%`,
+      changeType: summary.data.balance.change >= 0 ? "increase" : "decrease",
       icon: Wallet,
       color: "text-emerald-600",
       bgColor: "bg-emerald-50",
     },
     {
       title: "Pemasukan Bulan Ini",
-      value: "Rp 3.200.000",
-      change: "+12%",
-      changeType: "increase",
+      value: `Rp ${summary.data.income.current.toLocaleString("id-ID")}`,
+      change: `${summary.data.income.change.toFixed(1)}%`,
+      changeType: summary.data.income.change >= 0 ? "increase" : "decrease",
       icon: ArrowUpRight,
       color: "text-blue-600",
       bgColor: "bg-blue-50",
     },
     {
       title: "Pengeluaran Bulan Ini",
-      value: "Rp 1.850.000",
-      change: "-5%",
-      changeType: "decrease",
+      value: `Rp ${summary.data.expense.current.toLocaleString("id-ID")}`,
+      change: `${summary.data.expense.change.toFixed(1)}%`,
+      changeType: summary.data.expense.change >= 0 ? "increase" : "decrease",
       icon: ArrowDownRight,
       color: "text-orange-600",
       bgColor: "bg-orange-50",
     },
     {
       title: "Tabungan RT",
-      value: "Rp 15.000.000",
+      value: `Rp ${(summary.data.balance.current - summary.data.expense.current).toLocaleString("id-ID")}`,
       change: "+3%",
       changeType: "increase",
       icon: PiggyBank,
