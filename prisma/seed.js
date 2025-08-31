@@ -37,7 +37,7 @@ const houses = Array.from({ length: 130 }, (_, i) => ({
 
 const residents = [
   {
-    fullName: "Bpk. Kismardi",
+    fullName: "Kismardi",
     phone: "085264144435",
     idCardNumber: "XXXXXXXXXXXXXXX",
     idCardType: "BATAM",
@@ -45,9 +45,10 @@ const residents = [
     gender: "L",
     maritalStatus: "KAWIN",
     image: "/profile/kis.jpg",
+    committeeId: "penasehat",
   },
   {
-    fullName: "Bpk. Sulaiman",
+    fullName: "Sulaiman",
     phone: "081277537556",
     idCardNumber: "XXXXXXXXXXXXXXX",
     idCardType: "BATAM",
@@ -55,6 +56,7 @@ const residents = [
     gender: "L",
     maritalStatus: "KAWIN",
     image: "/placeholder-nybna.png",
+    committeeId: "penasehat",
   },
   {
     fullName: "Edika Saputra",
@@ -65,6 +67,7 @@ const residents = [
     gender: "L",
     maritalStatus: "KAWIN",
     image: "/profile/rt.jpg",
+    committeeId: "ketua",
   },
 
   {
@@ -76,6 +79,7 @@ const residents = [
     gender: "L",
     maritalStatus: "KAWIN",
     image: "/profile/eka.jpg",
+    committeeId: "sekretaris",
   },
   {
     fullName: "Shinta julia fitri",
@@ -86,6 +90,7 @@ const residents = [
     gender: "P",
     maritalStatus: "KAWIN",
     image: "/profile/shinta.jpg",
+    committeeId: "bendahara",
   },
   {
     fullName: "Andeska Arifin",
@@ -96,6 +101,7 @@ const residents = [
     gender: "L",
     maritalStatus: "KAWIN",
     image: "/profile/andes.jpg",
+    committeeId: "bidang_sarana",
   },
   {
     fullName: "Nur Afandi",
@@ -106,6 +112,7 @@ const residents = [
     gender: "L",
     maritalStatus: "KAWIN",
     image: "/profile/nur.jpg",
+    committeeId: "bidang_sarana",
   },
   {
     fullName: "Agus Purnomo",
@@ -116,6 +123,7 @@ const residents = [
     gender: "L",
     maritalStatus: "KAWIN",
     image: "/placeholder-nybna.png",
+    committeeId: "bidang_sarana",
   },
   {
     fullName: "Leni Syafrida",
@@ -126,6 +134,7 @@ const residents = [
     gender: "P",
     maritalStatus: "KAWIN",
     image: "/profile/leni.jpg",
+    committeeId: "konsumsi",
   },
   {
     fullName: "Rizky ragil seputro",
@@ -136,6 +145,7 @@ const residents = [
     gender: "L",
     maritalStatus: "KAWIN",
     image: "/profile/ragil.jpg",
+    committeeId: "pemuda_olahraga",
   },
   {
     fullName: "Muhammad Ary Widodo",
@@ -146,6 +156,7 @@ const residents = [
     gender: "L",
     maritalStatus: "KAWIN",
     image: "/profile/ary.jpg",
+    committeeId: "pemuda_olahraga",
   },
   {
     fullName: "Ondra Wizal",
@@ -155,7 +166,7 @@ const residents = [
     isHead: true,
     gender: "L",
     maritalStatus: "KAWIN",
-    image: "/profile/ondra.jpg",
+    image: "/profile/ondra.jpg",committeeId: "humas",
   },
   {
     fullName: "Ruli Candra",
@@ -165,7 +176,7 @@ const residents = [
     isHead: true,
     gender: "L",
     maritalStatus: "KAWIN",
-    image: "/profile/ruli.jpg",
+    image: "/profile/ruli.jpg",committeeId: "humas",
   },
   {
     fullName: "Afrizal",
@@ -175,18 +186,18 @@ const residents = [
     isHead: true,
     gender: "L",
     maritalStatus: "KAWIN",
-    image: "/placeholder-nybna.png",
+    image: "/placeholder-nybna.png",committeeId: "humas",
   },
-  {
-    fullName: "Alfitra K.",
-    phone: "081373318342",
-    idCardNumber: "XXXXXXXXXXXXXXX",
-    idCardType: "BATAM",
-    isHead: true,
-    gender: "L",
-    maritalStatus: "KAWIN",
-    image: "/placeholder-nybna.png",
-  },
+  // {
+  //   fullName: "Alfitra K.",
+  //   phone: "081373318342",
+  //   idCardNumber: "XXXXXXXXXXXXXXX",
+  //   idCardType: "BATAM",
+  //   isHead: true,
+  //   gender: "L",
+  //   maritalStatus: "KAWIN",
+  //   image: "/placeholder-nybna.png",
+  // },
   {
     fullName: "Cak Gucir",
     phone: "081990895797",
@@ -195,7 +206,7 @@ const residents = [
     isHead: true,
     gender: "L",
     maritalStatus: "KAWIN",
-    image: "/profile/gucir.jpg",
+    image: "/profile/gucir.jpg",committeeId: "humas",
   },
   {
     fullName: "Rufima'ruf",
@@ -205,7 +216,7 @@ const residents = [
     isHead: true,
     gender: "L",
     maritalStatus: "KAWIN",
-    image: "/profile/rufi.jpg",
+    image: "/profile/rufi.jpg",committeeId: "keagamaan",
   },
   {
     fullName: "Andi Samsu alam",
@@ -215,7 +226,7 @@ const residents = [
     isHead: true,
     gender: "L",
     maritalStatus: "KAWIN",
-    image: "/profile/andi.jpg",
+    image: "/profile/andi.jpg",committeeId: "keagamaan",
   },
   {
     fullName: "Halle",
@@ -225,66 +236,66 @@ const residents = [
     isHead: true,
     gender: "L",
     maritalStatus: "KAWIN",
-    image: "/placeholder-nybna.png",
+    image: "/placeholder-nybna.png",committeeId: "keamanan",
   },
 ];
 
 const committees = [
   {
-    key: 'penasehat',
+    key: "penasehat",
     label: "Penasehat",
     description:
       "Mendampingi dan memberi pertimbangan bagi kelancaran kegiatan RT.",
   },
   {
-    key: 'ketua',
+    key: "ketua",
     label: "Ketua RT",
     description: "Memimpin dan mengkoordinasikan seluruh kegiatan RT.",
   },
   {
-    key: 'sekretaris',
+    key: "sekretaris",
     label: "Sekretaris",
     description:
       "Mengelola administrasi dan dokumentasi RT dengan ketelitian dan dedikasi tinggi.",
   },
   {
-    key: 'bendahara',
+    key: "bendahara",
     label: "Bendahara",
     description:
       "Mengelola keuangan RT dengan transparansi dan akuntabilitas yang tinggi.",
   },
   {
-    key: 'bidang_sarana',
+    key: "bidang_sarana",
     label: "Bidang Sarana",
     description:
       "Mengelola, merawat, dan memastikan ketersediaan sarana serta peralatan untuk mendukung kegiatan RT.",
   },
   {
-    key: 'konsumsi',
+    key: "konsumsi",
     label: "Konsumsi",
     description:
       "Mengatur, menyiapkan, dan memastikan kebutuhan konsumsi terpenuhi dalam setiap kegiatan RT.",
   },
   {
-    key: 'pemuda_olahraga',
+    key: "pemuda_olahraga",
     label: "Pemuda & Olahraga",
     description:
       "Mengkoordinir kegiatan olahraga serta membina kreativitas, semangat, dan peran aktif pemuda dalam kegiatan RT.",
   },
   {
-    key: 'humas',
+    key: "humas",
     label: "Humas",
     description:
       "Menjalin komunikasi, menyebarkan informasi, dan menjadi penghubung antara pengurus RT dengan warga maupun pihak luar.",
   },
   {
-    key: 'keagamaan',
+    key: "keagamaan",
     label: "Keagamaan",
     description:
       "Mengkoordinir kegiatan keagamaan serta mendorong peningkatan iman, takwa, dan kerukunan warga di lingkungan RT.",
   },
   {
-    key: 'keamanan',
+    key: "keamanan",
     label: "Keamanan",
     description:
       "Mengatur, menjaga, dan meningkatkan keamanan serta ketertiban lingkungan RT bersama warga.",
@@ -474,14 +485,13 @@ const transactions = [
   },
 ];
 
-
-
 async function main() {
-  const [commiteeExist, organizationProfileExist, houseExist] = await Promise.all([
-    prisma.committee.findFirst({ select: { id: true } }),
-    prisma.organizationProfile.findFirst({ select: { id: true } }),
-    prisma.house.findFirst()
-  ]);
+  const [commiteeExist, organizationProfileExist, houseExist] =
+    await Promise.all([
+      prisma.committee.findFirst({ select: { id: true } }),
+      prisma.organizationProfile.findFirst({ select: { id: true } }),
+      prisma.house.findFirst(),
+    ]);
   await prisma.$transaction(async (t) => {
     // seed organitation
     if (organizationProfileExist) {
@@ -496,17 +506,29 @@ async function main() {
     // seed houses
     if (!houseExist) {
       await t.house.createMany({
-        data: houses.map(h => {
+        data: houses.map((h) => {
           return {
             number: h.number.toString(),
-            type: h.type
-          }
-        })
-      })
+            type: h.type,
+          };
+        }),
+      });
     }
 
+    // seed commitee
+    if (!commiteeExist)
+      await t.committee.createMany({
+        data: committees.map((c) => {
+          return {
+            id: c.key,
+            label: c.label,
+            description: c.description,
+          };
+        }),
+      });
+
     // seed resident
-    let i = 1
+    let i = 1;
     for (const r of residents) {
       await t.resident.upsert({
         where: {
@@ -522,29 +544,18 @@ async function main() {
           isHead: r.isHead,
           maritalStatus: r.maritalStatus,
           houseNumber: (i + 1).toString(),
+          committeeId: r.committeeId
         },
         update: {},
       });
-      i++
+      i++;
     }
 
     if (transactions) {
       await t.transaction.createMany({
-        data: transactions
-      })
-    }
-
-    // seed commitee
-    if (!commiteeExist)
-      await t.committee.createMany({
-        data: committees.map((c) => {
-          return {
-            id: c.key,
-            label: c.label,
-            description: c.description,
-          };
-        }),
+        data: transactions,
       });
+    }
   });
 }
 // execute the main function
