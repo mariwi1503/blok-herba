@@ -1,131 +1,143 @@
-"use client"
+"use client";
 
-import type React from "react"
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-import { useState } from "react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+type AddTransactionDialogProps = {
+  open: boolean;
+  onOpenChange: (val: boolean) => void;
+  onSubmit: (payload: {
+    date: string;
+    description: string;
+    type: "INCOME" | "EXPENSE";
+    category: string;
+    amount: number;
+    source: string; // ✅ ditambahkan
+  }) => void;
+};
 
-interface AddTransactionDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-}
+export function AddTransactionDialog({
+  open,
+  onOpenChange,
+  onSubmit,
+}: AddTransactionDialogProps) {
+  const [date, setDate] = useState("");
+  const [description, setDescription] = useState("");
+  const [type, setType] = useState<"INCOME" | "EXPENSE">("INCOME");
+  const [category, setCategory] = useState("LAIN");
+  const [amount, setAmount] = useState("");
+  const [source, setSource] = useState(""); // ✅ state baru
 
-export function AddTransactionDialog({ open, onOpenChange }: AddTransactionDialogProps) {
-  const [transactionType, setTransactionType] = useState<"income" | "expense">("income")
+  const handleSubmit = () => {
+    if (!date || !description || !amount || !source) {
+      alert("Lengkapi semua field!");
+      return;
+    }
 
-  const incomeCategories = ["Iuran Bulanan", "Sumbangan", "Denda", "Lain-lain"]
-  const expenseCategories = ["Kebersihan", "Infrastruktur", "Konsumsi", "Administrasi", "Keamanan", "Lain-lain"]
+    onSubmit({
+      date,
+      description,
+      type,
+      category,
+      amount: Number(amount),
+      source, // ✅ ikut dikirim
+    });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission here
-    console.log("Transaction submitted")
-    onOpenChange(false)
-  }
+    // reset form
+    setDate("");
+    setDescription("");
+    setType("INCOME");
+    setCategory("LAIN");
+    setAmount("");
+    setSource("");
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="font-heading text-xl">Tambah Transaksi Baru</DialogTitle>
+          <DialogTitle>Tambah Transaksi Baru</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Transaction Type */}
-          <div className="space-y-3">
-            <Label className="font-body font-medium">Jenis Transaksi</Label>
-            <RadioGroup
-              value={transactionType}
-              onValueChange={(value) => setTransactionType(value as "income" | "expense")}
-              className="flex space-x-6"
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="income" id="income" />
-                <Label htmlFor="income" className="font-body">
-                  Pemasukan
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="expense" id="expense" />
-                <Label htmlFor="expense" className="font-body">
-                  Pengeluaran
-                </Label>
-              </div>
-            </RadioGroup>
+        <div className="space-y-4">
+          <div>
+            <label className="text-sm font-medium">Tanggal</label>
+            <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
           </div>
 
-          {/* Category */}
-          <div className="space-y-2">
-            <Label htmlFor="category" className="font-body font-medium">
-              Kategori
-            </Label>
-            <Select>
+          <div>
+            <label className="text-sm font-medium">Deskripsi</label>
+            <Input value={description} onChange={(e) => setDescription(e.target.value)} />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium">Jenis</label>
+            <Select value={type} onValueChange={(val) => setType(val as "INCOME" | "EXPENSE")}>
               <SelectTrigger>
-                <SelectValue placeholder="Pilih kategori" />
+                <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {(transactionType === "income" ? incomeCategories : expenseCategories).map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {category}
-                  </SelectItem>
-                ))}
+                <SelectItem value="INCOME">Pemasukan</SelectItem>
+                <SelectItem value="EXPENSE">Pengeluaran</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
-          {/* Amount */}
-          <div className="space-y-2">
-            <Label htmlFor="amount" className="font-body font-medium">
-              Jumlah (Rp)
-            </Label>
-            <Input id="amount" type="number" placeholder="0" required />
+          <div>
+            <label className="text-sm font-medium">Kategori</label>
+            <Select value={category} onValueChange={setCategory}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="IURAN">Iuran</SelectItem>
+                <SelectItem value="INFRASTRUKTUR">Infrastruktur</SelectItem>
+                <SelectItem value="ADMINISTRASI">Administrasi</SelectItem>
+                <SelectItem value="LAIN">Lain-lain</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
-          {/* Description */}
-          <div className="space-y-2">
-            <Label htmlFor="description" className="font-body font-medium">
-              Deskripsi
-            </Label>
-            <Textarea id="description" placeholder="Masukkan deskripsi transaksi" required />
-          </div>
-
-          {/* Date */}
-          <div className="space-y-2">
-            <Label htmlFor="date" className="font-body font-medium">
-              Tanggal
-            </Label>
-            <Input id="date" type="date" required />
-          </div>
-
-          {/* Payer/Vendor */}
-          <div className="space-y-2">
-            <Label htmlFor="party" className="font-body font-medium">
-              {transactionType === "income" ? "Pembayar" : "Vendor/Penerima"}
-            </Label>
+          <div>
+            <label className="text-sm font-medium">Jumlah</label>
             <Input
-              id="party"
-              placeholder={transactionType === "income" ? "Nama pembayar" : "Nama vendor/penerima"}
-              required
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
             />
           </div>
 
-          {/* Actions */}
-          <div className="flex justify-end space-x-3 pt-4">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="bg-transparent">
-              Batal
-            </Button>
-            <Button type="submit" className="bg-emerald-600 hover:bg-emerald-700">
-              Simpan Transaksi
+          {/* ✅ field baru */}
+          <div>
+            <label className="text-sm font-medium">Sumber Dana / Pemberi Dana</label>
+            <Input
+              value={source}
+              onChange={(e) => setSource(e.target.value)}
+              placeholder="Contoh: Donatur A, Iuran Warga, dll"
+            />
+          </div>
+
+          <div className="flex justify-end">
+            <Button onClick={handleSubmit} className="bg-emerald-600 hover:bg-emerald-700">
+              Simpan
             </Button>
           </div>
-        </form>
+        </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

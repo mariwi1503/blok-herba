@@ -182,6 +182,26 @@ export function FinanceDashboard() {
       <AddTransactionDialog
         open={showAddTransaction}
         onOpenChange={setShowAddTransaction}
+        onSubmit={async (payload) => {
+          try {
+            const res = await fetch("/api/transactions", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+
+            const result = await res.json();
+            if (result.status === "success") {
+              fetchTransactions(); // refresh data
+              setShowAddTransaction(false); // tutup dialog
+            } else {
+              alert("Gagal menambah transaksi: " + result.message);
+            }
+          } catch (err) {
+            console.error("Error:", err);
+            alert("Terjadi error saat menambah transaksi.");
+          }
+        }}
       />
     </div>
   );

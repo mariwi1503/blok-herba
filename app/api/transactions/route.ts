@@ -53,3 +53,49 @@ export const GET = async (req: NextRequest) => {
     )
   }
 }
+
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const { date, description, type, category, amount, source } = body;
+
+    // Ambil saldo terakhir
+    const lastTransaction = await prisma.transaction.findFirst({
+      orderBy: { date: "desc" },
+    });
+    const prevBalance = lastTransaction ? lastTransaction.balance : 0;
+    console.log("🚀 ~ :68 ~ prevBalance:", typeof prevBalance)
+
+    // Hitung saldo baru
+    const newBalance =
+      type === "INCOME"
+        ? prevBalance + amount
+        : prevBalance - amount;
+
+    // Simpan transaksi
+    const newTransaction = await prisma.transaction.create({
+      data: {
+        date: new Date(date), // FIX: convert string → Date
+        description,
+        type, // pastikan sesuai enum di schema
+        category,
+        amount: Number(amount), // FIX: pastikan angka
+        source,
+        balance: newBalance,
+      },
+    });
+
+    return NextResponse.json(
+      { status: "success", data: newTransaction },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error("Error creating transaction:", error);
+    return NextResponse.json(
+      { status: "error", message: "Failed to create transaction" },
+      { status: 500 }
+    );
+  }
+}
+
+
