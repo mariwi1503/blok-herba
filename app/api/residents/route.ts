@@ -8,11 +8,12 @@ export const GET = async (req: NextRequest) => {
   try {
     const url = new URL(req.url);
     const page = parseInt(url.searchParams.get("page") || "1", 10);
-    const perPage = parseInt(url.searchParams.get("per_page") || "10", 10);
+    const perPage = parseInt(url.searchParams.get("per_page") || "25", 10);
     const search = url.searchParams.get("search") || "";
     const gender = url.searchParams.get("gender");
     const maritalStatus = url.searchParams.get("maritalStatus");
     const idCardType = url.searchParams.get("idCardType");
+    const committee = url.searchParams.get("committee");
 
     const paginate = createPaginator({ perPage });
 
@@ -27,6 +28,7 @@ export const GET = async (req: NextRequest) => {
     if (gender) whereClause.gender = gender;
     if (maritalStatus) whereClause.maritalStatus = maritalStatus;
     if (idCardType) whereClause.idCardType = idCardType;
+    if (committee) {whereClause.committeeId = null}
 
     const result = await paginate(
       prisma.resident,
