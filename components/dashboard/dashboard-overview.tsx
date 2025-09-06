@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   Home,
   Users,
@@ -19,11 +19,16 @@ import {
   Settings,
   ArrowUpRight,
   ArrowDownLeft,
-} from "lucide-react"
-import { useAuth } from "@/contexts/auth-context"
+} from "lucide-react";
+import { useAuth } from "@/contexts/auth-context";
+import { AddTransactionDialog } from "./add-transaction-dialog";
+import { useState } from "react";
+import { AddResidentDialog } from "./add-resident-dialog";
 
 export function DashboardOverview() {
-  const { user } = useAuth()
+  const { user } = useAuth();
+  const [showAddTransaction, setShowAddTransaction] = useState(false);
+  const [showAddResident, setShowAddResident] = useState(false);
 
   const stats = [
     {
@@ -62,7 +67,7 @@ export function DashboardOverview() {
       color: "text-orange-600",
       bgColor: "bg-orange-50",
     },
-  ]
+  ];
 
   const adminActivities = [
     {
@@ -110,7 +115,7 @@ export function DashboardOverview() {
       color: "text-red-600",
       bgColor: "bg-red-50",
     },
-  ]
+  ];
 
   const recentTransactions = [
     {
@@ -153,7 +158,7 @@ export function DashboardOverview() {
       time: "1 hari yang lalu",
       status: "completed",
     },
-  ]
+  ];
 
   const recentActivities = [
     {
@@ -191,7 +196,7 @@ export function DashboardOverview() {
       status: "completed",
       participants: "150 warga",
     },
-  ]
+  ];
 
   const upcomingEvents = [
     {
@@ -212,30 +217,40 @@ export function DashboardOverview() {
       time: "08:00-17:00",
       location: "Rumah Ketua RT",
     },
-  ]
+  ];
 
   return (
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="font-heading text-3xl font-bold text-gray-900">Dashboard RT Blok Herba</h1>
+        <h1 className="font-heading text-3xl font-bold text-gray-900">
+          Dashboard RT Blok Herba
+        </h1>
         <p className="font-body text-gray-600 mt-2">
-          Selamat datang kembali, {user?.name}! Berikut ringkasan aktivitas RT hari ini.
+          Selamat datang kembali, {user?.name}! Berikut ringkasan aktivitas RT
+          hari ini.
         </p>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
-          <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <Card
+            key={index}
+            className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300"
+          >
             <CardContent className="p-6">
               <div className="flex flex-col md:flex-row items-center justify-between">
                 <div className={`p-3 rounded-lg ${stat.bgColor}`}>
                   <stat.icon className={`w-6 h-6 ${stat.color}`} />
                 </div>
                 <div className="flex flex-col text-center">
-                  <p className="font-body text-sm text-gray-600 mb-1">{stat.title}</p>
-                  <p className="font-heading text-2xl font-bold text-gray-900">{stat.value}</p>
+                  <p className="font-body text-sm text-gray-600 mb-1">
+                    {stat.title}
+                  </p>
+                  <p className="font-heading text-2xl font-bold text-gray-900">
+                    {stat.value}
+                  </p>
                   <div className="flex items-center mt-2">
                     {stat.changeType === "increase" ? (
                       <TrendingUp className="w-4 h-4 text-emerald-600 mr-1" />
@@ -244,20 +259,53 @@ export function DashboardOverview() {
                     )}
                     <span
                       className={`font-body text-sm ${
-                        stat.changeType === "increase" ? "text-emerald-600" : "text-red-600"
+                        stat.changeType === "increase"
+                          ? "text-emerald-600"
+                          : "text-red-600"
                       }`}
                     >
                       {stat.change}
                     </span>
-                    <span className="font-body text-sm text-gray-500 ml-1">bulan ini</span>
+                    <span className="font-body text-sm text-gray-500 ml-1">
+                      bulan ini
+                    </span>
                   </div>
                 </div>
-                
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
+
+      {/* Quick Actions */}
+      <Card className="border-0 shadow-lg">
+        <CardHeader>
+          <CardTitle className="font-heading text-xl">Aksi Cepat</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <Button
+              onClick={() => setShowAddTransaction(true)}
+              className="h-20 flex-col bg-emerald-600 hover:bg-emerald-700"
+            >
+              <Wallet className="w-6 h-6 mb-2" />
+              <span className="font-body text-sm">Tambah Transaksi</span>
+            </Button>
+            <Button onClick={() => setShowAddResident(true)} variant="outline" className="h-20 flex-col bg-transparent">
+              <Users className="w-6 h-6 mb-2" />
+              <span className="font-body text-sm">Tambah Warga</span>
+            </Button>
+            <Button variant="outline" className="h-20 flex-col bg-transparent">
+              <Calendar className="w-6 h-6 mb-2" />
+              <span className="font-body text-sm">Buat Acara</span>
+            </Button>
+            <Button variant="outline" className="h-20 flex-col bg-transparent">
+              <AlertCircle className="w-6 h-6 mb-2" />
+              <span className="font-body text-sm">Laporan Masalah</span>
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="grid lg:grid-cols-2 gap-8">
         <Card className="border-0 shadow-lg">
@@ -278,11 +326,19 @@ export function DashboardOverview() {
                     <activity.icon className={`w-4 h-4 ${activity.color}`} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-body font-medium text-gray-900">{activity.action}</p>
-                    <p className="font-body text-sm text-gray-600">{activity.description}</p>
+                    <p className="font-body font-medium text-gray-900">
+                      {activity.action}
+                    </p>
+                    <p className="font-body text-sm text-gray-600">
+                      {activity.description}
+                    </p>
                     <div className="flex items-center justify-between mt-1">
-                      <p className="font-body text-xs text-gray-500">oleh {activity.admin}</p>
-                      <p className="font-body text-xs text-gray-500">{activity.time}</p>
+                      <p className="font-body text-xs text-gray-500">
+                        oleh {activity.admin}
+                      </p>
+                      <p className="font-body text-xs text-gray-500">
+                        {activity.time}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -299,7 +355,8 @@ export function DashboardOverview() {
         <Card className="border-0 shadow-lg">
           <CardHeader>
             <CardTitle className="font-heading text-xl flex items-center">
-              <Wallet className="w-5 h-5 mr-2 text-orange-600" />5 Transaksi Terakhir
+              <Wallet className="w-5 h-5 mr-2 text-orange-600" />5 Transaksi
+              Terakhir
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -311,7 +368,11 @@ export function DashboardOverview() {
                 >
                   <div className="flex items-center space-x-3">
                     <div
-                      className={`p-2 rounded-full ${transaction.type === "income" ? "bg-emerald-50" : "bg-red-50"}`}
+                      className={`p-2 rounded-full ${
+                        transaction.type === "income"
+                          ? "bg-emerald-50"
+                          : "bg-red-50"
+                      }`}
                     >
                       {transaction.type === "income" ? (
                         <ArrowDownLeft className="w-4 h-4 text-emerald-600" />
@@ -320,15 +381,23 @@ export function DashboardOverview() {
                       )}
                     </div>
                     <div>
-                      <p className="font-body font-medium text-gray-900">{transaction.title}</p>
-                      <p className="font-body text-sm text-gray-600">{transaction.description}</p>
-                      <p className="font-body text-xs text-gray-500">{transaction.time}</p>
+                      <p className="font-body font-medium text-gray-900">
+                        {transaction.title}
+                      </p>
+                      <p className="font-body text-sm text-gray-600">
+                        {transaction.description}
+                      </p>
+                      <p className="font-body text-xs text-gray-500">
+                        {transaction.time}
+                      </p>
                     </div>
                   </div>
                   <div className="text-right">
                     <p
                       className={`font-body font-semibold ${
-                        transaction.type === "income" ? "text-emerald-600" : "text-red-600"
+                        transaction.type === "income"
+                          ? "text-emerald-600"
+                          : "text-red-600"
                       }`}
                     >
                       {transaction.type === "income" ? "+" : "-"}
@@ -351,7 +420,8 @@ export function DashboardOverview() {
         <Card className="border-0 shadow-lg">
           <CardHeader>
             <CardTitle className="font-heading text-xl flex items-center">
-              <Calendar className="w-5 h-5 mr-2 text-blue-600" />5 Kegiatan Terakhir
+              <Calendar className="w-5 h-5 mr-2 text-blue-600" />5 Kegiatan
+              Terakhir
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -365,11 +435,19 @@ export function DashboardOverview() {
                     <CheckCircle className="w-4 h-4 text-blue-600" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-body font-medium text-gray-900">{activity.title}</p>
-                    <p className="font-body text-sm text-gray-600">{activity.description}</p>
+                    <p className="font-body font-medium text-gray-900">
+                      {activity.title}
+                    </p>
+                    <p className="font-body text-sm text-gray-600">
+                      {activity.description}
+                    </p>
                     <div className="flex items-center justify-between mt-1">
-                      <p className="font-body text-xs text-gray-500">{activity.participants}</p>
-                      <p className="font-body text-xs text-gray-500">{activity.time}</p>
+                      <p className="font-body text-xs text-gray-500">
+                        {activity.participants}
+                      </p>
+                      <p className="font-body text-xs text-gray-500">
+                        {activity.time}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -394,12 +472,23 @@ export function DashboardOverview() {
           <CardContent>
             <div className="space-y-4">
               {upcomingEvents.map((event, index) => (
-                <div key={index} className="p-3 border border-gray-200 rounded-lg">
-                  <h4 className="font-body font-medium text-gray-900 mb-2">{event.title}</h4>
+                <div
+                  key={index}
+                  className="p-3 border border-gray-200 rounded-lg"
+                >
+                  <h4 className="font-body font-medium text-gray-900 mb-2">
+                    {event.title}
+                  </h4>
                   <div className="space-y-1">
-                    <p className="font-body text-sm text-gray-600">📅 {event.date}</p>
-                    <p className="font-body text-sm text-gray-600">🕐 {event.time}</p>
-                    <p className="font-body text-sm text-gray-600">📍 {event.location}</p>
+                    <p className="font-body text-sm text-gray-600">
+                      📅 {event.date}
+                    </p>
+                    <p className="font-body text-sm text-gray-600">
+                      🕐 {event.time}
+                    </p>
+                    <p className="font-body text-sm text-gray-600">
+                      📍 {event.location}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -413,32 +502,37 @@ export function DashboardOverview() {
         </Card>
       </div>
 
-      {/* Quick Actions */}
-      <Card className="border-0 shadow-lg">
-        <CardHeader>
-          <CardTitle className="font-heading text-xl">Aksi Cepat</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Button className="h-20 flex-col bg-emerald-600 hover:bg-emerald-700">
-              <Wallet className="w-6 h-6 mb-2" />
-              <span className="font-body text-sm">Tambah Transaksi</span>
-            </Button>
-            <Button variant="outline" className="h-20 flex-col bg-transparent">
-              <Users className="w-6 h-6 mb-2" />
-              <span className="font-body text-sm">Daftar Warga</span>
-            </Button>
-            <Button variant="outline" className="h-20 flex-col bg-transparent">
-              <Calendar className="w-6 h-6 mb-2" />
-              <span className="font-body text-sm">Buat Acara</span>
-            </Button>
-            <Button variant="outline" className="h-20 flex-col bg-transparent">
-              <AlertCircle className="w-6 h-6 mb-2" />
-              <span className="font-body text-sm">Laporan Masalah</span>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Add Transaction Dialog */}
+      <AddTransactionDialog
+        open={showAddTransaction}
+        onOpenChange={setShowAddTransaction}
+        onSubmit={async (payload) => {
+          try {
+            const res = await fetch("/api/transactions", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+
+            const result = await res.json();
+            if (result.status === "success") {
+              // fetchTransactions(); // refresh data
+              setShowAddTransaction(false); // tutup dialog
+            } else {
+              alert("Gagal menambah transaksi: " + result.message);
+            }
+          } catch (err) {
+            console.error("Error:", err);
+            alert("Terjadi error saat menambah transaksi.");
+          }
+        }}
+      />
+
+      <AddResidentDialog
+        open={showAddResident}
+        onOpenChange={setShowAddResident}
+        onSuccess={() => alert("Berhasil menambahkan warga")}
+      />
     </div>
-  )
+  );
 }

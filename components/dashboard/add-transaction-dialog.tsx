@@ -43,18 +43,18 @@ export function AddTransactionDialog({
   const [source, setSource] = useState(""); // ✅ state baru
 
   const handleSubmit = () => {
-    if (!date || !description || !amount || !source) {
+    if (!date || !amount) {
       alert("Lengkapi semua field!");
       return;
     }
 
     onSubmit({
       date,
-      description,
+      description: description ?? '-',
       type,
       category,
       amount: Number(amount),
-      source, // ✅ ikut dikirim
+      source: source ?? '-', // ✅ ikut dikirim
     });
 
     // reset form
